@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-07-10
  */
 public interface IStaffService extends IService<Staff> {
-
+        void setPhone(String phone,String id);
 }

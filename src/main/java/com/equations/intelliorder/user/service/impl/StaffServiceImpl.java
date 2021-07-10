@@ -17,4 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements IStaffService {
 
+
+    @Override
+    public void setPhone(String phone, String id) {
+
+    }
 }
