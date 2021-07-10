@@ -2,6 +2,7 @@ package com.equations.intelliorder.user.mapper;
 
 import com.equations.intelliorder.user.entity.Staff;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author equations
  * @since 2021-07-10
  */
+
+@Mapper
 public interface StaffMapper extends BaseMapper<Staff> {
 
 }
