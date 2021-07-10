@@ -20,7 +20,9 @@ public interface IStaffService extends IService<Staff> {
 
         List<Staff> getStaffById(String id);
 
-        int updateStaff(String id,String phone, String account,String password,String staffType,String dishTpye);
+        int updateStaff(
+                String id,String phone, String account,
+                String password,String staffType,String dishType);
 
-
+        int deleteById(String id);
 }
