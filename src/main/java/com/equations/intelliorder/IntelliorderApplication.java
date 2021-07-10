@@ -1,9 +1,13 @@
 package com.equations.intelliorder;
 
+
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan("com.equations.intelliorder.*.mapper")
 public class IntelliorderApplication {
 
     public static void main(String[] args) {
