@@ -38,7 +38,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public int updateStaff(
             String id, String phone, String account,
-            String password, String staffType, String dishTpye) {
+            String password, String staffType) {
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
         Staff staff = new Staff();
@@ -46,7 +46,14 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         staff.setAccount(account);
         staff.setPassword(password);
         staff.setStaffType(staffType);
-        staff.setDishTpye(dishTpye);
+
+
         return staffMapper.update(staff,wrapper);
+    }
+
+    @Override
+    public int deleteById(String id) {
+        // Staff staff=new Staff();
+        return staffMapper.deleteById(id);
     }
 }
