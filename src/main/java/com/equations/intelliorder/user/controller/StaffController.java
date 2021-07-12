@@ -85,7 +85,7 @@ public class StaffController {
         Map<String,Object> map = new HashMap<String,Object>();
         try {
             int result=staffService.deleteById(id);
-            if(result==1){//
+            if(result==1){
                 map.put("status", "200");
                 map.put("msg", "删除成功");
             }else {
