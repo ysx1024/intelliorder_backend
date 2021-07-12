@@ -25,24 +25,26 @@ import java.util.List;
 public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements IStaffService {
 
     @Autowired
-    private StaffMapper staffMapper;
+    private StaffMapper staffMapper;//通过字段注入自动创建mapper映射类
+
 
     @Override
     public List<Staff> getStaffById(int id) {
+        //1)创建QueryWrapper对象
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("id",id);
+        //2)执行查询
         List<Staff> staffList = staffMapper.selectList(wrapper);
         return staffList;
     }
 
     @Override
     public List<Staff> getStaffByName(String name) {
-        List<Staff> staffList = null;
         //1)创建QueryWrapper对象
-                QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("name", name);
         //2)执行查询
-                staffList = staffMapper.selectList(wrapper);
+        List<Staff> staffList = staffMapper.selectList(wrapper);
         return staffList;
     }
 
@@ -50,15 +52,15 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     public int updateStaff(
             int id, String phone, String account,
             String password, String staffType) {
+        //1)创建QueryWrapper对象
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
+        //对staff类进行set基本操作
         Staff staff = new Staff();
         staff.setPhone(phone);
         staff.setAccount(account);
         staff.setPassword(password);
         staff.setStaffType(staffType);
-
-
         return staffMapper.update(staff,wrapper);
     }
 

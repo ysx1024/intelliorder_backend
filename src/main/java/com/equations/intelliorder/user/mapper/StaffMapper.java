@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * <p>
  *  Mapper 接口
+ *  一般不写代码
  * </p>
  *
  * @author equations
