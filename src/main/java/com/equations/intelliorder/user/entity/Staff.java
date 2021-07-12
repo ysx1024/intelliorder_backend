@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 实体类，一一对应数据库中相应列的列名，数据库修改列是要对应修改此类
+ * 实体类，一一对应数据库中相应列的列名，数据库修改列时要对应修改此类
  * </p>
  *
  * @author equations
