@@ -28,10 +28,21 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     private StaffMapper staffMapper;
 
     @Override
-    public List<Staff> getStaffById(String id) {
+    public List<Staff> getStaffById(int id) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("id",id);
         List<Staff> staffList = staffMapper.selectList(wrapper);
+        return staffList;
+    }
+
+    @Override
+    public List<Staff> getStaffByName(String name) {
+        List<Staff> staffList = null;
+        //1)创建QueryWrapper对象
+                QueryWrapper wrapper = new QueryWrapper();
+        wrapper.like("name", name);
+        //2)执行查询
+                staffList = staffMapper.selectList(wrapper);
         return staffList;
     }
 
@@ -52,7 +63,21 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
-    public int deleteById(String id) {
+    public int addStaff(
+        String name, String phone, String account,
+        String password, String staffType){
+            Staff staff = new Staff();
+
+            staff.setName(name);
+            staff.setPhone(phone);
+            staff.setAccount(phone);
+            staff.setPassword("123456");
+            staff.setStaffType(staffType);
+            return staffMapper.insert(staff);
+    }
+
+    @Override
+    public int deleteById(int id) {
         // Staff staff=new Staff();
         return staffMapper.deleteById(id);
     }
