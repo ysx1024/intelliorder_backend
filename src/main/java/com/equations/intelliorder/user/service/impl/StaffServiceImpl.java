@@ -2,7 +2,6 @@ package com.equations.intelliorder.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
 import com.equations.intelliorder.user.entity.Staff;
 import com.equations.intelliorder.user.mapper.StaffMapper;
 import com.equations.intelliorder.user.service.IStaffService;
@@ -39,7 +38,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public int updateStaff(
             String id, String phone, String account,
-            String password, String staffType, String dishType) {
+            String password, String staffType) {
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
         Staff staff = new Staff();
@@ -47,13 +46,14 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         staff.setAccount(account);
         staff.setPassword(password);
         staff.setStaffType(staffType);
-        staff.setDishType(dishType);
+
+
         return staffMapper.update(staff,wrapper);
     }
 
     @Override
     public int deleteById(String id) {
-
+        // Staff staff=new Staff();
         return staffMapper.deleteById(id);
     }
 }

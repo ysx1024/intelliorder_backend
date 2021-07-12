@@ -37,8 +37,5 @@ public class Staff implements Serializable {
     @TableField("staffType")
     private String staffType;
 
-    @TableField("dishType")
-    private String dishType;
-
 
 }
