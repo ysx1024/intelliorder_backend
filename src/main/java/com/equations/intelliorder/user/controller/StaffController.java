@@ -35,7 +35,7 @@ public class StaffController {
 
 
     @RequestMapping(value = "/getStaffById",method = RequestMethod.GET)
-    //swagger2接口文档描述
+
     @ResponseBody
     @ApiOperation(value="根据员工ID检索员工列表",notes = "员工列表查询接口")
     @ApiImplicitParams({
