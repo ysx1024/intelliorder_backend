@@ -37,7 +37,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     @Override
     public int updateStaff(
-            String id, String phone, String account,
+            int id, String phone, String account,
             String password, String staffType) {
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
