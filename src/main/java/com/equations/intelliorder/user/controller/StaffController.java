@@ -61,7 +61,7 @@ public class StaffController {
 
     @RequestMapping(value = "/updateStaff",method = RequestMethod.POST)
     public String updateStaff(
-            String id, String phone, String account,
+            int id, String phone, String account,
             String password, String staffType){
         Map<String,Object> map = new HashMap<String,Object>();
         try {
