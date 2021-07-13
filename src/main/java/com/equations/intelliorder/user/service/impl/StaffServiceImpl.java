@@ -39,12 +39,12 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
-    public List<Staff> getStaffById(int id) {
+    public Staff getStaffById(int id) {
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
         QueryWrapper wrapper = new QueryWrapper();
-        wrapper.like("id", id);
+        wrapper.eq("id", id);
         //2)执行查询
-        return staffMapper.selectList(wrapper);
+        return staffMapper.selectOne(wrapper);
     }
 
     @Override
@@ -96,12 +96,12 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         // 直接通过方法进行删除操作
         return staffMapper.deleteById(id);
     }
+
     @Override
-    public Staff login(String account, String password){
+    public Staff login(String account, String password) {
         //员工登录实现
         QueryWrapper wrapper = new QueryWrapper();
-        Staff user1 = staffMapper.selectOne(new QueryWrapper<Staff>().eq("account",account)
-                .eq("password",password));
-        return user1;
+        return staffMapper.selectOne(new QueryWrapper<Staff>().eq("account", account)
+                .eq("password", password));
     }
 }
