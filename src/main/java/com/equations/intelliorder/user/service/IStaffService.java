@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface IStaffService extends IService<Staff> {
 
+        //        int showStaff();//渲染时返回
+
         List<Staff> getStaffById(int id);//根据id查询员工
 
         List<Staff> getStaffByName(String name);//根据姓名查询员工

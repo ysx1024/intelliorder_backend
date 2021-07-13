@@ -86,6 +86,15 @@ public class StaffController {
     }
 
     @RequestMapping(value = "/getStaffByType",method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value="根据员工类别检索员工列表",notes = "需要输入员工类别{服务员，后厨，前台}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="staffType",value="员工类别",required = true,dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=20001,message="请求失败"),
+            @ApiResponse(code=200,message="请求成功")
+    })
     public String getStaffByType(String staffType) {
         Map<String,Object> map =new HashMap<String,Object>();
         try {
