@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -52,11 +53,11 @@ public class StaffController {
     })
     public String getStaffById(int id) {
         //对接前端，方法主要返回相应的状态参数
-        Map<String,Object> map =new HashMap<>();//创建hashmap用来存储返回列表并转成json数据
+        Map<String, Object> map = new HashMap<>();//创建hashmap用来存储返回实体类或者列表并转成json数据
         try {
-            List<Staff> staffList = staffService.getStaffById(id);
+            Staff staff = staffService.getStaffById(id);
             map.put("status", "200");
-            map.put("data", staffList);
+            map.put("data", staff);
         } catch (Exception exception) {
             map.put("status", "20001");
             map.put("errorMsg", exception.getMessage());
@@ -118,7 +119,7 @@ public class StaffController {
             @ApiResponse(code=200,message="请求成功")
     })
     public String getStaffByType(String staffType) {
-        Map<String,Object> map =new HashMap<String,Object>();
+        Map<String, Object> map = new HashMap<>();
         try {
             List<Staff> staffList = staffService.getStaffByType(staffType);
             map.put("status", "200");
@@ -141,22 +142,34 @@ public class StaffController {
             @ApiImplicitParam(name="staffType",value="员工类型",dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="更新成功"),
-            @ApiResponse(code=404,message="更新失败"),
-            @ApiResponse(code=-1,message="errorMsg")
+            @ApiResponse(code = 300, message = "信息无变动"),
+            @ApiResponse(code = 200, message = "更新成功"),
+            @ApiResponse(code = 404, message = "更新失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
     })
     public String updateStaff(
             int id, String phone, String account,
             String password, String staffType){
         Map<String,Object> map = new HashMap<>();
         try {
-            int result=staffService.updateStaff(id,phone,account,password,staffType);
-            if(result==1){
-                map.put("status", "200");
-                map.put("msg", "更新成功");
-            }else {
-                map.put("status", "404");
-                map.put("msg", "更新失败");
+            Staff staff = staffService.getStaffById(id);
+            boolean flag = true;
+            if (!Objects.equals(staff.getPhone(), phone)) flag = false;
+            else if (!Objects.equals(staff.getAccount(), account)) flag = false;
+            else if (!Objects.equals(staff.getPassword(), password)) flag = false;
+            else if (!Objects.equals(staff.getStaffType(), staffType)) flag = false;
+            if (flag) {
+                map.put("status", "300");
+                map.put("msg", "信息无变动");
+            } else {
+                int result = staffService.updateStaff(id, phone, account, password, staffType);
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "更新成功");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "更新失败");
+                }
             }
         }catch (Exception exception){
             map.put("status", "-1");
@@ -243,7 +256,7 @@ public class StaffController {
         try {
             Staff result=staffService.login(account,password);
             if(!ObjectUtils.isEmpty(result)){
-                //保持登录状态，讲登录id存放在session中
+                //保持登录状态，将登录id存放在session中
                 session.setAttribute("id", result.getId());
                 map.put("status", "200");
                 map.put("msg","登录成功");

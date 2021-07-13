@@ -33,9 +33,9 @@ public class Swagger2 {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 // 设置页面标题
-                .title("Market中心后端api接口文档")
+                .title("Intelliorder中心后端api接口文档")
                 // 描述
-                .description("欢迎访问Market中心接口文档，这里是描述信息")
+                .description("欢迎访问Intelliorder中心接口文档，这里是描述信息")
                 // 定义版本号
                 .version("1.0").build();
     }
