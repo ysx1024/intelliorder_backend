@@ -29,13 +29,22 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
 
     @Override
+    public List<Staff> showStaffList() {
+        //1)创建QueryWrapper对象
+        QueryWrapper wrapper = new QueryWrapper();
+        //通过id>=1的条件巧用ge方法返回所有员工列表信息
+        wrapper.ge("id", 1);
+        //2)执行查询
+        return staffMapper.selectList(wrapper);
+    }
+
+    @Override
     public List<Staff> getStaffById(int id) {
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
         QueryWrapper wrapper = new QueryWrapper();
-        wrapper.like("id",id);
+        wrapper.like("id", id);
         //2)执行查询
-        List<Staff> staffList = staffMapper.selectList(wrapper);
-        return staffList;
+        return staffMapper.selectList(wrapper);
     }
 
     @Override
@@ -44,17 +53,14 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("name", name);
         //2)执行查询
-        List<Staff> staffList = staffMapper.selectList(wrapper);
-        return staffList;
+        return staffMapper.selectList(wrapper);
     }
 
     @Override
     public List<Staff> getStaffByType(String staffType) {
-        List<Staff> staffList = null;
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("staffType", staffType);
-        staffList = staffMapper.selectList(wrapper);
-        return staffList;
+        return staffMapper.selectList(wrapper);
     }
 
     @Override
