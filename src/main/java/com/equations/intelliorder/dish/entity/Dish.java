@@ -10,14 +10,14 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 实体类
  * </p>
  *
  * @author equations
  * @since 2021-07-13
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 @Accessors(chain = true)
 public class Dish implements Serializable {
 
@@ -33,7 +33,7 @@ public class Dish implements Serializable {
     private String dishType;
 
     @TableField("dishPrice")
-    private Double dishPrice;
+    private double dishPrice;
 
     @TableField("dishImage")
     private String dishImage;
@@ -42,10 +42,10 @@ public class Dish implements Serializable {
     private String dishDesc;
 
     @TableField("costPrice")
-    private Double costPrice;
+    private double costPrice;
 
     @TableField("dishState")
-    private Boolean dishState;
+    private boolean dishState;
 
 
 }

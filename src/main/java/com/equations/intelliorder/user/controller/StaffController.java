@@ -247,9 +247,9 @@ public class StaffController {
             @ApiImplicitParam(name="password",value="密码",required = true,dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="添加成功"),
-            @ApiResponse(code=404,message="添加失败"),
-            @ApiResponse(code=-1,message="errorMsg")
+            @ApiResponse(code = 200, message = "登录成功"),
+            @ApiResponse(code = 404, message = "账号或密码错误"),
+            @ApiResponse(code = -1, message = "errorMsg")
     })
     public String login(String account, String password, HttpSession session){
         Map<String,Object> map = new HashMap<>();
