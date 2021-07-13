@@ -47,9 +47,9 @@ public class DishController {
 
         Map<String,Object> map =new HashMap<>();//创建hashmap用来存储返回列表并转成json数据
         try {
-            List<Dish> dishList = dishService.getDishId(dishId);
+            Dish dish = dishService.getDishId(dishId);
             map.put("status", "200");
-            map.put("data", dishList);
+            map.put("data", dish);
         } catch (Exception exception) {
             map.put("status", "20001");
             map.put("errorMsg", exception.getMessage());

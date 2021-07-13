@@ -27,9 +27,9 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
 
 
     @Override   //通过菜品id进行查询
-    public List<Dish> getDishId(int dishId) {
+    public Dish getDishId(int dishId) {
         QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("dishId",dishId);
-        return dishMapper.selectList(wrapper);
+        wrapper.eq("dishId", dishId);
+        return dishMapper.selectOne(wrapper);
     }
 }
