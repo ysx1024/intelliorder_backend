@@ -32,6 +32,11 @@ public class Staff implements Serializable {
 
     private String account;
 
+    private String password;
+
+    @TableField("staffType")
+    private String staffType;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -55,11 +60,5 @@ public class Staff implements Serializable {
     public void setStaffType(String staffType) {
         this.staffType = staffType;
     }
-
-    private String password;
-
-    @TableField("staffType")
-    private String staffType;
-
 
 }
