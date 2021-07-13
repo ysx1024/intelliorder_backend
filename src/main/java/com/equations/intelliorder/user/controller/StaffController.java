@@ -3,7 +3,7 @@ package com.equations.intelliorder.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.user.entity.Staff;
-//import com.equations.intelliorder.user.mapper.StaffMapper;
+import com.equations.intelliorder.user.mapper.StaffMapper;
 import com.equations.intelliorder.user.service.IStaffService;
 import io.swagger.annotations.*;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +122,18 @@ public class StaffController {
 
 
     @RequestMapping(value = "/addStaff",method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value="增加员工与其各项信息",notes = "需要输入员工姓名与其余信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="name",value="姓名",required = true,dataType = "String"),
+            @ApiImplicitParam(name="phone",value="手机号",required = true,dataType = "String"),
+            @ApiImplicitParam(name="staffType",value="员工类型",required = true,dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="添加成功"),
+            @ApiResponse(code=404,message="添加失败"),
+            @ApiResponse(code=-1,message="errorMsg")
+    })
     public String addStaff(String name, String phone, String staffType) {
         Map<String, Object> map = new HashMap<>();
         try {
@@ -141,6 +153,16 @@ public class StaffController {
     }
 
     @RequestMapping(value = "/deleteById",method = RequestMethod.DELETE)
+    @ResponseBody
+    @ApiOperation(value="删除员工",notes = "需要输入员工ID，必须是有效的数字")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="id",value="ID序列号",required = true,dataType = "Integer")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="添加成功"),
+            @ApiResponse(code=404,message="添加失败"),
+            @ApiResponse(code=-1,message="errorMsg")
+    })
     public String deleteById(int id){
         Map<String,Object> map = new HashMap<>();
         try {
