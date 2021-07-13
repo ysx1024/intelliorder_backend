@@ -4,6 +4,7 @@ package com.equations.intelliorder.dish.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.service.IDishService;
+import com.equations.intelliorder.user.entity.Staff;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,4 +58,51 @@ public class DishController {
         return JSON.toJSONString(map);
     }
 
+
+    @RequestMapping(value = "/getDishName", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "根据菜品名模糊检索菜单列表", notes = "需要输入菜品名")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dishName", value = "菜品名", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String getDishName(String dishName) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Dish> dishList = dishService.getDishName(dishName);
+            map.put("status", "200");
+            map.put("data", dishList);
+        } catch (Exception exception) {
+            map.put("status", "20001");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    @RequestMapping(value = "/getDishType",method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value="根据菜品类别检索菜单列表",notes = "需要输入菜品类别")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="dishType",value="菜品类别",required = true,dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=20001,message="请求失败"),
+            @ApiResponse(code=200,message="请求成功")
+    })
+    public String getDishType(String dishType) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Dish> dishList = dishService.getDishType(dishType);
+            map.put("status", "200");
+            map.put("data", dishList);
+        } catch (Exception exception) {
+            map.put("status", "20001");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
 }

@@ -32,4 +32,21 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         wrapper.eq("dishId", dishId);
         return dishMapper.selectOne(wrapper);
     }
+
+    @Override   //通过菜品名进行查询
+    public List<Dish> getDishName(String dishName) {
+        QueryWrapper wrapper = new QueryWrapper();
+        //模糊查询
+        wrapper.like("dishName", dishName);
+        return dishMapper.selectList(wrapper);
+
+    }
+
+    @Override  //通过菜品类别查询
+    public List<Dish> getDishType(String dishType) {
+        QueryWrapper wrapper = new QueryWrapper();
+        //模糊查询
+        wrapper.like("dishType", dishType);
+        return dishMapper.selectList(wrapper);
+    }
 }
