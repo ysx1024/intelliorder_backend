@@ -55,30 +55,50 @@ public class StaffController {
             List<Staff> staffList = staffService.getStaffById(id);
             map.put("status", "200");
             map.put("data", staffList);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             map.put("status", "20001");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/getStaffByName",method = RequestMethod.GET)
+    @RequestMapping(value = "/getStaffByName", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value="根据员工姓名模糊检索员工列表",notes = "需要输入中文姓名")
+    @ApiOperation(value = "根据员工姓名模糊检索员工列表", notes = "需要输入中文姓名")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="name",value="姓名",required = true,dataType = "String")
+            @ApiImplicitParam(name = "name", value = "姓名", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=20001,message="请求失败"),
-            @ApiResponse(code=200,message="请求成功")
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
     })
-        public String getStaffByName(String name) {
-            Map<String,Object> map =new HashMap<>();
+    public String getStaffByName(String name) {
+        Map<String, Object> map = new HashMap<>();
         try {
             List<Staff> staffList = staffService.getStaffByName(name);
             map.put("status", "200");
             map.put("data", staffList);
-        }catch (Exception exception){
+        } catch (Exception exception) {
+            map.put("status", "20001");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/showStaffList", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
+    @ApiResponses({
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showStaffList() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Staff> staffList = staffService.showStaffList();
+            map.put("status", "200");
+            map.put("data", staffList);
+        } catch (Exception exception) {
             map.put("status", "20001");
             map.put("errorMsg", exception.getMessage());
         }
