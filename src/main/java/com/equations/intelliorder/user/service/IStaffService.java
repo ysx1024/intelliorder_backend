@@ -22,6 +22,8 @@ public interface IStaffService extends IService<Staff> {
 
         List<Staff> getStaffByName(String name);
 
+        List<Staff> getStaffByType(String staffType);
+
         int updateStaff(int id,String phone, String account,String password,String staffType);
 
         int addStaff(String name,String phone, String account,String password,String staffType);

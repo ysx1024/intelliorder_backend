@@ -47,6 +47,15 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
+    public List<Staff> getStaffByType(String staffType) {
+        List<Staff> staffList = null;
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.like("staffType", staffType);
+        staffList = staffMapper.selectList(wrapper);
+        return staffList;
+    }
+
+    @Override
     public int updateStaff(
             int id, String phone, String account,
             String password, String staffType) {
