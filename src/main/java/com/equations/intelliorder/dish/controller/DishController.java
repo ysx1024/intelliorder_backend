@@ -57,4 +57,34 @@ public class DishController {
         return JSON.toJSONString(map);
     }
 
+    @RequestMapping(value = "/updateDishState", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "根据菜单ID修改菜品状态", notes = "输入菜品ID必须是有效的数字")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "更新成功"),
+            @ApiResponse(code = 404, message = "更新失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String updateDishState(int dishId) {
+
+        Map<String, Object> map = new HashMap<>();
+        try {
+            int result = dishService.updateDishState(dishId);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("msg", "更新成功");
+            } else {
+                map.put("status", "404");
+                map.put("msg", "更新失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
 }

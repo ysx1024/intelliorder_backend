@@ -16,4 +16,6 @@ import java.util.List;
 public interface IDishService extends IService<Dish> {
 
     Dish getDishId(int dishId);//通过菜品id查询
+
+    int updateDishState(int dishId);
 }
