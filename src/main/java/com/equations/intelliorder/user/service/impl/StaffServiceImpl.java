@@ -96,4 +96,12 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         // 直接通过方法进行删除操作
         return staffMapper.deleteById(id);
     }
+    @Override
+    public Staff login(String account, String password){
+        //员工登录实现
+        QueryWrapper wrapper = new QueryWrapper();
+        Staff user1 = staffMapper.selectOne(new QueryWrapper<Staff>().eq("account",account)
+                .eq("password",password));
+        return user1;
+    }
 }

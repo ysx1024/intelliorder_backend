@@ -2,6 +2,7 @@ package com.equations.intelliorder.user.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.equations.intelliorder.user.entity.Staff;
 import com.equations.intelliorder.user.mapper.StaffMapper;
 import com.equations.intelliorder.user.service.IStaffService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -216,6 +218,38 @@ public class StaffController {
             }else {
                 map.put("status", "404");
                 map.put("msg", "没有找到数据");
+            }
+        }catch (Exception exception){
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value="员工登录",notes = "需要输入员工账号、密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="account",value="账号",required = true,dataType = "String"),
+            @ApiImplicitParam(name="password",value="密码",required = true,dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="添加成功"),
+            @ApiResponse(code=404,message="添加失败"),
+            @ApiResponse(code=-1,message="errorMsg")
+    })
+    public String login(String account, String password, HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        try {
+            Staff result=staffService.login(account,password);
+            if(!ObjectUtils.isEmpty(result)){
+                //保持登录状态，讲登录id存放在session中
+                session.setAttribute("id", result.getId());
+                map.put("status", "200");
+                map.put("msg","登录成功");
+            }else {
+                map.put("status", "404");
+                map.put("msg", "账号或密码错误");
             }
         }catch (Exception exception){
             map.put("status", "-1");

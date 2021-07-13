@@ -28,4 +28,6 @@ public interface IStaffService extends IService<Staff> {
         int addStaff(String name, String phone,String staffType);//增加员工信息
 
         int deleteById(int id);//物理删除员工信息
+
+        Staff login( String account, String password);//员工登录
 }
