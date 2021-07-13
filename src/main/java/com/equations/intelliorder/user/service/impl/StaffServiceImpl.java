@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ *  服务实现类，业务逻辑的实现层
  * </p>
  *
  * @author equations
@@ -25,24 +25,26 @@ import java.util.List;
 public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements IStaffService {
 
     @Autowired
-    private StaffMapper staffMapper;
+    private StaffMapper staffMapper;//通过字段注入自动创建mapper映射类
+
 
     @Override
     public List<Staff> getStaffById(int id) {
+        //1)创建QueryWrapper对象，通过id找到需要操作的某行
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("id",id);
+        //2)执行查询
         List<Staff> staffList = staffMapper.selectList(wrapper);
         return staffList;
     }
 
     @Override
     public List<Staff> getStaffByName(String name) {
-        List<Staff> staffList = null;
-        //1)创建QueryWrapper对象
-                QueryWrapper wrapper = new QueryWrapper();
+        //1)创建QueryWrapper对象，通过name寻找到需要操作的某行
+        QueryWrapper wrapper = new QueryWrapper();
         wrapper.like("name", name);
         //2)执行查询
-                staffList = staffMapper.selectList(wrapper);
+        List<Staff> staffList = staffMapper.selectList(wrapper);
         return staffList;
     }
 
@@ -50,24 +52,22 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     public int updateStaff(
             int id, String phone, String account,
             String password, String staffType) {
+        //1)创建QueryWrapper对象，通过id找到需要操作的某行
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
+        //对staff类进行set基本修改操作
         Staff staff = new Staff();
         staff.setPhone(phone);
         staff.setAccount(account);
         staff.setPassword(password);
         staff.setStaffType(staffType);
-
-
         return staffMapper.update(staff,wrapper);
     }
 
     @Override
-    public int addStaff(
-        String name, String phone, String account,
-        String password, String staffType){
+    public int addStaff(String name, String phone, String staffType){
+        //对staff类进行set基本修改操作
             Staff staff = new Staff();
-
             staff.setName(name);
             staff.setPhone(phone);
             staff.setAccount(phone);
@@ -78,7 +78,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     @Override
     public int deleteById(int id) {
-        // Staff staff=new Staff();
+        // 直接通过方法进行删除操作
         return staffMapper.deleteById(id);
     }
 }

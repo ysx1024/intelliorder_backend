@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ *  服务类，业务逻辑的定义层
  * </p>
  *
  * @author equations
@@ -15,16 +15,15 @@ import java.util.List;
  */
 public interface IStaffService extends IService<Staff> {
 
+        List<Staff> getStaffById(int id);//根据id查询员工
+
+        List<Staff> getStaffByName(String name);//根据姓名查询员工
+
+        int updateStaff(int id,String phone, String account,String password,String staffType);//修改员工信息
 
 
 
-        List<Staff> getStaffById(int id);
+        int addStaff(String name, String phone,String staffType);//增加员工信息
 
-        List<Staff> getStaffByName(String name);
-
-        int updateStaff(int id,String phone, String account,String password,String staffType);
-
-        int addStaff(String name,String phone, String account,String password,String staffType);
-
-        int deleteById(int id);
+        int deleteById(int id);//物理删除员工信息
 }
