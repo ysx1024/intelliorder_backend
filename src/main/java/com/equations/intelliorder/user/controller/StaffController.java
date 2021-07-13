@@ -85,6 +85,20 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
+    @RequestMapping(value = "/getStaffByType",method = RequestMethod.GET)
+    public String getStaffByType(String staffType) {
+        Map<String,Object> map =new HashMap<String,Object>();
+        try {
+            List<Staff> staffList = staffService.getStaffByType(staffType);
+            map.put("status", "200");
+            map.put("data", staffList);
+        }catch (Exception exception){
+            map.put("status", "20001");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
     @RequestMapping(value = "/updateStaff",method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value="根据员工Id修改员工各项信息",notes = "需要输入员工数字ID与其余信息")

@@ -19,9 +19,9 @@ public interface IStaffService extends IService<Staff> {
 
         List<Staff> getStaffByName(String name);//根据姓名查询员工
 
+        List<Staff> getStaffByType(String staffType);//根据员工类型查询员工
+
         int updateStaff(int id,String phone, String account,String password,String staffType);//修改员工信息
-
-
 
         int addStaff(String name, String phone,String staffType);//增加员工信息
 

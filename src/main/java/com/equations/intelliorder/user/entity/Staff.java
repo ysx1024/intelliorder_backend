@@ -37,5 +37,28 @@ public class Staff implements Serializable {
     @TableField("staffType")
     private String staffType;//员工类别
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setStaffType(String staffType) {
+        this.staffType = staffType;
+    }
 
 }
