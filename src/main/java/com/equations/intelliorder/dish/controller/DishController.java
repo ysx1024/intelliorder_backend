@@ -33,16 +33,35 @@ public class DishController {
     @Autowired
     private IDishService dishService;//通过字段注入自动创建业务类，调用IDishServer类
 
-
-    @RequestMapping(value = "/getDishId",method = RequestMethod.GET)//url地址和请求方法类型
+    @RequestMapping(value = "/showDishList", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value="根据菜单ID检索菜品",notes = "输入菜品ID必须是有效的数字")
+    @ApiOperation(value = "页面渲染时返回所有菜品列表", notes = "渲染时即返回")
+    @ApiResponses({
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showDishList() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Dish> dishList = dishService.showDishList();
+            map.put("status", "200");
+            map.put("data", dishList);
+        } catch (Exception exception) {
+            map.put("status", "20001");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/getDishId", method = RequestMethod.GET)//url地址和请求方法类型
+    @ResponseBody
+    @ApiOperation(value = "根据菜单ID检索菜品", notes = "输入菜品ID必须是有效的数字")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="dishId",value="菜品id",required = true,dataType = "int")
+            @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int")
     })
     @ApiResponses({
-            @ApiResponse(code=20001,message="请求失败"),
-            @ApiResponse(code=200,message="请求成功")
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishId(int dishId) {
 
@@ -121,6 +140,37 @@ public class DishController {
         Map<String, Object> map = new HashMap<>();
         try {
             int result = dishService.updateDishState(dishId);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("msg", "更新成功");
+            } else {
+                map.put("status", "404");
+                map.put("msg", "更新失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/updateDish", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "修改菜单状态", notes = "需要输入数字为菜单编号和其余修改信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "更新成功"),
+            @ApiResponse(code = 404, message = "更新失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String updateDish(int dishId, String dishName, String dishType, double dishPrice,
+                             String dishImage, String dishDesc, double costPrice) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            int result = dishService.updateDish(dishId, dishName, dishType, dishPrice
+                    , dishImage, dishDesc, costPrice);
             if (result == 1) {
                 map.put("status", "200");
                 map.put("msg", "更新成功");

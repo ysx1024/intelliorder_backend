@@ -8,13 +8,15 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author equations
  * @since 2021-07-13
  */
 public interface IDishService extends IService<Dish> {
+
+    List<Dish> showDishList();//渲染时返回所有菜品的信息列表
 
     Dish getDishId(int dishId);//通过菜品id查询
 
@@ -23,4 +25,12 @@ public interface IDishService extends IService<Dish> {
     List<Dish> getDishType(String dishType);//根据菜品类型查询菜品
 
     int updateDishState(int dishId);//通过id修改上下架状态
+
+    int updateDish(int dishId, String dishName, String dishType, double dishPrice,
+                   String dishImage, String dishDesc, double costPrice);//修改菜品具体信息
+
+    int addDish(String dishName, String dishType, double dishPrice,
+                String dishImage, String dishDesc, double costPrice);//增加菜品信息
+
+    int deleteByDishId(int dishId);//通过序号删除菜品
 }
