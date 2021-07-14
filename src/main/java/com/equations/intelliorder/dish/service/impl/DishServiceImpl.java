@@ -27,6 +27,11 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
     private DishMapper dishMapper;//通过字段注入自动创建mapper映射类
 
 
+    @Override
+    public List<Dish> showDishList() {
+        return null;
+    }
+
     @Override   //通过菜品id进行查询
     public Dish getDishId(int dishId) {
         QueryWrapper wrapper = new QueryWrapper();
@@ -58,5 +63,20 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         Dish dish = dishMapper.selectOne(wrapper);
         dish.setDishState(!dish.isDishState());
         return dishMapper.update(dish, wrapper);
+    }
+
+    @Override
+    public int updateDish(int dishId, String dishName, String dishType, double dishPrice, String dishImage, String dishDesc, double costPrice) {
+        return 0;
+    }
+
+    @Override
+    public int addDish(String dishName, String dishType, double dishPrice, String dishImage, String dishDesc, double costPrice) {
+        return 0;
+    }
+
+    @Override
+    public int deleteByDishId(int dishId) {
+        return 0;
     }
 }
