@@ -30,4 +30,6 @@ public interface IStaffService extends IService<Staff> {
         int deleteById(int id);//物理删除员工信息
 
         Staff login( String account, String password);//员工登录
+
+        int changePassword(int id, String oldPassword, String newPassword);//个人密码修改
 }

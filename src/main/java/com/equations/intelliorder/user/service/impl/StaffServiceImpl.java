@@ -104,4 +104,16 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         return staffMapper.selectOne(new QueryWrapper<Staff>().eq("account", account)
                 .eq("password", password));
     }
+
+    @Override
+    public int changePassword(int id, String oldPassword, String newPassword) {
+        //个人密码修改
+        Staff result = staffMapper.selectById(id);
+        UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id", id);
+        Staff staff = new Staff();
+        staff.setPassword(newPassword);
+        staffMapper.update(staff, wrapper);
+        return staffMapper.update(staff, wrapper);
+    }
 }

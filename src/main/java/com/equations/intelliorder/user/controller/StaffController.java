@@ -270,4 +270,31 @@ public class StaffController {
         }
         return JSON.toJSONString(map);
     }
+
+    @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
+    public String changePassword(String oldPassword, String newPassword, HttpSession session) {
+        Integer id = Integer.valueOf(session.getAttribute("id").toString());
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Staff staff=staffService.getStaffById(id);
+            if (!oldPassword.equals(staff.getPassword())) {
+                map.put("status", "300");
+                map.put("msg", "修改密码失败，原密码错误");
+            } else {
+                staffService.changePassword(id, oldPassword, newPassword);
+                int result=staffService.changePassword(id,oldPassword,newPassword);
+                if(result==1) {
+                    map.put("status", "200");
+                    map.put("msg", "修改密码成功");
+                }else {
+                    map.put("status", "404");
+                    map.put("msg", "修改密码失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
 }

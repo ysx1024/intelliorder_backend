@@ -61,4 +61,31 @@ public class Staff implements Serializable {
         this.staffType = staffType;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getStaffType() {
+        return staffType;
+    }
 }
