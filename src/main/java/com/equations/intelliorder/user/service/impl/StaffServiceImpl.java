@@ -70,7 +70,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
-        //对staff类进行set基本修改操作
+        //通过set将查找到的这行进行数据修改
         Staff staff = staffMapper.selectOne(wrapper);
         staff.setPhone(phone);
         staff.setAccount(account);
