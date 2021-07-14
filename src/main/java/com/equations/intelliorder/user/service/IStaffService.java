@@ -32,4 +32,6 @@ public interface IStaffService extends IService<Staff> {
         Staff login( String account, String password);//员工登录
 
         int changePassword(int id, String oldPassword, String newPassword);//个人密码修改
+
+        Staff showStaffInfo(int id);//个人信息展示
 }
