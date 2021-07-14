@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类，业务逻辑的实现层
+ * 服务实现类，业务逻辑的实现层
  * </p>
  *
  * @author equations
@@ -69,26 +69,26 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
             String password, String staffType) {
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id",id);
+        wrapper.eq("id", id);
         //通过set将查找到的这行进行数据修改
         Staff staff = staffMapper.selectOne(wrapper);
         staff.setPhone(phone);
         staff.setAccount(account);
         staff.setPassword(password);
         staff.setStaffType(staffType);
-        return staffMapper.update(staff,wrapper);
+        return staffMapper.update(staff, wrapper);
     }
 
     @Override
-    public int addStaff(String name, String phone, String staffType){
+    public int addStaff(String name, String phone, String staffType) {
         //新建一个类，对staff类通过set操作插入表中
-            Staff staff = new Staff();
-            staff.setName(name);
-            staff.setPhone(phone);
-            staff.setAccount(phone);
-            staff.setPassword("123456");
-            staff.setStaffType(staffType);
-            return staffMapper.insert(staff);
+        Staff staff = new Staff();
+        staff.setName(name);
+        staff.setPhone(phone);
+        staff.setAccount(phone);
+        staff.setPassword("123456");
+        staff.setStaffType(staffType);
+        return staffMapper.insert(staff);
     }
 
     @Override

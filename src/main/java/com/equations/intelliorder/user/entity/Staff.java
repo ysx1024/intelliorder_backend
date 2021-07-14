@@ -1,6 +1,7 @@
 package com.equations.intelliorder.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -37,30 +38,6 @@ public class Staff implements Serializable {
     @TableField("staffType")
     private String staffType;//员工类别
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setStaffType(String staffType) {
-        this.staffType = staffType;
-    }
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -69,23 +46,47 @@ public class Staff implements Serializable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getAccount() {
         return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getStaffType() {
         return staffType;
+    }
+
+    public void setStaffType(String staffType) {
+        this.staffType = staffType;
     }
 }

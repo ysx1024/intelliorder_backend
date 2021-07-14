@@ -51,7 +51,7 @@ public class CodeGenerator {
         gc.setAuthor("equations");
         gc.setOpen(false);
         gc.setSwagger2(false);
-            //实体属性 Swagger2 注解
+        //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -158,12 +158,6 @@ public class CodeGenerator {
     }
 
 }
-
-
-
-
-
-
 
 
 //package com.equations.intelliorder.config;

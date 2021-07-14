@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 配置分页插件
- *
  */
 @Configuration
 @MapperScan("com.equations.intelliorder.*.mapper")
