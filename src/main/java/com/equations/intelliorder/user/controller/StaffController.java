@@ -142,7 +142,7 @@ public class StaffController {
             @ApiImplicitParam(name="staffType",value="员工类型",dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code = 300, message = "信息无变动"),
+            @ApiResponse(code = 304, message = "信息未修改"),
             @ApiResponse(code = 200, message = "更新成功"),
             @ApiResponse(code = 404, message = "更新失败"),
             @ApiResponse(code = -1, message = "errorMsg")
@@ -159,8 +159,8 @@ public class StaffController {
             else if (!Objects.equals(staff.getPassword(), password)) flag = false;
             else if (!Objects.equals(staff.getStaffType(), staffType)) flag = false;
             if (flag) {
-                map.put("status", "300");
-                map.put("msg", "信息无变动");
+                map.put("status", "304");
+                map.put("msg", "信息未修改");
             } else {
                 int result = staffService.updateStaff(id, phone, account, password, staffType);
                 if (result == 1) {
