@@ -18,7 +18,7 @@ public interface IDishService extends IService<Dish> {
 
     Dish getDishId(int dishId);//通过菜品id查询
 
-    List<Dish> getDishName(String dishName);//根据姓名查询员工
+    List<Dish> getDishName(String dishName);//根据菜品名称查询
 
-    List<Dish> getDishType(String dishType);//根据员工类型查询员工
+    List<Dish> getDishType(String dishType);//根据菜品类型查询菜品
 }
