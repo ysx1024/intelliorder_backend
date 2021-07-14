@@ -137,7 +137,7 @@ public class DishController {
             @ApiResponse(code = 404, message = "更新失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String addStaff(int dishId) {
+    public String updateDishState(int dishId) {
         Map<String, Object> map = new HashMap<>();
         try {
             int result = dishService.updateDishState(dishId);
@@ -199,6 +199,72 @@ public class DishController {
                     map.put("status", "404");
                     map.put("msg", "更新失败");
                 }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/addDish", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "增加菜单", notes = "需要输入各种菜单信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dishName", value = "菜品名称", dataType = "String"),
+            @ApiImplicitParam(name = "dishType", value = "菜品类别", dataType = "String"),
+            @ApiImplicitParam(name = "dishPrice", value = "菜品价格", dataType = "double"),
+            @ApiImplicitParam(name = "dishImage", value = "图片地址", dataType = "String"),
+            @ApiImplicitParam(name = "dishDesc", value = "菜品描述", dataType = "String"),
+            @ApiImplicitParam(name = "costPrice", value = "菜品成本", dataType = "double"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "添加成功"),
+            @ApiResponse(code = 404, message = "添加失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String addDish(String dishName, String dishType, double dishPrice,
+                          String dishImage, String dishDesc, double costPrice) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            int result = dishService.addDish(dishName, dishType, dishPrice
+                    , dishImage, dishDesc, costPrice);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("msg", "添加成功");
+            } else {
+                map.put("status", "404");
+                map.put("msg", "添加失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/deleteByDishId", method = RequestMethod.DELETE)
+    @ResponseBody
+    @ApiOperation(value = "删除菜单", notes = "需要输入菜品ID，必须是有效的数字")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "ID序列号", required = true, dataType = "Integer")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "添加成功"),
+            @ApiResponse(code = 404, message = "添加失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String deleteByDishId(int dishId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            System.out.println("asd");
+            int result = dishService.deleteByDishId(dishId);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("msg", "删除成功");
+            } else {
+                map.put("status", "404");
+                map.put("msg", "没有找到数据");
             }
         } catch (Exception exception) {
             map.put("status", "-1");

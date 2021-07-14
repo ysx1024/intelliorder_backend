@@ -31,7 +31,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public List<Staff> showStaffList() {
         //1)创建QueryWrapper对象
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         //通过id>=1的条件巧用ge方法返回所有员工列表信息
         wrapper.ge("id", 1);
         //2)执行查询
@@ -41,7 +41,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public Staff getStaffById(int id) {
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         wrapper.eq("id", id);
         //2)执行查询
         return staffMapper.selectOne(wrapper);
@@ -50,7 +50,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public List<Staff> getStaffByName(String name) {
         //1)创建QueryWrapper对象，通过name寻找到需要操作的某行
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         wrapper.like("name", name);
         //2)执行查询
         return staffMapper.selectList(wrapper);
@@ -58,7 +58,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     @Override
     public List<Staff> getStaffByType(String staffType) {
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         wrapper.like("staffType", staffType);
         return staffMapper.selectList(wrapper);
     }
@@ -100,7 +100,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public Staff login(String account, String password) {
         //员工登录实现
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         return staffMapper.selectOne(new QueryWrapper<Staff>().eq("account", account)
                 .eq("password", password));
     }
