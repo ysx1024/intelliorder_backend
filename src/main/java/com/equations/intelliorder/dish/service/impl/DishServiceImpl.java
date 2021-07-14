@@ -29,7 +29,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
 
     @Override
     public List<Dish> showDishList() {
-        return null;
+        QueryWrapper wrapper = new QueryWrapper();
+        //通过id>=1的条件巧用ge方法返回所有菜品信息列表
+        wrapper.ge("dishId", 1);
+        return dishMapper.selectList(wrapper);
     }
 
     @Override   //通过菜品id进行查询
@@ -65,9 +68,19 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return dishMapper.update(dish, wrapper);
     }
 
-    @Override
-    public int updateDish(int dishId, String dishName, String dishType, double dishPrice, String dishImage, String dishDesc, double costPrice) {
-        return 0;
+    @Override //通过id修改具体菜单信息
+    public int updateDish(int dishId, String dishName, String dishType, double dishPrice,
+                          String dishImage, String dishDesc, double costPrice) {
+        UpdateWrapper<Dish> wrapper = new UpdateWrapper<>();
+        wrapper.eq("dishId", dishId);
+        Dish dish = dishMapper.selectOne(wrapper);
+        dish.setDishName(dishName);
+        dish.setDishType(dishType);
+        dish.setDishPrice(dishPrice);
+        dish.setDishImage(dishImage);
+        dish.setDishDesc(dishDesc);
+        dish.setCostPrice(costPrice);
+        return dishMapper.update(dish, wrapper);
     }
 
     @Override
