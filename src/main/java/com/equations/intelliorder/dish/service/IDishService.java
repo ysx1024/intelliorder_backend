@@ -2,6 +2,7 @@ package com.equations.intelliorder.dish.service;
 
 import com.equations.intelliorder.dish.entity.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.user.entity.Staff;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface IDishService extends IService<Dish> {
 
     Dish getDishId(int dishId);//通过菜品id查询
 
-    int updateDishState(int dishId);
+    List<Dish> getDishName(String dishName);//根据姓名查询员工
+
+    List<Dish> getDishType(String dishType);//根据员工类型查询员工
 }

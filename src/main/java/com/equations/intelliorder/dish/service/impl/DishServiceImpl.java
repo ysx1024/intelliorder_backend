@@ -1,12 +1,10 @@
 package com.equations.intelliorder.dish.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.mapper.DishMapper;
 import com.equations.intelliorder.dish.service.IDishService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.equations.intelliorder.user.entity.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,21 +33,20 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return dishMapper.selectOne(wrapper);
     }
 
-    @Override
-    public int updateDishState(int dishId) {
-        UpdateWrapper<Dish> wrapper = new UpdateWrapper<>();
-        wrapper.eq("dishId", dishId);
-        Dish dish = dishMapper.selectOne(wrapper);
-        System.out.println(dish.isDishState());
-//        System.out.println(getType( dish.isDishState()))
-        if (dish.isDishState()) {
-//            System.out.println("asdaddsa");
-            dish.setDishState(false);
-        } else
-            dish.setDishState(true);
-        return dishMapper.update(dish, wrapper);
+    @Override   //通过菜品名进行查询
+    public List<Dish> getDishName(String dishName) {
+        QueryWrapper wrapper = new QueryWrapper();
+        //模糊查询
+        wrapper.like("dishName", dishName);
+        return dishMapper.selectList(wrapper);
+
     }
 
-//    @Override   //通过id修改上下架状态
-
+    @Override  //通过菜品类别查询
+    public List<Dish> getDishType(String dishType) {
+        QueryWrapper wrapper = new QueryWrapper();
+        //模糊查询
+        wrapper.like("dishType", dishType);
+        return dishMapper.selectList(wrapper);
+    }
 }
