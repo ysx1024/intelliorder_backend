@@ -1,6 +1,7 @@
 package com.equations.intelliorder.dish.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.mapper.DishMapper;
 import com.equations.intelliorder.dish.service.IDishService;
@@ -48,5 +49,14 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         //模糊查询
         wrapper.like("dishType", dishType);
         return dishMapper.selectList(wrapper);
+    }
+
+    @Override   //通过id修改上下架状态
+    public int updateDishState(int dishId) {
+        UpdateWrapper<Dish> wrapper = new UpdateWrapper<>();
+        wrapper.eq("dishId", dishId);
+        Dish dish = dishMapper.selectOne(wrapper);
+        dish.setDishState(!dish.isDishState());
+        return dishMapper.update(dish, wrapper);
     }
 }
