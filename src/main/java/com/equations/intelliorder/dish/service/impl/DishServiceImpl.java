@@ -39,10 +39,13 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
     public int updateDishState(int dishId) {
         UpdateWrapper<Dish> wrapper = new UpdateWrapper<>();
         wrapper.eq("dishId", dishId);
-        Dish dish = new Dish();
-        if (dish.isDishState())
+        Dish dish = dishMapper.selectOne(wrapper);
+        System.out.println(dish.isDishState());
+//        System.out.println(getType( dish.isDishState()))
+        if (dish.isDishState()) {
+//            System.out.println("asdaddsa");
             dish.setDishState(false);
-        else
+        } else
             dish.setDishState(true);
         return dishMapper.update(dish, wrapper);
     }

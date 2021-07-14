@@ -71,7 +71,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id",id);
         //对staff类进行set基本修改操作
-        Staff staff = new Staff();
+        Staff staff = staffMapper.selectOne(wrapper);
         staff.setPhone(phone);
         staff.setAccount(account);
         staff.setPassword(password);
@@ -81,7 +81,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     @Override
     public int addStaff(String name, String phone, String staffType){
-        //对staff类进行set基本修改操作
+        //新建一个类，对staff类通过set操作插入表中
             Staff staff = new Staff();
             staff.setName(name);
             staff.setPhone(phone);
