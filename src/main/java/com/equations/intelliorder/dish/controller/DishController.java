@@ -257,7 +257,7 @@ public class DishController {
     public String deleteByDishId(int dishId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            System.out.println("asd");
+
             int result = dishService.deleteByDishId(dishId);
             if (result == 1) {
                 map.put("status", "200");
