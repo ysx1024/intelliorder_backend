@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author equations
@@ -65,7 +66,7 @@ public class DishController {
     })
     public String getDishId(int dishId) {
 
-        Map<String,Object> map =new HashMap<>();//创建hashmap用来存储返回列表并转成json数据
+        Map<String, Object> map = new HashMap<>();//创建hashmap用来存储返回列表并转成json数据
         try {
             Dish dish = dishService.getDishId(dishId);
             map.put("status", "200");
@@ -102,15 +103,15 @@ public class DishController {
     }
 
 
-    @RequestMapping(value = "/getDishType",method = RequestMethod.GET)
+    @RequestMapping(value = "/getDishType", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value="根据菜品类别检索菜单列表",notes = "需要输入菜品类别")
+    @ApiOperation(value = "根据菜品类别检索菜单列表", notes = "需要输入菜品类别")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="dishType",value="菜品类别",required = true,dataType = "String")
+            @ApiImplicitParam(name = "dishType", value = "菜品类别", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=20001,message="请求失败"),
-            @ApiResponse(code=200,message="请求成功")
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishType(String dishType) {
         Map<String, Object> map = new HashMap<>();
@@ -158,9 +159,16 @@ public class DishController {
     @ResponseBody
     @ApiOperation(value = "修改菜单状态", notes = "需要输入数字为菜单编号和其余修改信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int")
+            @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "dishName", value = "菜品名称", dataType = "String"),
+            @ApiImplicitParam(name = "dishType", value = "菜品类别", dataType = "String"),
+            @ApiImplicitParam(name = "dishPrice", value = "菜品价格", dataType = "double"),
+            @ApiImplicitParam(name = "dishImage", value = "图片地址", dataType = "String"),
+            @ApiImplicitParam(name = "dishDesc", value = "菜品描述", dataType = "String"),
+            @ApiImplicitParam(name = "costPrice", value = "菜品成本", dataType = "double"),
     })
     @ApiResponses({
+            @ApiResponse(code = 304, message = "信息未修改"),
             @ApiResponse(code = 200, message = "更新成功"),
             @ApiResponse(code = 404, message = "更新失败"),
             @ApiResponse(code = -1, message = "errorMsg")
@@ -169,14 +177,28 @@ public class DishController {
                              String dishImage, String dishDesc, double costPrice) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = dishService.updateDish(dishId, dishName, dishType, dishPrice
-                    , dishImage, dishDesc, costPrice);
-            if (result == 1) {
-                map.put("status", "200");
-                map.put("msg", "更新成功");
+            Dish dish = dishService.getDishId(dishId);
+            boolean flag = true;
+            if (!Objects.equals(dish.getDishName(), dishName)) flag = false;
+            else if (!Objects.equals(dish.getDishType(), dishType)) flag = false;
+            else if (!Objects.equals(dish.getDishPrice(), dishPrice)) flag = false;
+            else if (!Objects.equals(dish.getDishImage(), dishImage)) flag = false;
+            else if (!Objects.equals(dish.getDishDesc(), dishDesc)) flag = false;
+            else if (!Objects.equals(dish.getCostPrice(), costPrice)) flag = false;
+            if (flag) {
+                map.put("status", "304");
+                map.put("msg", "信息未修改");
             } else {
-                map.put("status", "404");
-                map.put("msg", "更新失败");
+                int result = dishService.updateDish(dishId, dishName, dishType, dishPrice
+                        , dishImage, dishDesc, costPrice);
+
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "更新成功");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "更新失败");
+                }
             }
         } catch (Exception exception) {
             map.put("status", "-1");
