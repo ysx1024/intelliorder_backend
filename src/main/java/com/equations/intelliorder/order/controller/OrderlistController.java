@@ -54,25 +54,4 @@ public class OrderlistController {
         }
         return JSON.toJSONString(map);
     }
-    /*
-    @RequestMapping(value = "/showOrderlist", method = RequestMethod.GET)
-    @ResponseBody
-    @ApiOperation(value = "页面渲染时返回待做订单菜品列表", notes = "厨师查看待做列表返回")
-    @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
-            @ApiResponse(code = 200, message = "请求成功")
-    })
-    public String showOrderlist() {
-        Map<String, Object> map = new HashMap<>();
-        try {
-            List<Orderlist> orderlistList = orderlistService.showOrderlist();
-            map.put("status", "200");
-            map.put("data", orderlistList);
-        } catch (Exception exception) {
-            map.put("status", "20001");
-            map.put("errorMsg", exception.getMessage());
-        }
-        return JSON.toJSONString(map);
-    }*/
-
 }

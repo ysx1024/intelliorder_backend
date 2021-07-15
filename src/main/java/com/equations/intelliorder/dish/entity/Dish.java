@@ -48,4 +48,39 @@ public class Dish implements Serializable {
     private boolean dishState;
 
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public int getDishId() {
+        return dishId;
+    }
+
+    public String getDishName() {
+        return dishName;
+    }
+
+    public String getDishType() {
+        return dishType;
+    }
+
+    public double getDishPrice() {
+        return dishPrice;
+    }
+
+    public String getDishImage() {
+        return dishImage;
+    }
+
+    public String getDishDesc() {
+        return dishDesc;
+    }
+
+    public double getCostPrice() {
+        return costPrice;
+    }
+
+    public boolean isDishState() {
+        return dishState;
+    }
 }
