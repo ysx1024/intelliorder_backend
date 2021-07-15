@@ -49,5 +49,5 @@ public class Dish implements Serializable {
     @TableField("dishState")
     private boolean dishState;
 
-
+    
 }
