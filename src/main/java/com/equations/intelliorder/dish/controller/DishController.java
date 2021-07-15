@@ -4,7 +4,7 @@ package com.equations.intelliorder.dish.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.service.IDishService;
-import com.equations.intelliorder.user.entity.Staff;
+//import com.equations.intelliorder.user.entity.Staff;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class DishController {
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回所有菜品列表", notes = "渲染时即返回")
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String showDishList() {
@@ -48,7 +48,7 @@ public class DishController {
             map.put("status", "200");
             map.put("data", dishList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -61,7 +61,7 @@ public class DishController {
             @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int")
     })
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishId(int dishId) {
@@ -72,7 +72,7 @@ public class DishController {
             map.put("status", "200");
             map.put("data", dish);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -86,7 +86,7 @@ public class DishController {
             @ApiImplicitParam(name = "dishName", value = "菜品名", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishName(String dishName) {
@@ -96,7 +96,7 @@ public class DishController {
             map.put("status", "200");
             map.put("data", dishList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -110,7 +110,7 @@ public class DishController {
             @ApiImplicitParam(name = "dishType", value = "菜品类别", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishType(String dishType) {
@@ -120,7 +120,7 @@ public class DishController {
             map.put("status", "200");
             map.put("data", dishList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -189,9 +189,8 @@ public class DishController {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {
-                int result = dishService.updateDish(dishId, dishName, dishType, dishPrice
-                        , dishImage, dishDesc, costPrice);
-
+                int result = dishService.updateDish(dishId, dishName, dishType,
+                        dishPrice, dishImage, dishDesc, costPrice);
                 if (result == 1) {
                     map.put("status", "200");
                     map.put("msg", "更新成功");

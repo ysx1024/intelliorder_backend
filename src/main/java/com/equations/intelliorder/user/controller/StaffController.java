@@ -4,7 +4,7 @@ package com.equations.intelliorder.user.controller;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.equations.intelliorder.user.entity.Staff;
-import com.equations.intelliorder.user.mapper.StaffMapper;
+//import com.equations.intelliorder.user.mapper.StaffMapper;
 import com.equations.intelliorder.user.service.IStaffService;
 import io.swagger.annotations.*;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class StaffController {
             @ApiImplicitParam(name = "id", value = "ID序列号", required = true, dataType = "Integer")
     })
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getStaffById(int id) {
@@ -59,7 +59,7 @@ public class StaffController {
             map.put("status", "200");
             map.put("data", staff);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -72,7 +72,7 @@ public class StaffController {
             @ApiImplicitParam(name = "name", value = "姓名", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getStaffByName(String name) {
@@ -82,7 +82,7 @@ public class StaffController {
             map.put("status", "200");
             map.put("data", staffList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -92,7 +92,7 @@ public class StaffController {
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String showStaffList() {
@@ -102,7 +102,7 @@ public class StaffController {
             map.put("status", "200");
             map.put("data", staffList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -115,7 +115,7 @@ public class StaffController {
             @ApiImplicitParam(name = "staffType", value = "员工类别", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getStaffByType(String staffType) {
@@ -125,7 +125,7 @@ public class StaffController {
             map.put("status", "200");
             map.put("data", staffList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
@@ -281,7 +281,6 @@ public class StaffController {
                 map.put("status", "304");
                 map.put("msg", "修改密码失败，原密码错误");
             } else {
-                staffService.changePassword(id, oldPassword, newPassword);
                 int result = staffService.changePassword(id, oldPassword, newPassword);
                 if (result == 1) {
                     map.put("status", "200");
@@ -302,18 +301,18 @@ public class StaffController {
     @ResponseBody
     @ApiOperation(value = "登录后查看员工个人信息", notes = "需要登录查看个人信息")
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String showStaffInfo(HttpSession session) {
-        Integer id = Integer.valueOf(session.getAttribute("id").toString());
+        int id = Integer.parseInt(session.getAttribute("id").toString());
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.showStaffInfo(id);
             map.put("status", "200");
             map.put("data", staff);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
