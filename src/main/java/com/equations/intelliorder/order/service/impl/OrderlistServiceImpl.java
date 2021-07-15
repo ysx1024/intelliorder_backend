@@ -27,9 +27,11 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
     @Override
     public List<Orderlist> showOrderlistList() {
         //1)创建QueryWrapper对象
-         QueryWrapper<Orderlist> wrapper = new QueryWrapper<Orderlist>();
+        QueryWrapper<Orderlist> wrapper = new QueryWrapper<>();
+
         //通过status<=1的条件返回所有待做菜品信息
-        wrapper.lt("listStatus",2);
+        wrapper.lt("listStatus", 2);
+
         //2)执行查询
         return orderlistMapper.selectList(wrapper);
     }

@@ -45,17 +45,17 @@ public class StaffController {
     @ResponseBody
     @ApiOperation(value = "根据员工ID检索员工列表", notes = "输入员工ID必须是有效的数字")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "ID序列号", required = true, dataType = "Integer")
+            @ApiImplicitParam(name = "staffId", value = "员工ID", required = true, dataType = "Integer")
     })
     @ApiResponses({
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String getStaffById(int id) {
+    public String getStaffById(int staffId) {
         //对接前端，方法主要返回相应的状态参数
         Map<String, Object> map = new HashMap<>();//创建hashmap用来存储返回实体类或者列表并转成json数据
         try {
-            Staff staff = staffService.getStaffById(id);
+            Staff staff = staffService.getStaffById(staffId);
             map.put("status", "200");
             map.put("data", staff);
         } catch (Exception exception) {
@@ -135,7 +135,7 @@ public class StaffController {
     @ResponseBody
     @ApiOperation(value = "根据员工Id修改员工各项信息", notes = "需要输入员工数字ID与其余信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "ID序列号", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "staffId", value = "员工ID", required = true, dataType = "Integer"),
             @ApiImplicitParam(name = "phone", value = "手机号", dataType = "String"),
             @ApiImplicitParam(name = "account", value = "账号", dataType = "String"),
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String"),
@@ -148,11 +148,11 @@ public class StaffController {
             @ApiResponse(code = -1, message = "errorMsg")
     })
     public String updateStaff(
-            int id, String phone, String account,
+            int staffId, String phone, String account,
             String password, String staffType) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Staff staff = staffService.getStaffById(id);
+            Staff staff = staffService.getStaffById(staffId);
             boolean flag = true;
             if (!Objects.equals(staff.getPhone(), phone)) flag = false;
             else if (!Objects.equals(staff.getAccount(), account)) flag = false;
@@ -162,7 +162,7 @@ public class StaffController {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {
-                int result = staffService.updateStaff(id, phone, account, password, staffType);
+                int result = staffService.updateStaff(staffId, phone, account, password, staffType);
                 if (result == 1) {
                     map.put("status", "200");
                     map.put("msg", "更新成功");
@@ -214,17 +214,17 @@ public class StaffController {
     @ResponseBody
     @ApiOperation(value = "删除员工", notes = "需要输入员工ID，必须是有效的数字")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "ID序列号", required = true, dataType = "Integer")
+            @ApiImplicitParam(name = "staffId", value = "员工ID", required = true, dataType = "Integer")
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "添加成功"),
             @ApiResponse(code = 404, message = "添加失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String deleteById(int id) {
+    public String deleteById(int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = staffService.deleteById(id);
+            int result = staffService.deleteById(staffId);
             if (result == 1) {
                 map.put("status", "200");
                 map.put("msg", "删除成功");
@@ -257,7 +257,7 @@ public class StaffController {
             Staff result = staffService.login(account, password);
             if (!ObjectUtils.isEmpty(result)) {
                 //保持登录状态，将登录id存放在session中
-                session.setAttribute("id", result.getId());
+                session.setAttribute("staffId", result.getStaffId());
                 map.put("status", "200");
                 map.put("msg", "登录成功");
             } else {
@@ -273,15 +273,15 @@ public class StaffController {
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePassword(String oldPassword, String newPassword, HttpSession session) {
-        int id = Integer.parseInt(session.getAttribute("id").toString());
+        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
         Map<String, Object> map = new HashMap<>();
         try {
-            Staff staff = staffService.getStaffById(id);
+            Staff staff = staffService.getStaffById(staffId);
             if (!oldPassword.equals(staff.getPassword())) {
                 map.put("status", "304");
                 map.put("msg", "修改密码失败，原密码错误");
             } else {
-                int result = staffService.changePassword(id, oldPassword, newPassword);
+                int result = staffService.changePassword(staffId, oldPassword, newPassword);
                 if (result == 1) {
                     map.put("status", "200");
                     map.put("msg", "修改密码成功");
@@ -305,10 +305,10 @@ public class StaffController {
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String showStaffInfo(HttpSession session) {
-        int id = Integer.parseInt(session.getAttribute("id").toString());
+        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
         Map<String, Object> map = new HashMap<>();
         try {
-            Staff staff = staffService.showStaffInfo(id);
+            Staff staff = staffService.showStaffInfo(staffId);
             map.put("status", "200");
             map.put("data", staff);
         } catch (Exception exception) {

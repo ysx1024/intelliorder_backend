@@ -246,7 +246,7 @@ public class DishController {
     @ResponseBody
     @ApiOperation(value = "删除菜单", notes = "需要输入菜品ID，必须是有效的数字")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "ID序列号", required = true, dataType = "Integer")
+            @ApiImplicitParam(name = "staffId", value = "员工ID", required = true, dataType = "Integer")
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "添加成功"),

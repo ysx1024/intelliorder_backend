@@ -45,8 +45,9 @@ public class OrderlistController {
     public String showOrderlistList() {
         Map<String, Object> map = new HashMap<>();
         try {
-            System.out.println("try");
+
             List<Orderlist> orderlistList = orderlistService.showOrderlistList();
+            map.put("status", "200");
             map.put("data", orderlistList);
         } catch (Exception exception) {
             map.put("status", "404");
