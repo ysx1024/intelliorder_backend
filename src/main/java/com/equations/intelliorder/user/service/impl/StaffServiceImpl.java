@@ -116,4 +116,12 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         staffMapper.update(staff, wrapper);
         return staffMapper.update(staff, wrapper);
     }
+
+    @Override
+    public  Staff showStaffInfo(int id){
+        //个人信息展示
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("id", id);
+        return staffMapper.selectOne(wrapper);
+    }
 }

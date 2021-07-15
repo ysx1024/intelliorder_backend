@@ -297,4 +297,25 @@ public class StaffController {
         }
         return JSON.toJSONString(map);
     }
+
+    @RequestMapping(value = "/showStaffInfo", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "登录后查看员工个人信息", notes = "需要登录查看个人信息")
+    @ApiResponses({
+            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showStaffInfo(HttpSession session) {
+        Integer id = Integer.valueOf(session.getAttribute("id").toString());
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Staff staff = staffService.showStaffInfo(id);
+            map.put("status", "200");
+            map.put("data", staff);
+        } catch (Exception exception) {
+            map.put("status", "20001");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
 }
