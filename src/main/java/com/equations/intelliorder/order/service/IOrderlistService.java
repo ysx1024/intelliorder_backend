@@ -18,4 +18,6 @@ public interface IOrderlistService extends IService<Orderlist> {
 
     List<Orderlist> showOrderlistList();//返回待做菜品列表
 
+    int receiveOrderlist(int listId,int staffId);
+
 }

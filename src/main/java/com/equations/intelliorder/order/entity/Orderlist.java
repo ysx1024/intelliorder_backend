@@ -47,5 +47,19 @@ public class Orderlist implements Serializable {
     @TableField("listStatus")
     private int listStatus;
 
+    @TableField("staffId")
+    private int staffId;
 
+    public int getListStatus() {
+        return listStatus;
+    }
+
+    public void setListStatus(int listStatus) {
+        
+        this.listStatus = listStatus;
+    }
+
+    public void setStaffId(int staffId) {
+        this.staffId=staffId;
+    }
 }
