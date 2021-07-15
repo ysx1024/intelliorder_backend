@@ -55,4 +55,30 @@ public class OrderlistController {
         }
         return JSON.toJSONString(map);
     }
+
+    @RequestMapping(value = "/receiveOrderlist",method = RequestMethod.POST)
+    public  String receiveOrderlist(int listId,int staffId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Orderlist orderlist = orderlistService.getById(listId);
+            if (!(orderlist.getListStatus() == 0)) {
+                map.put("status", "304");
+                map.put("msg", "已有厨师接单制作中");
+            } else {
+                int result = orderlistService.receiveOrderlist(listId, staffId);
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "接单成功");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "接单失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
 }
