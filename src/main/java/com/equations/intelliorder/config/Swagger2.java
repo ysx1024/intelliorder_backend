@@ -27,6 +27,7 @@ public class Swagger2 {
                 .paths(PathSelectors.any())
                 .build();
     }
+
     /**
      * @Description: 构建 api文档的信息
      */

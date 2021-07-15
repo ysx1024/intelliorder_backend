@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * @since 2021-07-14
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 @Accessors(chain = true)
 public class Orderlist implements Serializable {
 

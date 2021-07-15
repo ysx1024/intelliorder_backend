@@ -22,11 +22,11 @@ spring:
       test-on-borrow: false #申请连接时执行validationQuery检测连接是否有效
       test-while-idle: true #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis,执行validationQuery检测连接是否有效。
       time-between-eviction-runs-millis: 30000 #1) Destroy线程会检测连接的间隔时间，
-          #如果连接空闲时间大于等于minEvictableIdleTimeMillis则关闭物理连接。
-          #2) testWhileIdle的判断依据
+      #如果连接空闲时间大于等于minEvictableIdleTimeMillis则关闭物理连接。
+      #2) testWhileIdle的判断依据
       pool-prepared-statements: true #是否缓存preparedStatement，也就是PSCache
       max-open-prepared-statements: 100 #要启用PSCache，必须配置大于0，当大于0时，
-         #poolPreparedStatements自动触发修改为true
+      #poolPreparedStatements自动触发修改为true
 
 mybatis-plus:
   type-aliases-package: com.equations.intelliorder.*.entity
