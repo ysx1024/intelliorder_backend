@@ -30,8 +30,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
     @Override
     public List<Dish> showDishList() {
         QueryWrapper<Dish> wrapper = new QueryWrapper<>();
+
         //通过id>=1的条件巧用ge方法返回所有菜品信息列表
         wrapper.ge("dishId", 1);
+
         return dishMapper.selectList(wrapper);
     }
 

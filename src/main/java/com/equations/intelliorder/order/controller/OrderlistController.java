@@ -39,7 +39,7 @@ public class OrderlistController {
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回待做订单菜品列表", notes = "厨师查看待做列表返回")
     @ApiResponses({
-            @ApiResponse(code = 20001, message = "请求失败"),
+            @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String showOrderlistList() {
@@ -49,7 +49,7 @@ public class OrderlistController {
             List<Orderlist> orderlistList = orderlistService.showOrderlistList();
             map.put("data", orderlistList);
         } catch (Exception exception) {
-            map.put("status", "20001");
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);

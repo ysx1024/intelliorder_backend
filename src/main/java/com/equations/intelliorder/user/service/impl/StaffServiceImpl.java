@@ -108,19 +108,17 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public int changePassword(int id, String oldPassword, String newPassword) {
         //个人密码修改
-        Staff result = staffMapper.selectById(id);
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
         wrapper.eq("id", id);
-        Staff staff = new Staff();
+        Staff staff = staffMapper.selectOne(wrapper);
         staff.setPassword(newPassword);
-        staffMapper.update(staff, wrapper);
         return staffMapper.update(staff, wrapper);
     }
 
     @Override
     public  Staff showStaffInfo(int id){
         //个人信息展示
-        QueryWrapper wrapper = new QueryWrapper();
+        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         wrapper.eq("id", id);
         return staffMapper.selectOne(wrapper);
     }
