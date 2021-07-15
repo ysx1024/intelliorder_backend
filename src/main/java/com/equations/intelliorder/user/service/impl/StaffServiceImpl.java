@@ -33,16 +33,16 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         //1)创建QueryWrapper对象
         QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         //通过id>=1的条件巧用ge方法返回所有员工列表信息
-        wrapper.ge("id", 1);
+        wrapper.ge("staffId", 1);
         //2)执行查询
         return staffMapper.selectList(wrapper);
     }
 
     @Override
-    public Staff getStaffById(int id) {
+    public Staff getStaffById(int staffId) {
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
         QueryWrapper<Staff> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("staffId", staffId);
         //2)执行查询
         return staffMapper.selectOne(wrapper);
     }
@@ -65,11 +65,11 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     @Override
     public int updateStaff(
-            int id, String phone, String account,
+            int staffId, String phone, String account,
             String password, String staffType) {
         //1)创建QueryWrapper对象，通过id找到需要操作的某行
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("staffId", staffId);
         //通过set将查找到的这行进行数据修改
         Staff staff = staffMapper.selectOne(wrapper);
         staff.setPhone(phone);
@@ -92,9 +92,9 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
-    public int deleteById(int id) {
+    public int deleteById(int staffId) {
         // 直接通过方法进行删除操作
-        return staffMapper.deleteById(id);
+        return staffMapper.deleteById(staffId);
     }
 
     @Override
@@ -106,20 +106,20 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
-    public int changePassword(int id, String oldPassword, String newPassword) {
+    public int changePassword(int staffId, String oldPassword, String newPassword) {
         //个人密码修改
         UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("staffId", staffId);
         Staff staff = staffMapper.selectOne(wrapper);
         staff.setPassword(newPassword);
         return staffMapper.update(staff, wrapper);
     }
 
     @Override
-    public  Staff showStaffInfo(int id){
+    public Staff showStaffInfo(int staffId) {
         //个人信息展示
         QueryWrapper<Staff> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("staffId", staffId);
         return staffMapper.selectOne(wrapper);
     }
 }

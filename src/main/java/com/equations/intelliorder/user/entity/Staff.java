@@ -25,7 +25,7 @@ public class Staff implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId
-    private int id;//员工号id是主键，自动递增自动分配不可修改
+    private int staffId;//员工号id是主键，自动递增自动分配不可修改
 
     private String name;//员工姓名
 
@@ -42,12 +42,12 @@ public class Staff implements Serializable {
         return serialVersionUID;
     }
 
-    public int getId() {
-        return id;
+    public int getStaffId() {
+        return staffId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 
     public String getName() {
