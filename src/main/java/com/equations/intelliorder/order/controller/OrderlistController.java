@@ -45,7 +45,6 @@ public class OrderlistController {
     public String showOrderlistList() {
         Map<String, Object> map = new HashMap<>();
         try {
-
             List<Orderlist> orderlistList = orderlistService.showOrderlistList();
             map.put("status", "200");
             map.put("data", orderlistList);
@@ -66,6 +65,31 @@ public class OrderlistController {
                 map.put("msg", "已有厨师接单制作中");
             } else {
                 int result = orderlistService.receiveOrderlist(listId, staffId);
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "接单成功");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "接单失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/completeOrderlist",method = RequestMethod.POST)
+    public  String completeOrderlist(int listId,int staffId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Orderlist orderlist = orderlistService.getById(listId);
+            if (!(orderlist.getListStatus() == 1) || !(staffId == orderlist.getStaffId())) {
+                map.put("status", "304");
+                map.put("msg", "未接单不能完成制作");
+            } else {
+                int result = orderlistService.completeOrderlist(listId, staffId);
                 if (result == 1) {
                     map.put("status", "200");
                     map.put("msg", "接单成功");
