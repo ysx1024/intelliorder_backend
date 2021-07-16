@@ -92,10 +92,80 @@ public class OrderlistController {
                 int result = orderlistService.completeOrderlist(listId, staffId);
                 if (result == 1) {
                     map.put("status", "200");
+                    map.put("msg", "制作完成");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "制作失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/serveList", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "页面渲染时返回服务员上菜列表", notes = "服务员查看上菜列表")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String serveList() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Orderlist> orderlistList = orderlistService.serveList();
+            map.put("status", "200");
+            map.put("data", orderlistList);
+        } catch (Exception exception) {
+            map.put("status", "404");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/receiveServe",method = RequestMethod.POST)
+    public  String receiveServe(int listId,int staffId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Orderlist orderlist = orderlistService.getById(listId);
+            if (!(orderlist.getListStatus() == 2)) {
+                map.put("status", "304");
+                map.put("msg", "已有服务员接单送菜中");
+            } else {
+                int result = orderlistService.receiveOrderlist(listId, staffId);
+                if (result == 1) {
+                    map.put("status", "200");
                     map.put("msg", "接单成功");
                 } else {
                     map.put("status", "404");
                     map.put("msg", "接单失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/completeServe",method = RequestMethod.POST)
+    public  String completeServe(int listId,int staffId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Orderlist orderlist = orderlistService.getById(listId);
+            if (!(orderlist.getListStatus() == 3) || !(staffId == orderlist.getStaffId())) {
+                map.put("status", "304");
+                map.put("msg", "未接上菜不能完成上菜");
+            } else {
+                int result = orderlistService.completeServe(listId, staffId);
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "上菜完成");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "上菜失败");
                 }
             }
         } catch (Exception exception) {

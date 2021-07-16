@@ -22,4 +22,10 @@ public interface IOrderlistService extends IService<Orderlist> {
 
     int completeOrderlist(int listId,int staffId);//厨师完成做菜
 
+    List<Orderlist> serveList();//返回服务员上菜列表
+
+    int receiveServe(int listId,int staffId);//服务员接单上菜中
+
+    int completeServe(int listId,int staffId);//服务员上菜完成
+
 }
