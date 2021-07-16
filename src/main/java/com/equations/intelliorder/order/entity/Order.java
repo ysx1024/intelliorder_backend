@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,12 +24,13 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode()
 @Accessors(chain = true)
+@TableName("orderinfo")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId("orderId")
-    private String orderId;
+    private int orderId;
 
     @TableField("openId")
     private String openId;
