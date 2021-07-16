@@ -44,16 +44,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
 
-//    @Override
-//    public List<Order> showOrderInfo(int orderId) {
-//        //1)创建QueryWrapper对象
-//        QueryWrapper<Orderlist> wrapper = new QueryWrapper<>();
-//        wrapper.eq("orderId", orderId);
-//        //2)执行查询
-//        return orderMapper.selectList(wrapper);
-//    }
-
-
     @Override   //通过订单Id进行付款逻辑
     public int updateOrderState(int orderId) {
         UpdateWrapper<Order> wrapper = new UpdateWrapper<>();

@@ -4,10 +4,7 @@ package com.equations.intelliorder.order.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.order.entity.Orderlist;
 import com.equations.intelliorder.order.service.IOrderlistService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -55,8 +52,20 @@ public class OrderlistController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/receiveOrderlist",method = RequestMethod.POST)
-    public  String receiveOrderlist(int listId,int staffId) {
+    @RequestMapping(value = "/receiveOrderlist", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "厨师接单", notes = "参数为订单id与员工id'")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "listId", value = "订单id", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "staffId", value = "员工id", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "已有厨师接单制作中"),
+            @ApiResponse(code = 200, message = "接单成功"),
+            @ApiResponse(code = 404, message = "接单失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String receiveOrderlist(int listId, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Orderlist orderlist = orderlistService.getById(listId);
@@ -80,8 +89,20 @@ public class OrderlistController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/completeOrderlist",method = RequestMethod.POST)
-    public  String completeOrderlist(int listId,int staffId) {
+    @RequestMapping(value = "/completeOrderlist", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "完成菜品", notes = "参数为订单id与员工id'")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "listId", value = "订单id", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "staffId", value = "员工id", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "未接单不能完成制作"),
+            @ApiResponse(code = 200, message = "制作成功"),
+            @ApiResponse(code = 404, message = "制作失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String completeOrderlist(int listId, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Orderlist orderlist = orderlistService.getById(listId);
@@ -125,8 +146,21 @@ public class OrderlistController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/receiveServe",method = RequestMethod.POST)
-    public  String receiveServe(int listId,int staffId) {
+
+    @RequestMapping(value = "/receiveServe", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "服务员上菜接单", notes = "参数为订单id与员工id'")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "listId", value = "订单id", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "staffId", value = "员工id", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "已有服务员接单送菜中"),
+            @ApiResponse(code = 200, message = "接单成功"),
+            @ApiResponse(code = 404, message = "接单失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String receiveServe(int listId, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Orderlist orderlist = orderlistService.getById(listId);
@@ -150,8 +184,20 @@ public class OrderlistController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/completeServe",method = RequestMethod.POST)
-    public  String completeServe(int listId,int staffId) {
+    @RequestMapping(value = "/completeServe", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "服务员上菜完成", notes = "参数为订单id与员工id'")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "listId", value = "订单id", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "staffId", value = "员工id", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "未接上菜不能完成上菜"),
+            @ApiResponse(code = 200, message = "接单成功"),
+            @ApiResponse(code = 404, message = "接单失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String completeServe(int listId, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Orderlist orderlist = orderlistService.getById(listId);
@@ -170,6 +216,28 @@ public class OrderlistController {
             }
         } catch (Exception exception) {
             map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/showOrderInfo", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "前台请求详细信息", notes = "通过订单号请求")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showOrderInfo(int orderId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+
+            List<Orderlist> orderlnfo = orderlistService.showOrderInfo(orderId);
+            map.put("status", "200");
+            map.put("data", orderlnfo);
+        } catch (Exception exception) {
+
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);

@@ -38,7 +38,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
 
     @Override
     public  int receiveOrderlist(int listId,int staffId){
-        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<Orderlist>();
+        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<>();
         wrapper.eq("listId",listId);
         Orderlist orderlist = orderlistMapper.selectOne(wrapper);
         orderlist.setListStatus(1);
@@ -48,7 +48,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
 
     @Override
     public int completeOrderlist(int listId,int staffId){
-        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<Orderlist>();
+        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<>();
         wrapper.eq("listId",listId);
         Orderlist orderlist = orderlistMapper.selectOne(wrapper);
         orderlist.setListStatus(2);
@@ -64,7 +64,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
 
     @Override
     public int receiveServe(int listId,int staffId){
-        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<Orderlist>();
+        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<>();
         wrapper.eq("listId",listId);
         Orderlist orderlist = orderlistMapper.selectOne(wrapper);
         orderlist.setListStatus(3);
@@ -73,11 +73,21 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
     }
 
     @Override
-    public  int completeServe(int listId,int staffId){
-        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<Orderlist>();
-        wrapper.eq("listId",listId);
+    public int completeServe(int listId, int staffId) {
+        UpdateWrapper<Orderlist> wrapper = new UpdateWrapper<>();
+        wrapper.eq("listId", listId);
         Orderlist orderlist = orderlistMapper.selectOne(wrapper);
         orderlist.setListStatus(4);
-        return orderlistMapper.update(orderlist,wrapper);
+        return orderlistMapper.update(orderlist, wrapper);
     }
+
+    @Override
+    public List<Orderlist> showOrderInfo(int orderId) {
+        //1)创建QueryWrapper对象
+        QueryWrapper<Orderlist> wrapper = new QueryWrapper<>();
+        wrapper.eq("orderId", orderId);
+        //2)执行查询
+        return orderlistMapper.selectList(wrapper);
+    }
+
 }
