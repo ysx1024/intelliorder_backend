@@ -58,7 +58,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
     @Override
     public List<Orderlist> serveList(){
         QueryWrapper<Orderlist> wrapper = new QueryWrapper<>();
-        wrapper.eq("listStatus", 2);
+        wrapper.between("listStatus",2,3);
         return orderlistMapper.selectList(wrapper);
     }
 
