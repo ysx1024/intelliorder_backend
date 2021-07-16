@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
  * @since 2021-07-10
  */
 @Data
-//@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 @Accessors(chain = true)
 public class Staff implements Serializable {
 

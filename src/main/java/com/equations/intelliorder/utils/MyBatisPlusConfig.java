@@ -1,4 +1,4 @@
-package com.equations.intelliorder.config;
+package com.equations.intelliorder.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;

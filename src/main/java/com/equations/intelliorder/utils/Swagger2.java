@@ -1,4 +1,4 @@
-package com.equations.intelliorder.config;
+package com.equations.intelliorder.utils;
 
 
 import org.springframework.context.annotation.Bean;
