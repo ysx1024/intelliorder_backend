@@ -272,6 +272,19 @@ public class StaffController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "员工个人修改密码", notes = "输入原密码与新密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "session", value = "保存的用户标识", required = true, dataType = "HttpSession")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "修改密码失败，原密码错误"),
+            @ApiResponse(code = 200, message = "修改密码成功"),
+            @ApiResponse(code = 404, message = "修改密码失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
     public String changePassword(String oldPassword, String newPassword, HttpSession session) {
         int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
         Map<String, Object> map = new HashMap<>();
@@ -288,6 +301,82 @@ public class StaffController {
                 } else {
                     map.put("status", "404");
                     map.put("msg", "修改密码失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/changeAccount", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "员工个人修改账号", notes = "输入新账号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "account", value = "新账号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "session", value = "保存的用户标识", required = true, dataType = "HttpSession")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "信息未修改"),
+            @ApiResponse(code = 200, message = "修改成功"),
+            @ApiResponse(code = 404, message = "修改失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String changeAccount(String account, HttpSession session) {
+        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Staff staff = staffService.getStaffById(staffId);
+            if (staff.getAccount().equals(account)) {
+                map.put("status", "304");
+                map.put("msg", "信息未修改");
+            } else {
+                int result = staffService.changeAccount(staffId, account);
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "修改成功");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "修改失败");
+                }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/changePhone", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "员工个人修改手机号", notes = "输入新手机号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "phone", value = "新手机号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "session", value = "保存的用户标识", required = true, dataType = "HttpSession")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 304, message = "信息未修改"),
+            @ApiResponse(code = 200, message = "修改成功"),
+            @ApiResponse(code = 404, message = "修改失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String changePhone(String phone, HttpSession session) {
+        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Staff staff = staffService.getStaffById(staffId);
+            if (staff.getPhone().equals(phone)) {
+                map.put("status", "304");
+                map.put("msg", "信息未修改");
+            } else {
+                int result = staffService.changePhone(staffId, phone);
+                if (result == 1) {
+                    map.put("status", "200");
+                    map.put("msg", "修改成功");
+                } else {
+                    map.put("status", "404");
+                    map.put("msg", "修改失败");
                 }
             }
         } catch (Exception exception) {

@@ -116,6 +116,24 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
+    public int changeAccount(int staffId, String account) {
+        UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
+        wrapper.eq("staffId", staffId);
+        Staff staff = staffMapper.selectOne(wrapper);
+        staff.setAccount(account);
+        return staffMapper.update(staff, wrapper);
+    }
+
+    @Override
+    public int changePhone(int staffId, String phone) {
+        UpdateWrapper<Staff> wrapper = new UpdateWrapper<>();
+        wrapper.eq("staffId", staffId);
+        Staff staff = staffMapper.selectOne(wrapper);
+        staff.setPhone(phone);
+        return staffMapper.update(staff, wrapper);
+    }
+
+    @Override
     public Staff showStaffInfo(int staffId) {
         //个人信息展示
         QueryWrapper<Staff> wrapper = new QueryWrapper<>();
