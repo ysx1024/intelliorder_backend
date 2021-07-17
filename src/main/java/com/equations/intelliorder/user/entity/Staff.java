@@ -24,7 +24,7 @@ public class Staff implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId
+    @TableId("staffId")
     private int staffId;//员工号id是主键，自动递增自动分配不可修改
 
     private String name;//员工姓名
