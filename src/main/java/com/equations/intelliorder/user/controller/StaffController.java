@@ -289,6 +289,7 @@ public class StaffController {
         int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
         Map<String, Object> map = new HashMap<>();
         try {
+
             Staff staff = staffService.getStaffById(staffId);
             if (!oldPassword.equals(staff.getPassword())) {
                 map.put("status", "304");
