@@ -15,13 +15,13 @@ import java.util.List;
  */
 public interface IStaffService extends IService<Staff> {
 
-        List<Staff> showStaffList();//渲染时返回所有员工的信息列表
+    List<Staff> showStaffList();//渲染时返回所有员工的信息列表
 
-        Staff getStaffById(int staffId);//根据id查询员工
+    Staff getStaffById(int staffId);//根据id查询员工
 
-        List<Staff> getStaffByName(String name);//根据姓名查询员工
+    List<Staff> getStaffByName(String name);//根据姓名查询员工
 
-        List<Staff> getStaffByType(String staffType);//根据员工类型查询员工
+    List<Staff> getStaffByType(String staffType);//根据员工类型查询员工
 
     int updateStaff(int staffId, String phone, String account, String password, String staffType);//修改员工信息
 

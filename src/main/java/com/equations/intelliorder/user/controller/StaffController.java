@@ -254,10 +254,10 @@ public class StaffController {
     public String login(String account, String password, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Staff result = staffService.login(account, password);
-            if (!ObjectUtils.isEmpty(result)) {
+            Staff staff = staffService.login(account, password);
+            if (!ObjectUtils.isEmpty(staff)) {
                 //保持登录状态，将登录id存放在session中
-                session.setAttribute("staffId", result.getStaffId());
+                session.setAttribute("staffId", staff.getStaffId());
                 map.put("status", "200");
                 map.put("msg", "登录成功");
             } else {
