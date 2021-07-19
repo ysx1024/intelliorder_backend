@@ -16,19 +16,19 @@ import java.util.List;
  */
 public interface IOrderlistService extends IService<Orderlist> {
 
-    List<Orderlist> showOrderlistList();//返回待做菜品列表
+    List<Orderlist> showOrderlistList();    //返回待做菜品列表
 
-    int receiveOrderlist(int listId, int staffId);//厨师更改做菜状态
+    int receiveOrderlist(int listId, int staffId);  //厨师更改做菜状态
 
-    int completeOrderlist(int listId, int staffId);//厨师完成做菜
+    int completeOrderlist(int listId, int staffId); //厨师完成做菜
 
-    List<Orderlist> serveList();//返回服务员上菜列表
+    List<Orderlist> serveList();    //返回服务员上菜列表
 
-    int receiveServe(int listId, int staffId);//服务员接单上菜中
+    int receiveServe(int listId, int staffId);  //服务员接单上菜中
 
-    int completeServe(int listId, int staffId);//服务员上菜完成
+    int completeServe(int listId, int staffId); //服务员上菜完成
 
-    List<Orderlist> showOrderInfo(int orderId);     //前台查看订单详情
+    List<Orderlist> showOrderInfo(int orderId);    //前台查看订单详情
 
-
+    int addOrderlist(int dishId, int orderId);    //服务员添加菜品
 }

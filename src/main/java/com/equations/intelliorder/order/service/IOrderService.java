@@ -19,7 +19,7 @@ public interface IOrderService extends IService<Order> {
 
        int setDesk(int deskId);    //服务员设置桌号，同时创建新order
 
-       int updateOrderState(int orderId); //通过订单Id为当前订单结账
+       int updateOrderState(int orderId);        //通过订单Id为当前订单结账
 
-       int getOrderByDeskId(int deskId);  //通过桌号返回未付款订单号
+       int getOrderByDeskId(int deskId);         //通过桌号返回未付款订单号
 }

@@ -67,11 +67,13 @@ public class OrderController {
     public String setDesk(int deskId, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
         try {
-            session.setAttribute("deskId", deskId);
+//            session.setAttribute("deskId", deskId);
             int result = orderService.setDesk(deskId);
+            int orderId = orderService.getOrderByDeskId(deskId);
+            session.setAttribute("orderId", orderId);
             if (result == 1) {
                 map.put("status", "200");
-                map.put("data", orderService.getOrderByDeskId(deskId));
+                map.put("data", orderId);
             } else {
                 map.put("status", "404");
                 map.put("msg", "设定失败");
