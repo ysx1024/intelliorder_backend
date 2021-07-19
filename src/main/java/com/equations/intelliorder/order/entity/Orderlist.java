@@ -26,11 +26,14 @@ public class Orderlist implements Serializable {
     @TableId("listId")
     private String listId;
 
+    @TableField("orderId")
+    private int orderId;
+
     @TableField("orderTime")
     private LocalDateTime orderTime;
 
     @TableField("dishId")
-    private String dishId;
+    private Integer dishId;
 
     @TableField("dishNum")
     private Integer dishNum;
