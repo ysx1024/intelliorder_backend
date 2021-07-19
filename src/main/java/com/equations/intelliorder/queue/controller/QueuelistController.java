@@ -2,7 +2,9 @@ package com.equations.intelliorder.queue.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.equations.intelliorder.queue.entity.Queuelist;
 import com.equations.intelliorder.queue.service.IQueuelistService;
+import com.equations.intelliorder.queue.service.impl.QueuelistServiceImpl;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,17 @@ public class QueuelistController {
     @Autowired
     private IQueuelistService queuelistService;//通过字段注入自动创建业务类，调用IQueuelistService类
 
+    private static int signQueueNow=0;
+
+    public int getSignQueueNow(){
+        return signQueueNow;}
+
+    public void setSignQueueNow(int queueNow){
+        signQueueNow=queueNow+1;
+    }
+
+
+
 
     @RequestMapping(value = "/addQueue", method = RequestMethod.GET)
     @ResponseBody
@@ -42,7 +55,7 @@ public class QueuelistController {
             @ApiResponse(code = -1, message = "errorMsg")
     })
     public String addQueue(HttpSession session) {
-        String openId = session.getAttribute("staffId").toString();
+        String openId = session.getAttribute("openId").toString();
         Map<String, Object> map = new HashMap<>();
         try {
             int result = queuelistService.addQueue(openId);
@@ -57,6 +70,37 @@ public class QueuelistController {
                     map.put("status", "404");
                     map.put("msg", "叫号失败");
                 }
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+
+    @RequestMapping(value = "/showQueuelist", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "顾客通过手机查看", notes = "进入查看页面")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "查看成功"),
+            @ApiResponse(code = 201, message = "准备就餐"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String showQueuelist(HttpSession session) {
+        String openId = session.getAttribute("openId").toString();
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Queuelist result = queuelistService.showQueuelist(openId);
+            int queue = result.getQueueCustomer();
+            if(queue>signQueueNow) {
+                map.put("status", "200");
+                map.put("queueNow", signQueueNow);
+                map.put("data", result);
+            }else if(queue==signQueueNow){
+                map.put("status", "201");
+                map.put("msg","请您准备就餐");
             }
         } catch (Exception exception) {
             map.put("status", "-1");
