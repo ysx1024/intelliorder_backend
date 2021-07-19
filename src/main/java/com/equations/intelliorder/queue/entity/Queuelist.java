@@ -26,6 +26,7 @@ public class Queuelist implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
+
     @TableId(value = "queueCustomer", type = IdType.AUTO)
     private Integer queueCustomer;
 
