@@ -100,9 +100,10 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public Staff login(String account, String password) {
         //员工登录实现
-        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
-        return staffMapper.selectOne(new QueryWrapper<Staff>().eq("account", account)
-                .eq("password", password));
+//        QueryWrapper<Staff> wrapper = new QueryWrapper<>();
+        return staffMapper.selectOne(
+                new QueryWrapper<Staff>().eq("account", account)
+                        .eq("password", password));
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,35 @@ public class OrderController {
         return JSON.toJSONString(map);
     }
 
+    @RequestMapping(value = "/setDesk", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "设定桌号", notes = "服务员点餐前先设定桌号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deskId", value = "桌号", required = true, dataType = "int")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "设定成功"),
+            @ApiResponse(code = 404, message = "设定失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String setDesk(int deskId, HttpSession session) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            session.setAttribute("deskId", deskId);
+            int result = orderService.setDesk(deskId);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("data", orderService.getOrderByDeskId(deskId));
+            } else {
+                map.put("status", "404");
+                map.put("msg", "设定失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
 
     @RequestMapping(value = "/updateOrderState", method = RequestMethod.POST)
     @ResponseBody
