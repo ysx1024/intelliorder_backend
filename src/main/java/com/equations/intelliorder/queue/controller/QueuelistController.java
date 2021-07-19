@@ -88,8 +88,8 @@ public class QueuelistController {
             @ApiResponse(code = 201, message = "准备就餐"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String showQueuelist(String openId) {
-//        String openId = session.getAttribute("openId").toString();
+    public String showQueuelist(HttpSession session) {
+        String openId = session.getAttribute("openId").toString();
         Map<String, Object> map = new HashMap<>();
         try {
             Queuelist result = queuelistService.showQueuelist(openId);
