@@ -4,7 +4,6 @@ package com.equations.intelliorder.queue.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.queue.entity.Queuelist;
 import com.equations.intelliorder.queue.service.IQueuelistService;
-import com.equations.intelliorder.queue.service.impl.QueuelistServiceImpl;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +79,30 @@ public class QueuelistController {
 
 
 
+    @RequestMapping(value = "/changeQueue", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "服务员点击下一位", notes = "点击下一位")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "叫号更新成功"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String changeQueue() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            this.setSignQueueNow(signQueueNow);
+            map.put("status", "200");
+            map.put("queueNow", signQueueNow);
+            map.put("msg","叫号更新成功");
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+
+
     @RequestMapping(value = "/showQueuelist", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "顾客通过手机查看", notes = "进入查看页面")
@@ -108,4 +131,34 @@ public class QueuelistController {
         }
         return JSON.toJSONString(map);
     }
+
+
+    @RequestMapping(value = "/deleteQueue", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "服务员点击清空", notes = "清空数据库")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "清空成功"),
+            @ApiResponse(code = 201, message = "清空失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String deleteQueue() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            this.setSignQueueNow(-1);
+            int result = queuelistService.deleteQueue();
+            if (result==0){
+                map.put("status", "200");
+                map.put("queueNow", signQueueNow);
+                map.put("msg","清空成功");
+            }else {
+                map.put("status","201");
+                map.put("msg","清空失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
 }

@@ -3,7 +3,6 @@ package com.equations.intelliorder.queue.service;
 import com.equations.intelliorder.queue.entity.Queuelist;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
 
 /**
  * <p>
@@ -19,6 +18,7 @@ public interface IQueuelistService extends IService<Queuelist> {
 
     Queuelist showQueuelist(String openId);//顾客手机渲染
 
-    //服务员点击下一位
-    //24点数据库清空
+    void changeQueue();//服务员点击下一位
+
+    int deleteQueue();//一键清空
 }

@@ -53,7 +53,17 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
         QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
         wrapper.eq("openId",openId);
         wrapper.eq("queueStatus",0);
-        Queuelist result = queuelistMapper.selectOne(wrapper);
-        return result;
+        return queuelistMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public void changeQueue() {
+
+    }
+
+    @Override
+    public int deleteQueue() {
+        QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
+        return queuelistMapper.delete(wrapper);
     }
 }
