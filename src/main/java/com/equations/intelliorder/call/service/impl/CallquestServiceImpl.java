@@ -6,11 +6,12 @@ import com.equations.intelliorder.call.entity.Callquest;
 import com.equations.intelliorder.call.mapper.CallquestMapper;
 import com.equations.intelliorder.call.service.ICallquestService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.equations.intelliorder.order.entity.Orderlist;
-import com.equations.intelliorder.order.mapper.OrderlistMapper;
+//import com.equations.intelliorder.order.entity.Orderlist;
+//import com.equations.intelliorder.order.mapper.OrderlistMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,6 +29,16 @@ public class CallquestServiceImpl extends ServiceImpl<CallquestMapper, Callquest
     private CallquestMapper callquestMapper;//通过字段注入自动创建mapper映射类
 
     @Override
+    public int addCallquest(int deskId, String callMsg) {
+        Callquest callquest = new Callquest();
+        callquest.setDeskId(deskId);
+        callquest.setCallMsg(callMsg);
+        callquest.setCallStatus(0);
+        callquest.setCallTime(LocalDateTime.now());
+        return callquestMapper.insert(callquest);
+    }
+
+    @Override
     public List<Callquest> showCallquestList() {
         QueryWrapper<Callquest> wrapper = new QueryWrapper<>();
         wrapper.lt("callStatus", 2);
@@ -35,7 +46,7 @@ public class CallquestServiceImpl extends ServiceImpl<CallquestMapper, Callquest
     }
 
     @Override
-    public int receiveCallquest(int callId,int staffId){
+    public int receiveCallquest(int callId, int staffId) {
         UpdateWrapper<Callquest> wrapper = new UpdateWrapper<>();
         wrapper.eq("callId",callId);
         Callquest callquest = callquestMapper.selectOne(wrapper);

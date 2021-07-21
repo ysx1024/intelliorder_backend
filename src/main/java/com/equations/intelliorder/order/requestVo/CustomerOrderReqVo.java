@@ -1,10 +1,6 @@
 package com.equations.intelliorder.order.requestVo;
 
-
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -18,13 +14,12 @@ import java.util.List;
  */
 
 @Data
-public class WaiterOrderReqVo {
+
+public class CustomerOrderReqVo {
 
     //点餐桌号
     private Integer deskId;
 
     //dishOrders列表
     private List<DishOrder> dishOrders;
-
 }
-

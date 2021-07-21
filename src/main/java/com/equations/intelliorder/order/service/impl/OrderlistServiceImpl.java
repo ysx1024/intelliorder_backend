@@ -10,6 +10,8 @@ import com.equations.intelliorder.order.entity.Order;
 import com.equations.intelliorder.order.entity.Orderlist;
 import com.equations.intelliorder.order.mapper.OrderMapper;
 import com.equations.intelliorder.order.mapper.OrderlistMapper;
+import com.equations.intelliorder.order.requestVo.CustomerOrderReqVo;
+import com.equations.intelliorder.order.requestVo.DishOrder;
 import com.equations.intelliorder.order.requestVo.WaiterOrderReqVo;
 import com.equations.intelliorder.order.service.IOrderlistService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -118,7 +120,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
 //    }
 
     @Override
-    public List<Orderlist> waiterOrder(WaiterOrderReqVo waiterOrderReqVo) {
+    public int waiterOrder(WaiterOrderReqVo waiterOrderReqVo) {
 
 
         //服务员设置桌号，同时创建新order
@@ -140,7 +142,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
         double totalPrice = 0;
 
         //        先遍历dishOrders数组
-        for (WaiterOrderReqVo.DishOrder dishOrders : waiterOrderReqVo.getDishOrders()) {
+        for (DishOrder dishOrders : waiterOrderReqVo.getDishOrders()) {
 
             //得到各种值填入orderlist中
             Orderlist orderlist = new Orderlist();
@@ -154,9 +156,64 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
             dishQueryWrapper.eq("dishId", dishOrders.getDishId());
             double orderDishPrice =
                     dishMapper.selectOne(dishQueryWrapper).getDishPrice();
-            orderlist.setDishPrice(dishOrders.getDishNum() * orderDishPrice);
+            orderlist.setDishPrice(orderDishPrice);
             totalPrice += dishOrders.getDishNum() * orderDishPrice;
             orderlist.setListStatus(0);
+            orderlistMapper.insert(orderlist);
+
+        }
+
+
+        //服务员下单该订单
+        UpdateWrapper<Order> orderWrapper = new UpdateWrapper<>();
+        orderWrapper.eq("orderId", orderId);
+        Order order = orderMapper.selectOne(orderWrapper);
+        order.setOrderTime(LocalDateTime.now());
+        order.setTotalPrice(totalPrice);
+        return orderMapper.update(order, orderWrapper);
+    }
+
+    @Override
+    public List<Orderlist> customerOrder(
+            CustomerOrderReqVo customerOrderReqVo, String openId) {
+
+
+        Order newOrder = new Order();
+        newOrder.setDeskId(customerOrderReqVo.getDeskId());
+        newOrder.setOrderStatus(false);
+        newOrder.setOpenId(openId);
+        orderMapper.insert(newOrder);
+
+
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.eq("orderStatus", false)
+                .eq("deskId", customerOrderReqVo.getDeskId());
+
+        int orderId = orderMapper.selectOne(orderQueryWrapper).getOrderId();
+
+
+        //        服务员添加菜品
+        double totalPrice = 0;
+
+        //        先遍历dishOrders数组
+        for (DishOrder dishOrders : customerOrderReqVo.getDishOrders()) {
+
+            //得到各种值填入orderlist中
+            Orderlist orderlist = new Orderlist();
+            orderlist.setDeskId(customerOrderReqVo.getDeskId());
+            orderlist.setDishId(dishOrders.getDishId());
+            orderlist.setOrderId(orderId);
+            orderlist.setOrderTime(LocalDateTime.now());
+            orderlist.setDishNum(dishOrders.getDishNum());
+            //查询dish表得到单价
+            QueryWrapper<Dish> dishQueryWrapper = new QueryWrapper<>();
+            dishQueryWrapper.eq("dishId", dishOrders.getDishId());
+            double orderDishPrice =
+                    dishMapper.selectOne(dishQueryWrapper).getDishPrice();
+            orderlist.setDishPrice(orderDishPrice);
+            totalPrice += dishOrders.getDishNum() * orderDishPrice;
+            orderlist.setListStatus(0);
+            orderlist.setOpenId(openId);
             orderlistMapper.insert(orderlist);
 
         }

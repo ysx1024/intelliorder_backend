@@ -15,10 +15,12 @@ import java.util.List;
  */
 public interface ICallquestService extends IService<Callquest> {
 
+    int addCallquest(int deskId, String callMsg);//顾客呼叫
+
     List<Callquest> showCallquestList();//展示待做呼叫服务
 
-    int receiveCallquest(int callId,int staffId);//服务员接收呼叫服务中
+    int receiveCallquest(int callId, int staffId);//服务员接收呼叫服务中
 
-    int completeCallquest(int callId,int satffId);//服务员完成呼叫服务
+    int completeCallquest(int callId, int satffId);//服务员完成呼叫服务
 
 }

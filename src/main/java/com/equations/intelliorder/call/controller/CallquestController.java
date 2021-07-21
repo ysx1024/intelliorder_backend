@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,26 +36,54 @@ public class CallquestController {
     @Autowired
     private ICallquestService callquestService;
 
-       @RequestMapping(value = "/showCallquestList", method = RequestMethod.GET)//url地址和请求方法类型
-       //这里是swagger自动生成api文档的相关注解
-       @ResponseBody
-       @ApiOperation(value = "页面渲染时返回呼叫服务列表", notes = "渲染时即返回")
-       @ApiResponses({
-               @ApiResponse(code = 404, message = "请求失败"),
-               @ApiResponse(code = 200, message = "请求成功")
-       })
-       public String showCallquestList() {
-           Map<String, Object> map = new HashMap<>();
-           try {
-               List<Callquest> callquestList = callquestService.showCallquestList();
-               map.put("status", "200");
-               map.put("data", callquestList);
-           } catch (Exception exception) {
-               map.put("status", "404");
-               map.put("errorMsg", exception.getMessage());
-           }
-           return JSON.toJSONString(map);
-       }
+
+    @RequestMapping(value = "/addCallquest", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "顾客通过手机呼叫服务", notes = "传入桌号和呼叫内容")
+    @ApiResponses({
+
+            @ApiResponse(code = 200, message = "呼叫成功"),
+            @ApiResponse(code = 404, message = "呼叫失败"),
+            @ApiResponse(code = -1, message = "errorMsg")
+    })
+    public String addCallquest(int deskId, String callMsg) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            int result = callquestService.addCallquest(deskId, callMsg);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("msg", "呼叫成功");
+            } else {
+                map.put("status", "404");
+                map.put("msg", "呼叫失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/showCallquestList", method = RequestMethod.GET)//url地址和请求方法类型
+    //这里是swagger自动生成api文档的相关注解
+    @ResponseBody
+    @ApiOperation(value = "页面渲染时返回呼叫服务列表", notes = "渲染时即返回")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showCallquestList() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Callquest> callquestList = callquestService.showCallquestList();
+            map.put("status", "200");
+            map.put("data", callquestList);
+        } catch (Exception exception) {
+            map.put("status", "404");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
 
     @RequestMapping(value = "/receiveCallquest", method = RequestMethod.POST)
     @ResponseBody
