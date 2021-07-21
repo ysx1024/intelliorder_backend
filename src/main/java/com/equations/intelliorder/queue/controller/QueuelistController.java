@@ -44,7 +44,7 @@ public class QueuelistController {
 
 
 
-    @RequestMapping(value = "/addQueue", method = RequestMethod.GET)
+    @RequestMapping(value = "/addQueue", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "顾客通过手机叫号", notes = "扫码登录并点击叫号按钮")
     @ApiResponses({

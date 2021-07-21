@@ -3,6 +3,7 @@ package com.equations.intelliorder.order.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.order.entity.Orderlist;
+import com.equations.intelliorder.order.requestVo.CustomerOrderReqVo;
 import com.equations.intelliorder.order.requestVo.WaiterOrderReqVo;
 import com.equations.intelliorder.order.service.IOrderlistService;
 import io.swagger.annotations.*;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -280,7 +282,7 @@ public class OrderlistController {
 
     @RequestMapping(value = "/waiterOrder", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "前台请求详细信息", notes = "通过订单号请求")
+    @ApiOperation(value = "服务员点餐", notes = "点餐系列操作完成后传给打包好的json数组")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "waiterOrderReqVo", value = "请求json实体类",
                     required = true, dataType = "WaiterOrderReqVo"),
@@ -292,7 +294,37 @@ public class OrderlistController {
     public String waiterOrder(@RequestBody WaiterOrderReqVo waiterOrderReqVo) {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Orderlist> orderlist = orderlistService.waiterOrder(waiterOrderReqVo);
+            int result = orderlistService.waiterOrder(waiterOrderReqVo);
+            if (result == 1) {
+                map.put("status", "200");
+                map.put("data", "下单成功");
+            } else {
+                map.put("status", "404");
+                map.put("data", "下单失败");
+            }
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/customerOrder", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "顾客点餐", notes = "点餐系列操作完成后传给打包好的json数组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerOrderReqVo", value = "请求json实体类",
+                    required = true, dataType = "CustomerOrderReqVo"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String customerOrder(@RequestBody CustomerOrderReqVo customerOrderReqVo, HttpSession session) {
+        String openId = session.getAttribute("openId").toString();
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Orderlist> orderlist = orderlistService.customerOrder(customerOrderReqVo, openId);
             map.put("status", "200");
             map.put("data", orderlist);
         } catch (Exception exception) {
