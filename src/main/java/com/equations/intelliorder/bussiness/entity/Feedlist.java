@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * @since 2021-07-17
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 @Accessors(chain = true)
 public class Feedlist implements Serializable {
 
@@ -38,6 +38,7 @@ public class Feedlist implements Serializable {
     @TableField("feedLevel")
     private Integer feedLevel;
 
+    @TableField("reply")
     private String reply;
 
 
