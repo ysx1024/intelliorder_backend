@@ -41,7 +41,8 @@ public class FeedlistController {
     })
     @ApiResponses({
             @ApiResponse(code = 404, message = "评价失败"),
-            @ApiResponse(code = 200, message = "评价成功")
+            @ApiResponse(code = 200, message = "评价成功"),
+            @ApiResponse(code = -1, message = "errorMsg")
     })
     public String customerFeed(String openId, String feedText, int feedLevel) {
         Map<String, Object> map = new HashMap<>();

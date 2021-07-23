@@ -38,8 +38,11 @@ public class CallquestController {
     @RequestMapping(value = "/addCallquest", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "顾客通过手机呼叫服务", notes = "传入桌号和呼叫内容")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deskId", value = "桌号", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "callMsg", value = "呼叫内容", required = true, dataType = "String")
+    })
     @ApiResponses({
-
             @ApiResponse(code = 200, message = "呼叫成功"),
             @ApiResponse(code = 404, message = "呼叫失败"),
             @ApiResponse(code = -1, message = "errorMsg")
@@ -62,8 +65,7 @@ public class CallquestController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showCallquestList", method = RequestMethod.GET)//url地址和请求方法类型
-    //这里是swagger自动生成api文档的相关注解
+    @RequestMapping(value = "/showCallquestList", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回呼叫服务列表", notes = "渲染时即返回")
     @ApiResponses({

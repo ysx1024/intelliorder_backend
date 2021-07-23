@@ -20,11 +20,11 @@ public class WaiterOrderReqVo {
     //点餐桌号
     private Integer deskId;
 
-    // 总价
-    private Integer totalPrice;
-
     //dishOrders列表
     private List<DishOrder> dishOrders;
+
+    // 总价
+    private Double totalPrice;
 
 }
 

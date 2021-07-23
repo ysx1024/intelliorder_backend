@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -84,7 +85,6 @@ public class DishController {
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishId(int dishId) {
-
         Map<String, Object> map = new HashMap<>();//创建hashmap用来存储返回列表并转成json数据
         try {
             Dish dish = dishService.getDishId(dishId);
@@ -181,10 +181,10 @@ public class DishController {
             @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int"),
             @ApiImplicitParam(name = "dishName", value = "菜品名称", dataType = "String"),
             @ApiImplicitParam(name = "dishType", value = "菜品类别", dataType = "String"),
-            @ApiImplicitParam(name = "dishPrice", value = "菜品价格", dataType = "double"),
+            @ApiImplicitParam(name = "dishPrice", value = "菜品价格", dataType = "Double"),
             @ApiImplicitParam(name = "dishImage", value = "图片地址", dataType = "String"),
             @ApiImplicitParam(name = "dishDesc", value = "菜品描述", dataType = "String"),
-            @ApiImplicitParam(name = "costPrice", value = "菜品成本", dataType = "double"),
+            @ApiImplicitParam(name = "costPrice", value = "菜品成本", dataType = "Double"),
     })
     @ApiResponses({
             @ApiResponse(code = 304, message = "信息未修改"),
@@ -197,14 +197,14 @@ public class DishController {
         Map<String, Object> map = new HashMap<>();
         try {
             Dish dish = dishService.getDishId(dishId);
-            boolean flag = true;
-            if (!Objects.equals(dish.getDishName(), dishName)) flag = false;
-            else if (!Objects.equals(dish.getDishType(), dishType)) flag = false;
-            else if (!Objects.equals(dish.getDishPrice(), dishPrice)) flag = false;
-            else if (!Objects.equals(dish.getDishImage(), dishImage)) flag = false;
-            else if (!Objects.equals(dish.getDishDesc(), dishDesc)) flag = false;
-            else if (!Objects.equals(dish.getCostPrice(), costPrice)) flag = false;
-            if (flag) {
+            AtomicBoolean flag = new AtomicBoolean(true);
+            if (!Objects.equals(dish.getDishName(), dishName)) flag.set(false);
+            else if (!Objects.equals(dish.getDishType(), dishType)) flag.set(false);
+            else if (!Objects.equals(dish.getDishPrice(), dishPrice)) flag.set(false);
+            else if (!Objects.equals(dish.getDishImage(), dishImage)) flag.set(false);
+            else if (!Objects.equals(dish.getDishDesc(), dishDesc)) flag.set(false);
+            else if (!Objects.equals(dish.getCostPrice(), costPrice)) flag.set(false);
+            if (flag.get()) {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {
