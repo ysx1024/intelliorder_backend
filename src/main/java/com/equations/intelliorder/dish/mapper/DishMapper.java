@@ -1,7 +1,7 @@
 package com.equations.intelliorder.dish.mapper;
 
-import com.equations.intelliorder.dish.entity.Dish;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.equations.intelliorder.dish.entity.Dish;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

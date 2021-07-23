@@ -1,16 +1,17 @@
 package com.equations.intelliorder.order.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author equations
@@ -62,11 +63,11 @@ public class Orderlist implements Serializable {
         this.listStatus = listStatus;
     }
 
-    public void setStaffId(int staffId) {
-        this.staffId=staffId;
+    public int getStaffId() {
+        return staffId;
     }
 
-    public int getStaffId() {
-        return  staffId;
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 }

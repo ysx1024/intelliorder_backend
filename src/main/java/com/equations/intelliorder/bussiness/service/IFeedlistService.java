@@ -1,7 +1,7 @@
 package com.equations.intelliorder.bussiness.service;
 
-import com.equations.intelliorder.bussiness.entity.Feedlist;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.bussiness.entity.Feedlist;
 
 import java.util.List;
 

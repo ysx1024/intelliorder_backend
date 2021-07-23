@@ -2,10 +2,10 @@ package com.equations.intelliorder.dish.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.mapper.DishMapper;
 import com.equations.intelliorder.dish.service.IDishService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +30,15 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
     @Override
     public List<Dish> showDishList() {
         QueryWrapper<Dish> wrapper = new QueryWrapper<>();
-
         //通过id>=1的条件巧用ge方法返回所有菜品信息列表
         wrapper.ge("dishId", 1);
+        return dishMapper.selectList(wrapper);
+    }
 
+    @Override
+    public List<Dish> showDish() {
+        QueryWrapper<Dish> wrapper = new QueryWrapper<>();
+        wrapper.eq("dishState", true);
         return dishMapper.selectList(wrapper);
     }
 
@@ -104,10 +109,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return dishMapper.deleteById(dishId);
     }
 
-    @Override
-    public double getDishPriceById(int dishId) {
-        QueryWrapper<Dish> wrapper = new QueryWrapper<>();
-        wrapper.eq("dishId", dishId);
-        return dishMapper.selectOne(wrapper).getDishPrice();
-    }
+//    @Override
+//    public double getDishPriceById(int dishId) {
+//        QueryWrapper<Dish> wrapper = new QueryWrapper<>();
+//        wrapper.eq("dishId", dishId);
+//        return dishMapper.selectOne(wrapper).getDishPrice();
+//    }
 }

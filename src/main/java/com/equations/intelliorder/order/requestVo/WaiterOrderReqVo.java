@@ -2,9 +2,6 @@ package com.equations.intelliorder.order.requestVo;
 
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -22,6 +19,9 @@ public class WaiterOrderReqVo {
 
     //点餐桌号
     private Integer deskId;
+
+    // 总价
+    private Integer totalPrice;
 
     //dishOrders列表
     private List<DishOrder> dishOrders;

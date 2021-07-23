@@ -1,10 +1,10 @@
 package com.equations.intelliorder.bussiness.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.equations.intelliorder.bussiness.entity.Feedlist;
 import com.equations.intelliorder.bussiness.mapper.FeedlistMapper;
 import com.equations.intelliorder.bussiness.service.IFeedlistService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author equations
@@ -49,6 +49,6 @@ public class FeedlistServiceImpl extends ServiceImpl<FeedlistMapper, Feedlist> i
         wrapper.eq("feedId", feedId);
         Feedlist feedlist = feedlistMapper.selectOne(wrapper);
         feedlist.setReply(reply);
-        return feedlistMapper.update(feedlist,wrapper);
+        return feedlistMapper.update(feedlist, wrapper);
     }
 }

@@ -9,6 +9,9 @@ public class DishOrder {
     //菜品Id
     private Integer dishId;
 
+    //菜品单价
+    private Double dishPrice;
+
     //菜品名称
     private String dishName;
 

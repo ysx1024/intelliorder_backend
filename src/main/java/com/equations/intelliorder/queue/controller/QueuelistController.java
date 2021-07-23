@@ -4,10 +4,11 @@ package com.equations.intelliorder.queue.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.queue.entity.Queuelist;
 import com.equations.intelliorder.queue.service.IQueuelistService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author equations
@@ -29,19 +30,17 @@ import java.util.Map;
 public class QueuelistController {
 
 
+    private static int signQueueNow = 0;
     @Autowired
     private IQueuelistService queuelistService;//通过字段注入自动创建业务类，调用IQueuelistService类
 
-    private static int signQueueNow=0;
-
-    public int getSignQueueNow(){
-        return signQueueNow;}
-
-    public void setSignQueueNow(int queueNow){
-        signQueueNow=queueNow+1;
+    public int getSignQueueNow() {
+        return signQueueNow;
     }
 
-
+    public void setSignQueueNow(int queueNow) {
+        signQueueNow = queueNow + 1;
+    }
 
 
     @RequestMapping(value = "/addQueue", method = RequestMethod.POST)
@@ -58,7 +57,7 @@ public class QueuelistController {
         Map<String, Object> map = new HashMap<>();
         try {
             int result = queuelistService.addQueue(openId);
-            if (result==2) {
+            if (result == 2) {
                 map.put("status", "304");
                 map.put("msg", "您已经叫号");
             } else {
@@ -78,7 +77,6 @@ public class QueuelistController {
     }
 
 
-
     @RequestMapping(value = "/changeQueue", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "服务员点击下一位", notes = "点击下一位")
@@ -92,15 +90,13 @@ public class QueuelistController {
             this.setSignQueueNow(signQueueNow);
             map.put("status", "200");
             map.put("queueNow", signQueueNow);
-            map.put("msg","叫号更新成功");
+            map.put("msg", "叫号更新成功");
         } catch (Exception exception) {
             map.put("status", "-1");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);
     }
-
-
 
 
     @RequestMapping(value = "/showQueuelist", method = RequestMethod.GET)
@@ -117,13 +113,13 @@ public class QueuelistController {
         try {
             Queuelist result = queuelistService.showQueuelist(openId);
             int queue = result.getQueueCustomer();
-            if(queue>signQueueNow) {
+            if (queue > signQueueNow) {
                 map.put("status", "200");
                 map.put("queueNow", signQueueNow);
                 map.put("data", result);
-            }else if(queue==signQueueNow){
+            } else if (queue == signQueueNow) {
                 map.put("status", "201");
-                map.put("msg","请您准备就餐");
+                map.put("msg", "请您准备就餐");
             }
         } catch (Exception exception) {
             map.put("status", "-1");
@@ -146,13 +142,13 @@ public class QueuelistController {
         try {
             this.setSignQueueNow(-1);
             int result = queuelistService.deleteQueue();
-            if (result==0){
+            if (result == 0) {
                 map.put("status", "200");
                 map.put("queueNow", signQueueNow);
-                map.put("msg","清空成功");
-            }else {
-                map.put("status","201");
-                map.put("msg","清空失败");
+                map.put("msg", "清空成功");
+            } else {
+                map.put("status", "201");
+                map.put("msg", "清空失败");
             }
         } catch (Exception exception) {
             map.put("status", "-1");

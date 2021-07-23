@@ -1,12 +1,10 @@
 package com.equations.intelliorder.queue.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.equations.intelliorder.queue.entity.Queuelist;
 import com.equations.intelliorder.queue.mapper.QueuelistMapper;
 import com.equations.intelliorder.queue.service.IQueuelistService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author equations
@@ -28,14 +26,12 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
     private QueuelistMapper queuelistMapper;//通过字段注入自动创建mapper映射类
 
 
-
-
     @Override
     public int addQueue(String openId) {
         QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
-        wrapper.like("openId",openId);
+        wrapper.like("openId", openId);
         List<Queuelist> queuelistList = queuelistMapper.selectList(wrapper);
-        if(!(queuelistList==null)) {
+        if (!(queuelistList == null)) {
             for (Queuelist list : queuelistList)
                 if (list.getQueueStatus() == 0)
                     return 2;
@@ -51,8 +47,8 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
     @Override
     public Queuelist showQueuelist(String openId) {
         QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
-        wrapper.eq("openId",openId);
-        wrapper.eq("queueStatus",0);
+        wrapper.eq("openId", openId);
+        wrapper.eq("queueStatus", 0);
         return queuelistMapper.selectOne(wrapper);
     }
 

@@ -1,7 +1,7 @@
 package com.equations.intelliorder.call.service;
 
-import com.equations.intelliorder.call.entity.Callquest;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.call.entity.Callquest;
 
 import java.util.List;
 

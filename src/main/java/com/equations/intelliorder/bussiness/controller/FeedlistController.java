@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author equations
@@ -86,16 +86,17 @@ public class FeedlistController {
     @ResponseBody
     @ApiOperation(value = "根据反馈id回复反馈", notes = "反馈id")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "feedId", value = "反馈ID", required = true, dataType = "Integer")
+            @ApiImplicitParam(name = "feedId", value = "反馈ID", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "reply", value = "回复评价", required = true, dataType = "String"),
     })
     @ApiResponses({
             @ApiResponse(code = 404, message = "回复失败"),
             @ApiResponse(code = 200, message = "回复成功")
     })
-    public String replyFeed(int feedId,String reply) {
+    public String replyFeed(int feedId, String reply) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = feedlistService.replyFeed(feedId,reply);
+            int result = feedlistService.replyFeed(feedId, reply);
             if (result == 1) {
                 map.put("status", "200");
                 map.put("msg", "回复成功");

@@ -1,7 +1,7 @@
 package com.equations.intelliorder.order.service;
 
-import com.equations.intelliorder.order.entity.Orderlist;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.order.entity.Orderlist;
 import com.equations.intelliorder.order.requestVo.CustomerOrderReqVo;
 import com.equations.intelliorder.order.requestVo.WaiterOrderReqVo;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author equations

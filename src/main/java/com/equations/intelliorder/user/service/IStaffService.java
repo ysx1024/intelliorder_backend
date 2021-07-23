@@ -1,13 +1,13 @@
 package com.equations.intelliorder.user.service;
 
-import com.equations.intelliorder.user.entity.Staff;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.user.entity.Staff;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务类，业务逻辑的定义层
+ * 服务类，业务逻辑的定义层
  * </p>
  *
  * @author equations

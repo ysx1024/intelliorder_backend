@@ -1,12 +1,12 @@
 package com.equations.intelliorder.order.mapper;
 
-import com.equations.intelliorder.order.entity.Orderlist;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.equations.intelliorder.order.entity.Orderlist;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author equations

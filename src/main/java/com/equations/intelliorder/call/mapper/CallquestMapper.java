@@ -1,7 +1,7 @@
 package com.equations.intelliorder.call.mapper;
 
-import com.equations.intelliorder.call.entity.Callquest;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.equations.intelliorder.call.entity.Callquest;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
