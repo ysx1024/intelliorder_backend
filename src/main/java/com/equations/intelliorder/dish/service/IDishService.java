@@ -35,5 +35,4 @@ public interface IDishService extends IService<Dish> {
 
     int deleteByDishId(int dishId);//通过序号删除菜品
 
-//    double getDishPriceById(int dishId);    //通过序号查询菜品单价
 }

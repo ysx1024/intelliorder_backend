@@ -52,14 +52,9 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
         return queuelistMapper.selectOne(wrapper);
     }
 
-    @Override
-    public void changeQueue() {
-
-    }
 
     @Override
     public int deleteQueue() {
-        QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
-        return queuelistMapper.delete(wrapper);
+        return queuelistMapper.delete(new QueryWrapper<>());
     }
 }

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -151,12 +152,12 @@ public class StaffController {
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.getStaffById(staffId);
-            boolean flag = true;
-            if (!Objects.equals(staff.getPhone(), phone)) flag = false;
-            else if (!Objects.equals(staff.getAccount(), account)) flag = false;
-            else if (!Objects.equals(staff.getPassword(), password)) flag = false;
-            else if (!Objects.equals(staff.getStaffType(), staffType)) flag = false;
-            if (flag) {
+            AtomicBoolean flag = new AtomicBoolean(true);
+            if (!Objects.equals(staff.getPhone(), phone)) flag.set(false);
+            else if (!Objects.equals(staff.getAccount(), account)) flag.set(false);
+            else if (!Objects.equals(staff.getPassword(), password)) flag.set(false);
+            else if (!Objects.equals(staff.getStaffType(), staffType)) flag.set(false);
+            if (flag.get()) {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {

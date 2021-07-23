@@ -246,39 +246,6 @@ public class OrderlistController {
         return JSON.toJSONString(map);
     }
 
-//    @RequestMapping(value = "/addOrderlist", method = RequestMethod.POST)
-//    @ResponseBody
-//    @ApiOperation(value = "服务员添加菜品", notes = "需要输入菜品Id")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "dishId", value = "菜品名称", required = true, dataType = "Int"),
-//    })
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "添加成功"),
-//            @ApiResponse(code = 404, message = "添加失败"),
-//            @ApiResponse(code = -1, message = "errorMsg")
-//    })
-//    public String addOrderlist(int dishId, HttpSession session) {
-//        System.out.println("contr");
-////        int deskId = Integer.parseInt(session.getAttribute("deskId").toString());
-//        int orderId = Integer.parseInt(session.getAttribute("orderId").toString());
-//
-//        Map<String, Object> map = new HashMap<>();
-//        try {
-//            int result = orderlistService.addOrderlist(dishId, orderId);
-//            if (result == 1) {
-//                map.put("status", "200");
-//                map.put("msg", "添加成功");
-//            } else {
-//                map.put("status", "404");
-//                map.put("msg", "添加失败");
-//            }
-//        } catch (Exception exception) {
-//            map.put("status", "-1");
-//            map.put("errorMsg", exception.getMessage());
-//        }
-//        return JSON.toJSONString(map);
-//    }
-
     @RequestMapping(value = "/waiterOrder", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "服务员点餐", notes = "点餐系列操作完成后传给打包好的json数组")

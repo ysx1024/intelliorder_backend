@@ -31,10 +31,6 @@ public interface IOrderlistService extends IService<Orderlist> {
 
     List<Orderlist> showOrderInfo(int orderId);    //前台查看订单详情
 
-    //int addOrderlist(int dishId, int orderId);    //服务员添加菜品
-
-    //int increaseOrderlist(int )
-
     int waiterOrder(WaiterOrderReqVo waiterOrderReqVo); //服务员点餐系列操作
 
     List<Orderlist> customerOrder(CustomerOrderReqVo customerOrderReqVo, String openId); //顾客点餐系列操作

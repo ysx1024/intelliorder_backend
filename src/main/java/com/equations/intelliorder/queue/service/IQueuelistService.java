@@ -18,7 +18,5 @@ public interface IQueuelistService extends IService<Queuelist> {
 
     Queuelist showQueuelist(String openId);//顾客手机渲染
 
-    void changeQueue();//服务员点击下一位
-
     int deleteQueue();//一键清空
 }

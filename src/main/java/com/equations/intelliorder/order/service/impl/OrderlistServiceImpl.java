@@ -100,21 +100,6 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
         return orderlistMapper.selectList(wrapper);
     }
 
-//    @Override   //服务员添加菜品
-//    public int addOrderlist(int dishId, int orderId) {
-//        Orderlist orderlist = new Orderlist();
-//        QueryWrapper<Order> wrapper = new QueryWrapper<>();
-//        wrapper.eq("orderId", orderId);
-//        orderlist.setDeskId(orderMapper.selectOne(wrapper).getDeskId());
-//        orderlist.setDishId(dishId);
-//        orderlist.setOrderId(orderId);
-//        orderlist.setOrderTime(LocalDateTime.now());
-//        orderlist.setDishNum(1);
-//        orderlist.setDishPrice(dishService.getDishPriceById(dishId));
-//        orderlist.setListStatus(0);
-//        return orderlistMapper.insert(orderlist);
-//    }
-
     @Override
     public int waiterOrder(WaiterOrderReqVo waiterOrderReqVo) {
 

@@ -30,13 +30,12 @@ import java.util.Map;
 public class QueuelistController {
 
 
-    private static int signQueueNow = 0;
     @Autowired
     private IQueuelistService queuelistService;//通过字段注入自动创建业务类，调用IQueuelistService类
 
-    public int getSignQueueNow() {
-        return signQueueNow;
-    }
+
+    //创立排队序号静态变量与相关方法
+    private static int signQueueNow = 0;
 
     public void setSignQueueNow(int queueNow) {
         signQueueNow = queueNow + 1;

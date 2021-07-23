@@ -43,18 +43,6 @@ public class Callquest implements Serializable {
     @TableField("callStatus")
     private Integer callStatus;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Integer getCallId() {
-        return callId;
-    }
-
-    public void setCallId(Integer callId) {
-        this.callId = callId;
-    }
-
     public Integer getDeskId() {
         return deskId;
     }
@@ -63,16 +51,8 @@ public class Callquest implements Serializable {
         this.deskId = deskId;
     }
 
-    public String getCallMsg() {
-        return callMsg;
-    }
-
     public void setCallMsg(String callMsg) {
         this.callMsg = callMsg;
-    }
-
-    public LocalDateTime getCallTime() {
-        return callTime;
     }
 
     public void setCallTime(LocalDateTime callTime) {
