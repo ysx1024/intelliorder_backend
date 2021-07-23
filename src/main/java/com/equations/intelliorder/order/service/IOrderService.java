@@ -22,6 +22,7 @@ public interface IOrderService extends IService<Order> {
     int updateOrderState(int orderId);        //通过订单Id为当前订单结账
 
 //       int getOrderByDeskId(int deskId);         //通过桌号返回未付款订单号
+     Order toPay(int orderId);    //结账
 
 
 }

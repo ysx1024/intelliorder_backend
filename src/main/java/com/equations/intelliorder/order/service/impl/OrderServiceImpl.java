@@ -63,6 +63,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return orderMapper.update(order, wrapper);
     }
 
+    @Override
+    public Order toPay(int orderId) {
+        UpdateWrapper wrapper = new UpdateWrapper();
+        wrapper.eq("orderId",orderId);
+        return orderMapper.selectOne(wrapper);
+    }
+
 //    @Override   //通过桌号返回未付款订单号
 //    public int getOrderByDeskId(int deskId) {
 //        QueryWrapper<Order> wrapper = new QueryWrapper<>();
