@@ -1,15 +1,20 @@
 package com.equations.intelliorder.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+//import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+//import com.equations.intelliorder.dish.entity.Dish;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.equations.intelliorder.order.entity.Order;
+
 import com.equations.intelliorder.order.mapper.OrderMapper;
 import com.equations.intelliorder.order.service.IOrderService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
+
 import java.util.List;
 
 /**
@@ -38,6 +43,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     }
 
+//    @Override   //服务员设置桌号，同时创建新order
+//    public int setDesk(int deskId) {
+//        Order order = new Order();
+//        order.setDeskId(deskId);
+//        order.setOrderStatus(false);
+//        return orderMapper.insert(order);
+//    }
 
 
     @Override   //通过订单Id进行付款逻辑
@@ -50,5 +62,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setEndTime(dataTime);//设置结账时间
         return orderMapper.update(order, wrapper);
     }
+
+    @Override
+    public Order toPay(int orderId) {
+        UpdateWrapper wrapper = new UpdateWrapper();
+        wrapper.eq("orderId",orderId);
+        return orderMapper.selectOne(wrapper);
+    }
+
+//    @Override   //通过桌号返回未付款订单号
+//    public int getOrderByDeskId(int deskId) {
+//        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+//        wrapper.eq("orderStatus", 0).eq("deskId", deskId);
+//        return orderMapper.selectOne(wrapper).getOrderId();
+//    }
+
 
 }
