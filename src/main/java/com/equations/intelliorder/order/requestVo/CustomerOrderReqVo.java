@@ -22,4 +22,7 @@ public class CustomerOrderReqVo {
 
     //dishOrders列表
     private List<DishOrder> dishOrders;
+
+    // 总价
+    private Double totalPrice;
 }

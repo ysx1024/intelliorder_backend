@@ -4,7 +4,6 @@ package com.equations.intelliorder.dish.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.service.IDishService;
-//import com.equations.intelliorder.user.entity.Staff;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -54,6 +54,26 @@ public class DishController {
         return JSON.toJSONString(map);
     }
 
+    @RequestMapping(value = "/showDish", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "页面渲染时返回所有上架菜品列表", notes = "渲染时即返回")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showDish() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Dish> dishList = dishService.showDish();
+            map.put("status", "200");
+            map.put("data", dishList);
+        } catch (Exception exception) {
+            map.put("status", "404");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
     @RequestMapping(value = "/getDishId", method = RequestMethod.GET)//url地址和请求方法类型
     @ResponseBody
     @ApiOperation(value = "根据菜单ID检索菜品", notes = "输入菜品ID必须是有效的数字")
@@ -65,7 +85,6 @@ public class DishController {
             @ApiResponse(code = 200, message = "请求成功")
     })
     public String getDishId(int dishId) {
-
         Map<String, Object> map = new HashMap<>();//创建hashmap用来存储返回列表并转成json数据
         try {
             Dish dish = dishService.getDishId(dishId);
@@ -162,10 +181,10 @@ public class DishController {
             @ApiImplicitParam(name = "dishId", value = "菜品id", required = true, dataType = "int"),
             @ApiImplicitParam(name = "dishName", value = "菜品名称", dataType = "String"),
             @ApiImplicitParam(name = "dishType", value = "菜品类别", dataType = "String"),
-            @ApiImplicitParam(name = "dishPrice", value = "菜品价格", dataType = "double"),
+            @ApiImplicitParam(name = "dishPrice", value = "菜品价格", dataType = "Double"),
             @ApiImplicitParam(name = "dishImage", value = "图片地址", dataType = "String"),
             @ApiImplicitParam(name = "dishDesc", value = "菜品描述", dataType = "String"),
-            @ApiImplicitParam(name = "costPrice", value = "菜品成本", dataType = "double"),
+            @ApiImplicitParam(name = "costPrice", value = "菜品成本", dataType = "Double"),
     })
     @ApiResponses({
             @ApiResponse(code = 304, message = "信息未修改"),
@@ -178,14 +197,14 @@ public class DishController {
         Map<String, Object> map = new HashMap<>();
         try {
             Dish dish = dishService.getDishId(dishId);
-            boolean flag = true;
-            if (!Objects.equals(dish.getDishName(), dishName)) flag = false;
-            else if (!Objects.equals(dish.getDishType(), dishType)) flag = false;
-            else if (!Objects.equals(dish.getDishPrice(), dishPrice)) flag = false;
-            else if (!Objects.equals(dish.getDishImage(), dishImage)) flag = false;
-            else if (!Objects.equals(dish.getDishDesc(), dishDesc)) flag = false;
-            else if (!Objects.equals(dish.getCostPrice(), costPrice)) flag = false;
-            if (flag) {
+            AtomicBoolean flag = new AtomicBoolean(true);
+            if (!Objects.equals(dish.getDishName(), dishName)) flag.set(false);
+            else if (!Objects.equals(dish.getDishType(), dishType)) flag.set(false);
+            else if (!Objects.equals(dish.getDishPrice(), dishPrice)) flag.set(false);
+            else if (!Objects.equals(dish.getDishImage(), dishImage)) flag.set(false);
+            else if (!Objects.equals(dish.getDishDesc(), dishDesc)) flag.set(false);
+            else if (!Objects.equals(dish.getCostPrice(), costPrice)) flag.set(false);
+            if (flag.get()) {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {

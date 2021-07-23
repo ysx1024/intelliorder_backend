@@ -1,23 +1,24 @@
 package com.equations.intelliorder.bussiness.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author equations
  * @since 2021-07-17
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 @Accessors(chain = true)
 public class Feedlist implements Serializable {
 
@@ -38,6 +39,7 @@ public class Feedlist implements Serializable {
     @TableField("feedLevel")
     private Integer feedLevel;
 
+    @TableField("reply")
     private String reply;
 
 

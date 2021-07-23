@@ -1,8 +1,7 @@
 package com.equations.intelliorder.dish.service;
 
-import com.equations.intelliorder.dish.entity.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.equations.intelliorder.user.entity.Staff;
+import com.equations.intelliorder.dish.entity.Dish;
 
 import java.util.List;
 
@@ -17,6 +16,8 @@ import java.util.List;
 public interface IDishService extends IService<Dish> {
 
     List<Dish> showDishList();//渲染时返回所有菜品的信息列表
+
+    List<Dish> showDish();//返回所有上架菜品列表
 
     Dish getDishId(int dishId);//通过菜品id查询
 
@@ -34,5 +35,4 @@ public interface IDishService extends IService<Dish> {
 
     int deleteByDishId(int dishId);//通过序号删除菜品
 
-    double getDishPriceById(int dishId);    //通过序号查询菜品单价
 }

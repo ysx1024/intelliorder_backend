@@ -1,7 +1,7 @@
 package com.equations.intelliorder.order.mapper;
 
-import com.equations.intelliorder.order.entity.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.equations.intelliorder.order.entity.Order;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -2,12 +2,10 @@ package com.equations.intelliorder.call.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.equations.intelliorder.call.entity.Callquest;
 import com.equations.intelliorder.call.mapper.CallquestMapper;
 import com.equations.intelliorder.call.service.ICallquestService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-//import com.equations.intelliorder.order.entity.Orderlist;
-//import com.equations.intelliorder.order.mapper.OrderlistMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,20 +46,20 @@ public class CallquestServiceImpl extends ServiceImpl<CallquestMapper, Callquest
     @Override
     public int receiveCallquest(int callId, int staffId) {
         UpdateWrapper<Callquest> wrapper = new UpdateWrapper<>();
-        wrapper.eq("callId",callId);
+        wrapper.eq("callId", callId);
         Callquest callquest = callquestMapper.selectOne(wrapper);
         callquest.setCallStatus(1);
         callquest.setStaffId(staffId);
-        return callquestMapper.update(callquest,wrapper);
+        return callquestMapper.update(callquest, wrapper);
     }
 
     @Override
-    public  int completeCallquest(int callId,int staffId){
+    public int completeCallquest(int callId, int staffId) {
         UpdateWrapper<Callquest> wrapper = new UpdateWrapper<>();
-        wrapper.eq("callId",callId);
+        wrapper.eq("callId", callId);
         Callquest callquest = callquestMapper.selectOne(wrapper);
         callquest.setCallStatus(2);
-        return callquestMapper.update(callquest,wrapper);
+        return callquestMapper.update(callquest, wrapper);
     }
 
 

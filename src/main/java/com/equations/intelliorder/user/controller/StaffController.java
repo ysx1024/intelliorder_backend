@@ -4,10 +4,8 @@ package com.equations.intelliorder.user.controller;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.equations.intelliorder.user.entity.Staff;
-//import com.equations.intelliorder.user.mapper.StaffMapper;
 import com.equations.intelliorder.user.service.IStaffService;
 import io.swagger.annotations.*;
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -153,12 +152,12 @@ public class StaffController {
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.getStaffById(staffId);
-            boolean flag = true;
-            if (!Objects.equals(staff.getPhone(), phone)) flag = false;
-            else if (!Objects.equals(staff.getAccount(), account)) flag = false;
-            else if (!Objects.equals(staff.getPassword(), password)) flag = false;
-            else if (!Objects.equals(staff.getStaffType(), staffType)) flag = false;
-            if (flag) {
+            AtomicBoolean flag = new AtomicBoolean(true);
+            if (!Objects.equals(staff.getPhone(), phone)) flag.set(false);
+            else if (!Objects.equals(staff.getAccount(), account)) flag.set(false);
+            else if (!Objects.equals(staff.getPassword(), password)) flag.set(false);
+            else if (!Objects.equals(staff.getStaffType(), staffType)) flag.set(false);
+            if (flag.get()) {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {

@@ -1,17 +1,14 @@
 package com.equations.intelliorder.call.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -46,36 +43,8 @@ public class Callquest implements Serializable {
     @TableField("callStatus")
     private Integer callStatus;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Integer getCallId() {
-        return callId;
-    }
-
     public Integer getDeskId() {
         return deskId;
-    }
-
-    public String getCallMsg() {
-        return callMsg;
-    }
-
-    public LocalDateTime getCallTime() {
-        return callTime;
-    }
-
-    public Integer getStaffId() {
-        return staffId;
-    }
-
-    public Integer getCallStatus() {
-        return callStatus;
-    }
-
-    public void setCallId(Integer callId) {
-        this.callId = callId;
     }
 
     public void setDeskId(Integer deskId) {
@@ -90,8 +59,16 @@ public class Callquest implements Serializable {
         this.callTime = callTime;
     }
 
+    public Integer getStaffId() {
+        return staffId;
+    }
+
     public void setStaffId(Integer staffId) {
         this.staffId = staffId;
+    }
+
+    public Integer getCallStatus() {
+        return callStatus;
     }
 
     public void setCallStatus(Integer callStatus) {

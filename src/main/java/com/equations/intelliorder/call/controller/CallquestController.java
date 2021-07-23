@@ -4,13 +4,11 @@ package com.equations.intelliorder.call.controller;
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.call.entity.Callquest;
 import com.equations.intelliorder.call.service.ICallquestService;
-import com.equations.intelliorder.order.entity.Orderlist;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +38,11 @@ public class CallquestController {
     @RequestMapping(value = "/addCallquest", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "顾客通过手机呼叫服务", notes = "传入桌号和呼叫内容")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deskId", value = "桌号", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "callMsg", value = "呼叫内容", required = true, dataType = "String")
+    })
     @ApiResponses({
-
             @ApiResponse(code = 200, message = "呼叫成功"),
             @ApiResponse(code = 404, message = "呼叫失败"),
             @ApiResponse(code = -1, message = "errorMsg")
@@ -64,8 +65,7 @@ public class CallquestController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showCallquestList", method = RequestMethod.GET)//url地址和请求方法类型
-    //这里是swagger自动生成api文档的相关注解
+    @RequestMapping(value = "/showCallquestList", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回呼叫服务列表", notes = "渲染时即返回")
     @ApiResponses({
@@ -104,7 +104,7 @@ public class CallquestController {
             Callquest callquest = callquestService.getById(callId);
             if (!(callquest.getCallStatus() == 0)) {
                 map.put("status", "304");
-                map.put("msg", "已有服务员接收呼叫服务中" );
+                map.put("msg", "已有服务员接收呼叫服务中");
             } else {
                 int result = callquestService.receiveCallquest(callId, staffId);
                 if (result == 1) {
@@ -135,7 +135,7 @@ public class CallquestController {
             @ApiResponse(code = 404, message = "完成失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-     public String completeCallquest(int callId, int staffId) {
+    public String completeCallquest(int callId, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Callquest callquest = callquestService.getById(callId);

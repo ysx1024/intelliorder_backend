@@ -1,8 +1,7 @@
 package com.equations.intelliorder.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-//import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-//import com.equations.intelliorder.dish.entity.Dish;
+
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.equations.intelliorder.order.entity.Order;
 
@@ -37,19 +36,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         //通过status==0的条件返回未付款订单信息
         wrapper.eq("orderStatus", 0);
-
-        //2)执行查询
         return orderMapper.selectList(wrapper);
 
     }
 
-//    @Override   //服务员设置桌号，同时创建新order
-//    public int setDesk(int deskId) {
-//        Order order = new Order();
-//        order.setDeskId(deskId);
-//        order.setOrderStatus(false);
-//        return orderMapper.insert(order);
-//    }
 
 
     @Override   //通过订单Id进行付款逻辑
@@ -65,17 +55,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     public Order toPay(int orderId) {
-        UpdateWrapper wrapper = new UpdateWrapper();
+        UpdateWrapper<Order> wrapper = new UpdateWrapper<>();
         wrapper.eq("orderId",orderId);
         return orderMapper.selectOne(wrapper);
     }
-
-//    @Override   //通过桌号返回未付款订单号
-//    public int getOrderByDeskId(int deskId) {
-//        QueryWrapper<Order> wrapper = new QueryWrapper<>();
-//        wrapper.eq("orderStatus", 0).eq("deskId", deskId);
-//        return orderMapper.selectOne(wrapper).getOrderId();
-//    }
-
 
 }
