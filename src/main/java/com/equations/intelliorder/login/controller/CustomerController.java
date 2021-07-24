@@ -13,13 +13,15 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.equations.intelliorder.utils.Alipay.*;
+
 /**
  * <p>
  *  前端控制器
  * </p>
  *
  * @author equations
- * @since 2021-07-21
+ * @since 2021-07-21''
  */
 @RestController
 @CrossOrigin
@@ -28,8 +30,6 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
-    String appId = "wx5d09a57a36240a0c";
-    String secret = "fa7113349649612f5b37f142db6afa33";
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
@@ -45,6 +45,7 @@ public class CustomerController {
                 String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
                 String str = WeChatUtil.httpRequest(url, "GET", null); //调用工具类解密
                 JSONObject jsonObject = JSONObject.parseObject(str);
+
                 String openId = (String) jsonObject.get("openid");
                 String nickName = user.getNickName();
                 String avataUrl = user.getAvataUrl();

@@ -11,4 +11,8 @@ public class Alipay {
     //付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
     public static final String ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlUYDyaDpCwAQ+7tw1XJg9rpd1xbviVpxqV/8rtlAOYuVYmXRdlr2rmZUMfkF+ShRAlsHx3ya9KKjIbixCreHLI4mOqBurZQPW63wpW5GrpXPrx2Y8ahdVsrAxEBf2+rPO+MhRB3RebX20NuV39BS2x1Ft2cRpoEISnc02S2bSRjn3ZS7BVJG1AtqZ5akJ8WV5hilvXJILLf/y4ET7NTs+SSVD3JPwxnMvEkuq84mNnCv6L6V6bOzWpeznRAKkxefxRSrX9404NQH7BdvCkC57TS8VyV7WtGi8QrIeXRkwPMVSLIpcIU2ENrZvcdhdOwHUrDzw9ju26OB0cu0pXyQpQIDAQAB";
     public static final String SIGN_TYPE = "RSA2";
+
+    public static final String appId = "wx5d09a57a36240a0c";
+    public static final String secret = "fa7113349649612f5b37f142db6afa33";
+
 }
