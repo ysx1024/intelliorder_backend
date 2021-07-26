@@ -51,8 +51,7 @@ public class QueuelistController {
             @ApiResponse(code = 404, message = "叫号失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String addQueue(HttpSession session) {
-        String openId = session.getAttribute("openId").toString();
+    public String addQueue(String openId) {
         Map<String, Object> map = new HashMap<>();
         try {
             int result = queuelistService.addQueue(openId);
@@ -106,8 +105,7 @@ public class QueuelistController {
             @ApiResponse(code = 201, message = "准备就餐"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String showQueuelist(HttpSession session) {
-        String openId = session.getAttribute("openId").toString();
+    public String showQueuelist(String openId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Queuelist result = queuelistService.showQueuelist(openId);

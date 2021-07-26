@@ -250,13 +250,13 @@ public class StaffController {
             @ApiResponse(code = 404, message = "账号或密码错误"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String login(String account, String password, HttpSession session) {
+    public String login(String account, String password) {
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.login(account, password);
             if (!ObjectUtils.isEmpty(staff)) {
                 //保持登录状态，将登录id存放在session中
-                session.setAttribute("staffId", staff.getStaffId());
+                //session   由前端完成
                 map.put("status", "200");
                 map.put("msg", "登录成功");
             } else {
@@ -276,7 +276,7 @@ public class StaffController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, dataType = "String"),
             @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "session", value = "保存的用户标识", required = true, dataType = "HttpSession")
+            @ApiImplicitParam(name = "staffId", value = "员工Id", required = true, dataType = "Int")
     })
     @ApiResponses({
             @ApiResponse(code = 304, message = "修改密码失败，原密码错误"),
@@ -284,8 +284,7 @@ public class StaffController {
             @ApiResponse(code = 404, message = "修改密码失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String changePassword(String oldPassword, String newPassword, HttpSession session) {
-        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
+    public String changePassword(String oldPassword, String newPassword, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
 
@@ -315,7 +314,7 @@ public class StaffController {
     @ApiOperation(value = "员工个人修改账号", notes = "输入新账号")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "account", value = "新账号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "session", value = "保存的用户标识", required = true, dataType = "HttpSession")
+            @ApiImplicitParam(name = "staffId", value = "员工Id", required = true, dataType = "Int")
     })
     @ApiResponses({
             @ApiResponse(code = 304, message = "信息未修改"),
@@ -323,8 +322,7 @@ public class StaffController {
             @ApiResponse(code = 404, message = "修改失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String changeAccount(String account, HttpSession session) {
-        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
+    public String changeAccount(String account, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.getStaffById(staffId);
@@ -353,7 +351,7 @@ public class StaffController {
     @ApiOperation(value = "员工个人修改手机号", notes = "输入新手机号")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "phone", value = "新手机号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "session", value = "保存的用户标识", required = true, dataType = "HttpSession")
+            @ApiImplicitParam(name = "staffId", value = "员工Id", required = true, dataType = "Int")
     })
     @ApiResponses({
             @ApiResponse(code = 304, message = "信息未修改"),
@@ -361,8 +359,7 @@ public class StaffController {
             @ApiResponse(code = 404, message = "修改失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String changePhone(String phone, HttpSession session) {
-        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
+    public String changePhone(String phone, int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.getStaffById(staffId);
@@ -389,12 +386,14 @@ public class StaffController {
     @RequestMapping(value = "/showStaffInfo", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "登录后查看员工个人信息", notes = "需要登录查看个人信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "staffId", value = "员工Id", required = true, dataType = "Int")
+    })
     @ApiResponses({
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String showStaffInfo(HttpSession session) {
-        int staffId = Integer.parseInt(session.getAttribute("staffId").toString());
+    public String showStaffInfo(int staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             Staff staff = staffService.showStaffInfo(staffId);

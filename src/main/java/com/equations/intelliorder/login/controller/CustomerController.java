@@ -42,7 +42,8 @@ public class CustomerController {
                 map.put("msg", "code不能为空!");
             } else {
                 //微信接口服务,通过调用微信接口服务中jscode2session接口获取到openid和session_key
-                String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
+                String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId
+                        + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
                 String str = WeChatUtil.httpRequest(url, "GET", null); //调用工具类解密
                 JSONObject jsonObject = JSONObject.parseObject(str);
 
@@ -51,7 +52,7 @@ public class CustomerController {
                 String avataUrl = user.getAvataUrl();
                 String gender = user.getGender();
                 int deskId = user.getDeskId();
-                int result = customerService.undateCustomer(openId, nickName,deskId,avataUrl,gender);
+                int result = customerService.undateCustomer(openId, nickName, deskId, avataUrl, gender);
                 if (result == 1) {
                     session.setAttribute("openId", openId);
                     map.put("code", 200);

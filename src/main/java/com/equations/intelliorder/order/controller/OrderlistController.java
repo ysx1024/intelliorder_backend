@@ -286,8 +286,7 @@ public class OrderlistController {
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String customerOrder(@RequestBody CustomerOrderReqVo customerOrderReqVo, HttpSession session) {
-        String openId = session.getAttribute("openId").toString();
+    public String customerOrder(@RequestBody CustomerOrderReqVo customerOrderReqVo, String openId) {
         Map<String, Object> map = new HashMap<>();
         try {
             List<Orderlist> orderlist = orderlistService.customerOrder(customerOrderReqVo, openId);
