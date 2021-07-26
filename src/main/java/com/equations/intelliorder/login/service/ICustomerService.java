@@ -1,11 +1,11 @@
 package com.equations.intelliorder.login.service;
 
-import com.equations.intelliorder.login.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.login.entity.Customer;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author equations
@@ -14,8 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ICustomerService extends IService<Customer> {
 
 
-
     //获取数据
 
-    int undateCustomer(String openId,String nickName,int deskId,String avataUrl,String gender);//更新数据
+    int undateCustomer(String openId, String nickName, int deskId, String avataUrl, String gender);//更新数据
 }

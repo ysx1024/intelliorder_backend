@@ -3,11 +3,7 @@ package com.equations.intelliorder.bussiness.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.bussiness.entity.Bussinessdata;
-import com.equations.intelliorder.bussiness.entity.Feedlist;
 import com.equations.intelliorder.bussiness.service.IBussinessdataService;
-import com.equations.intelliorder.bussiness.service.IFeedlistService;
-import com.equations.intelliorder.order.entity.Order;
-import com.equations.intelliorder.order.service.IOrderService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -15,16 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author equations
@@ -47,10 +40,10 @@ public class BussinessdataController {
             @ApiResponse(code = 200, message = "更新成功"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String queryTotal(String startMonth,String endMonth) {
+    public String queryTotal(String startMonth, String endMonth) {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Bussinessdata> result = bussinessdataService.queryTotal(startMonth,endMonth);
+            List<Bussinessdata> result = bussinessdataService.queryTotal(startMonth, endMonth);
             map.put("status", "200");
             map.put("data", result);
         } catch (Exception exception) {
@@ -67,12 +60,12 @@ public class BussinessdataController {
             @ApiResponse(code = 200, message = "更新成功"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String updateDishProfit(String startDay,String endDay) {
+    public String updateDishProfit(String startDay, String endDay) {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Bussinessdata> list=bussinessdataService.updateDishProfit(startDay,endDay);
+            List<Bussinessdata> list = bussinessdataService.updateDishProfit(startDay, endDay);
             map.put("status", "200");
-            map.put("data",list);
+            map.put("data", list);
         } catch (Exception exception) {
             map.put("status", "-1");
             map.put("errorMsg", exception.getMessage());

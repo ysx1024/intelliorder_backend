@@ -1,7 +1,7 @@
 package com.equations.intelliorder.order.service;
 
-import com.equations.intelliorder.order.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.equations.intelliorder.order.entity.Order;
 
 import java.util.List;
 
@@ -15,8 +15,10 @@ import java.util.List;
  */
 public interface IOrderService extends IService<Order> {
 
-       List<Order> showOrderList();    //前台查看未付款的订单
+    List<Order> showOrderList();    //前台查看未付款的订单
 
+    int updateOrderState(int orderId);        //通过订单Id为当前订单结账
 
-       int updateOrderState(int orderId);//通过订单Id为当前订单结账
+    Order toPay(int orderId);    //结账
+
 }
