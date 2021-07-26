@@ -8,13 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +23,7 @@ import java.util.Map;
  * @since 2021-07-17
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/queue/queuelist")
 public class QueuelistController {
 
@@ -120,6 +118,27 @@ public class QueuelistController {
             }
         } catch (Exception exception) {
             map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @RequestMapping(value = "/showQueue", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "请求失败"),
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    public String showQueue() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Queuelist> queueList = queuelistService.showQueue();
+            map.put("status", "200");
+            map.put("queueNow", signQueueNow);
+            map.put("data", queueList);
+        } catch (Exception exception) {
+            map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }
         return JSON.toJSONString(map);

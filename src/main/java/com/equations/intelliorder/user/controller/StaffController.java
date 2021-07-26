@@ -382,7 +382,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showStaffInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/showStaffInfo", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "登录后查看员工个人信息", notes = "需要登录查看个人信息")
     @ApiImplicitParams({
@@ -395,7 +395,6 @@ public class StaffController {
     public String showStaffInfo(String staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
-
             Staff staff = staffService.showStaffInfo(Integer.parseInt(staffId));
             map.put("status", "200");
             map.put("data", staff);
