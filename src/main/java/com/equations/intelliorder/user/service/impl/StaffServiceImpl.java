@@ -25,8 +25,7 @@ import java.util.List;
 public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements IStaffService {
 
     @Autowired
-    private StaffMapper staffMapper;//通过字段注入自动创建mapper映射类
-
+    private  StaffMapper staffMapper;
 
     @Override
     public List<Staff> showStaffList() {

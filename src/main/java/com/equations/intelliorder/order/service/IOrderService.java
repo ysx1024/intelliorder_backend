@@ -15,11 +15,8 @@ import java.util.List;
  */
 public interface IOrderService extends IService<Order> {
 
-    List<Order> showOrderList();    //前台查看未付款的订单
-
-    int updateOrderState(int orderId);        //通过订单Id为当前订单结账
-
-    Order toPay(int orderId);    //结账
+       List<Order> showOrderList();    //前台查看未付款的订单
 
 
+       int updateOrderState(int orderId);//通过订单Id为当前订单结账
 }
