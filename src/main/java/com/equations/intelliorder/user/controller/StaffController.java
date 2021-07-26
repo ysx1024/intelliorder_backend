@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -258,7 +257,7 @@ public class StaffController {
                 //保持登录状态，将登录id存放在session中
                 //session   由前端完成
                 map.put("status", "200");
-                map.put("msg", "登录成功");
+                map.put("data", staff);
             } else {
                 map.put("status", "404");
                 map.put("msg", "账号或密码错误");

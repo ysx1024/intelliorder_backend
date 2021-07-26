@@ -9,11 +9,11 @@ import com.equations.intelliorder.utils.WeChatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.equations.intelliorder.utils.Alipay.*;
+import static com.equations.intelliorder.utils.Alipay.appId;
+import static com.equations.intelliorder.utils.Alipay.secret;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public String login(Customer user, HttpSession session) {
+    public String login(Customer user) {
         Map<String, Object> map = new HashMap<>();
         try{
             String code = user.getCode();
@@ -54,7 +54,6 @@ public class CustomerController {
                 int deskId = user.getDeskId();
                 int result = customerService.undateCustomer(openId, nickName, deskId, avataUrl, gender);
                 if (result == 1) {
-                    session.setAttribute("openId", openId);
                     map.put("code", 200);
                     map.put("msg", "登录成功!");
                     map.put("userInfo", jsonObject);
