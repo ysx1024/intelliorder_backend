@@ -17,7 +17,7 @@ import static com.equations.intelliorder.utils.Alipay.secret;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author equations
@@ -31,13 +31,13 @@ public class CustomerController {
     private ICustomerService customerService;
 
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public String login(Customer user) {
         Map<String, Object> map = new HashMap<>();
-        try{
+        try {
             String code = user.getCode();
-            if (code == null ) {
+            if (code == null) {
                 map.put("code", 300);
                 map.put("msg", "code不能为空!");
             } else {

@@ -53,7 +53,7 @@ public class Order implements Serializable {
 
 
     public Double getTotalPrice() {
-        return  totalPrice;
+        return totalPrice;
     }
 
     public void setEndTime(LocalDateTime dataTime) {

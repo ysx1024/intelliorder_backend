@@ -2,6 +2,7 @@ package com.equations.intelliorder.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
@@ -82,7 +83,7 @@ public class WeChatUtil {
                     new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
-                result=result.concat(line);
+                result = result.concat(line);
             }
         } catch (Exception e) {
             System.out.println("发送 POST 请求出现异常！" + e);

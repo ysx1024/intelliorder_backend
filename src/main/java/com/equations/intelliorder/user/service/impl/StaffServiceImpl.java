@@ -25,7 +25,7 @@ import java.util.List;
 public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements IStaffService {
 
     @Autowired
-    private  StaffMapper staffMapper;
+    private StaffMapper staffMapper;
 
     @Override
     public List<Staff> showStaffList() {
