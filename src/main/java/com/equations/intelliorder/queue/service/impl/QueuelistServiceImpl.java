@@ -57,4 +57,14 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
     public int deleteQueue() {
         return queuelistMapper.delete(new QueryWrapper<>());
     }
+
+    @Override
+    public List<Queuelist> showQueue() {
+
+            //1)创建QueryWrapper对象
+            QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
+            wrapper.eq("queueStatus", 0);
+            //2)执行查询
+            return queuelistMapper.selectList(wrapper);
+    }
 }

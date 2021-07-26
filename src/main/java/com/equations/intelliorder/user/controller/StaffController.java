@@ -392,10 +392,10 @@ public class StaffController {
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String showStaffInfo(int staffId) {
+    public String showStaffInfo(String staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Staff staff = staffService.showStaffInfo(staffId);
+            Staff staff = staffService.showStaffInfo(Integer.parseInt(staffId));
             map.put("status", "200");
             map.put("data", staff);
         } catch (Exception exception) {
