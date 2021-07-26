@@ -33,7 +33,7 @@ public class FeedlistServiceImpl extends ServiceImpl<FeedlistMapper, Feedlist> i
         feedlist.setFeedLevel(feedLevel);
         feedlist.setFeedTime(LocalDateTime.now());
         return feedlistMapper.insert(feedlist);
-        //
+
     }
 
     @Override
