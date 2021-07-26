@@ -48,4 +48,14 @@ public class Order implements Serializable {
     private Boolean orderStatus;
 
 
+    public void setOrderStatus(boolean b) {
+    }
+
+
+    public Double getTotalPrice() {
+        return  totalPrice;
+    }
+
+    public void setEndTime(LocalDateTime dataTime) {
+    }
 }
