@@ -71,20 +71,6 @@ public class BussinessdataController {
         Map<String, Object> map = new HashMap<>();
         try {
             List<Bussinessdata> list=bussinessdataService.updateDishProfit(startDay,endDay);
-//            试图传数组json
-//            List dishName=new ArrayList();
-//            List dishNum=new ArrayList();
-//            List pie=new ArrayList();
-//            for (int i=0;i<list.size();i++){
-//                dishName.add(list.get(i).getDishName());
-//                dishNum.add(list.get(i).getDishNum());
-//                pie.add(list.get(i).getDishName());
-//                pie.add(list.get(i).getDishProfit());
-//
-//            }
-//            map.put("y-data",dishName);
-//            map.put("series_data",dishNum);
-//            map.put("data",pie);
             map.put("status", "200");
             map.put("data",list);
         } catch (Exception exception) {
