@@ -156,9 +156,10 @@ public class QueuelistController {
     public String deleteQueue() {
         Map<String, Object> map = new HashMap<>();
         try {
-            this.setSignQueueNow(-1);
+
             int result = queuelistService.deleteQueue();
-            if (result == 0) {
+            if (result == 1) {
+                this.setSignQueueNow(-1);
                 map.put("status", "200");
                 map.put("queueNow", signQueueNow);
                 map.put("msg", "清空成功");
