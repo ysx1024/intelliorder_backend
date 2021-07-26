@@ -1,27 +1,25 @@
 package com.equations.intelliorder.bussiness.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author equations
  * @since 2021-07-19
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 @Accessors(chain = true)
 public class Bussinessdata implements Serializable {
 
@@ -48,7 +46,8 @@ public class Bussinessdata implements Serializable {
     @TableField("dishNum")
     private int dishNum;
 
-    public void setDishNum(int dishNum) { this.dishNum=dishNum;
+    public void setDishNum(int dishNum) {
+        this.dishNum = dishNum;
     }
 
     public void setDishProfit(Double dishProfit) {
@@ -63,8 +62,12 @@ public class Bussinessdata implements Serializable {
         this.dishName = dishName;
     }
 
-    public void setStartDay(LocalDateTime startDay) { this.startDay=startDay; }
+    public void setStartDay(LocalDateTime startDay) {
+        this.startDay = startDay;
+    }
 
-    public void setEndDay(LocalDateTime endDay) { this.endDay=endDay; }
+    public void setEndDay(LocalDateTime endDay) {
+        this.endDay = endDay;
+    }
 
 }

@@ -61,10 +61,10 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
     @Override
     public List<Queuelist> showQueue() {
 
-            //1)创建QueryWrapper对象
-            QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
-            wrapper.eq("queueStatus", 0);
-            //2)执行查询
-            return queuelistMapper.selectList(wrapper);
+        //1)创建QueryWrapper对象
+        QueryWrapper<Queuelist> wrapper = new QueryWrapper<>();
+        wrapper.eq("queueStatus", 0);
+        //2)执行查询
+        return queuelistMapper.selectList(wrapper);
     }
 }

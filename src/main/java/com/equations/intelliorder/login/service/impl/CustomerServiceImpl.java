@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author equations
@@ -25,11 +25,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     private CustomerMapper customerMapper;
 
 
-
     @Override
     public int undateCustomer(String openId, String nickName, int deskId, String avataUrl, String gender) {
         UpdateWrapper<Customer> wrapper = new UpdateWrapper<>();
-        if (wrapper.eq("openId",openId)==null){
+        if (wrapper.eq("openId", openId) == null) {
             Customer customer = new Customer();
             customer.setOpenId(openId);
             customer.setNickName(nickName);
@@ -39,7 +38,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             LocalDateTime dataTime = LocalDateTime.now();
             customer.setFirstLoginTime(dataTime);
             return customerMapper.insert(customer);
-        }else {
+        } else {
             Customer customer = customerMapper.selectOne(wrapper);
             customer.setNickName(nickName);
             customer.setDeskId(deskId);
@@ -47,7 +46,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             customer.setGender(gender);
             LocalDateTime dataTime = LocalDateTime.now();
             customer.setLastLoginTime(dataTime);
-            return customerMapper.update(customer,wrapper);
+            return customerMapper.update(customer, wrapper);
         }
     }
 }
