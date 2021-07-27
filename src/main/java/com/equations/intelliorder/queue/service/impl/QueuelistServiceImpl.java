@@ -67,4 +67,5 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
         //2)执行查询
         return queuelistMapper.selectList(wrapper);
     }
+
 }

@@ -123,7 +123,7 @@ public class QueuelistController {
 
     @RequestMapping(value = "/showQueue", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
+    @ApiOperation(value = "页面渲染时返回所有叫号列表", notes = "渲染时即返回")
     @ApiResponses({
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
@@ -154,9 +154,10 @@ public class QueuelistController {
     public String deleteQueue() {
         Map<String, Object> map = new HashMap<>();
         try {
-            this.setSignQueueNow(-1);
+
             int result = queuelistService.deleteQueue();
-            if (result == 0) {
+            if (result == 1) {
+                this.setSignQueueNow(-1);
                 map.put("status", "200");
                 map.put("queueNow", signQueueNow);
                 map.put("msg", "清空成功");
