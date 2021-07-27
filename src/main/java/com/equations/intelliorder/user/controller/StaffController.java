@@ -293,9 +293,10 @@ public class StaffController {
                 map.put("msg", "修改密码失败，原密码错误");
             } else {
                 int result = staffService.changePassword(staffId, oldPassword, newPassword);
+                Staff staff1 = staffService.getStaffById(staffId);
                 if (result == 1) {
                     map.put("status", "200");
-                    map.put("msg", "修改密码成功");
+                    map.put("password", staff1.getPassword());
                 } else {
                     map.put("status", "404");
                     map.put("msg", "修改密码失败");
