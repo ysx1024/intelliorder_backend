@@ -22,5 +22,6 @@ public interface IQueuelistService extends IService<Queuelist> {
 
     int deleteQueue();//一键清空
 
-    List<Queuelist> showQueue();//服务员渲染时返回信息
+    List<Queuelist> showQueue();//前台渲染时返回信息
+
 }

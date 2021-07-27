@@ -123,7 +123,7 @@ public class QueuelistController {
 
     @RequestMapping(value = "/showQueue", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
+    @ApiOperation(value = "页面渲染时返回所有叫号列表", notes = "渲染时即返回")
     @ApiResponses({
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")

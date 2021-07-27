@@ -382,7 +382,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showStaffInfo", method = RequestMethod.GET)
+        @RequestMapping(value = "/showStaffInfo", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "登录后查看员工个人信息", notes = "需要登录查看个人信息")
     @ApiImplicitParams({
