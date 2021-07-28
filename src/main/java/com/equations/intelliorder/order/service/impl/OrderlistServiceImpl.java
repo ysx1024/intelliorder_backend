@@ -93,11 +93,11 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
 
     @Override
     public List<Orderlist> showOrderInfo(int orderId) {
-        //1)创建QueryWrapper对象
         QueryWrapper<Orderlist> wrapper = new QueryWrapper<>();
         wrapper.eq("orderId", orderId);
-        //2)执行查询
-        return orderlistMapper.selectList(wrapper);
+        List<Orderlist> orderlists = orderlistMapper.selectList(wrapper);
+        return orderlists;
+
     }
 
     @Override

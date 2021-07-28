@@ -14,7 +14,6 @@ import org.apache.ibatis.annotations.Select;
  * @author equations
  * @since 2021-07-19
  */
-
 @Mapper
 public interface BussinessdataMapper extends BaseMapper<Bussinessdata> {
 

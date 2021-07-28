@@ -17,5 +17,4 @@ public class IntelliorderApplication {
         SpringApplication.run(IntelliorderApplication.class, args);
 
     }
-
 }
