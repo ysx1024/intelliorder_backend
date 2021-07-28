@@ -2,6 +2,8 @@ package com.equations.intelliorder.order.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.equations.intelliorder.dish.entity.Dish;
+import com.equations.intelliorder.dish.service.IDishService;
 import com.equations.intelliorder.order.entity.Orderlist;
 import com.equations.intelliorder.order.requestVo.CustomerOrderReqVo;
 import com.equations.intelliorder.order.requestVo.WaiterOrderReqVo;
@@ -33,6 +35,10 @@ public class OrderlistController {
 
     @Autowired
     private IOrderlistService orderlistService;//通过字段注入自动创建业务类，调用orderlistService类
+
+    @Autowired
+    private IDishService dishService;
+
 
     @RequestMapping(value = "/showOrderlist", method = RequestMethod.GET)
     @ResponseBody
@@ -223,7 +229,7 @@ public class OrderlistController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showOrderInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/showOrderInfo", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "前台请求详细信息", notes = "通过订单号请求")
     @ApiResponses({
@@ -233,12 +239,16 @@ public class OrderlistController {
     public String showOrderInfo(int orderId) {
         Map<String, Object> map = new HashMap<>();
         try {
-
-            List<Orderlist> orderlnfo = orderlistService.showOrderInfo(orderId);
+            List<Orderlist> orderlists = orderlistService.showOrderInfo(orderId);
+            for (Orderlist orderlist:orderlists){
+                int dishId = orderlist.getDishId();
+                Dish dish = dishService.getDishId(dishId);
+                String dishName = dish.getDishName();
+                orderlist.setDishName(dishName);
+            }
             map.put("status", "200");
-            map.put("data", orderlnfo);
+            map.put("data", orderlists);
         } catch (Exception exception) {
-
             map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
         }

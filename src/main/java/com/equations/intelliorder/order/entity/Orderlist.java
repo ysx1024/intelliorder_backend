@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode()
 @Accessors(chain = true)
-public class Orderlist implements Serializable {
+public class Orderlist implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,8 @@ public class Orderlist implements Serializable {
     @TableField("listStatus")
     private int listStatus;
 
+    @TableField("null")
+    private String dishName;
 
     @TableField("staffId")
     private int staffId;
@@ -69,5 +71,13 @@ public class Orderlist implements Serializable {
 
     public void setStaffId(int staffId) {
         this.staffId = staffId;
+    }
+
+    public void setDishName(String dishName) {
+        this.dishName = dishName;
+    }
+
+    public String getDishName() {
+        return dishName;
     }
 }

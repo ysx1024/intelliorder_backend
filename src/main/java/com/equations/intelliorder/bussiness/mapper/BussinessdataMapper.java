@@ -2,6 +2,7 @@ package com.equations.intelliorder.bussiness.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.equations.intelliorder.bussiness.entity.Bussinessdata;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Select;
  * @author equations
  * @since 2021-07-19
  */
+@Mapper
 public interface BussinessdataMapper extends BaseMapper<Bussinessdata> {
 
 
