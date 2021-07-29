@@ -18,6 +18,9 @@ public interface IBussinessdataService extends IService<Bussinessdata> {
     //按月查询月销售
     List<Bussinessdata> queryTotal(String startMonth, String endMonth);
 
+    /*//测试
+    int testInsert();*/
+
     //按日期更新和查询排名前10的菜品销量和利润
     List<Bussinessdata> updateDishProfit(String startDay, String endDay);
 

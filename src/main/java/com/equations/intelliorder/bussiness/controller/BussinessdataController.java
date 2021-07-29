@@ -32,6 +32,21 @@ public class BussinessdataController {
     @Autowired
     private IBussinessdataService bussinessdataService;//通过字段注入自动创建业务类，调用IBussinessdataService类
 
+    /*
+    @RequestMapping(value = "/queryTotal", method = RequestMethod.POST)
+    @ResponseBody
+    public String testInsert() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            int result = bussinessdataService.testInsert();
+            map.put("status", "200");
+            map.put("data", result);
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
+        }
+        return JSON.toJSONString(map);
+    }*/
 
     @RequestMapping(value = "/queryTotal", method = RequestMethod.POST)
     @ResponseBody
@@ -55,7 +70,7 @@ public class BussinessdataController {
 
     @RequestMapping(value = "/updateDishProfit", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "根据年月更新月份销售额供前端饼状图", notes = "前端传参年月应该是String类型yyyy-mm格式")
+    @ApiOperation(value = "根据年月更新月份销售额供前端饼状图", notes = "前端传参年月应该是String类型yyyy-mm-dd 00:00:00格式")
     @ApiResponses({
             @ApiResponse(code = 200, message = "更新成功"),
             @ApiResponse(code = -1, message = "errorMsg")
@@ -69,6 +84,7 @@ public class BussinessdataController {
         } catch (Exception exception) {
             map.put("status", "-1");
             map.put("errorMsg", exception.getMessage());
+            exception.printStackTrace();
         }
         return JSON.toJSONString(map);
     }
