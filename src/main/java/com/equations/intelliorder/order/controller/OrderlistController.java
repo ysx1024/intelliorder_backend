@@ -151,6 +151,12 @@ public class OrderlistController {
         Map<String, Object> map = new HashMap<>();
         try {
             List<Orderlist> orderlistList = orderlistService.serveList();
+            for (Orderlist orderlist:orderlistList){
+                int dishId = orderlist.getDishId();
+                Dish dish = dishService.getDishId(dishId);
+                String dishName = dish.getDishName();
+                orderlist.setDishName(dishName);
+            }
             map.put("status", "200");
             map.put("data", orderlistList);
         } catch (Exception exception) {
