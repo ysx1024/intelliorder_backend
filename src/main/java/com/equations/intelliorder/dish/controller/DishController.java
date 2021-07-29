@@ -74,7 +74,7 @@ public class DishController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/getDishId", method = RequestMethod.GET)//url地址和请求方法类型
+    @RequestMapping(value = "/getDishId", method = RequestMethod.POST)//url地址和请求方法类型
     @ResponseBody
     @ApiOperation(value = "根据菜单ID检索菜品", notes = "输入菜品ID必须是有效的数字")
     @ApiImplicitParams({
@@ -98,7 +98,7 @@ public class DishController {
     }
 
 
-    @RequestMapping(value = "/getDishName", method = RequestMethod.GET)
+    @RequestMapping(value = "/getDishName", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "根据菜品名模糊检索菜单列表", notes = "需要输入菜品名")
     @ApiImplicitParams({
@@ -122,7 +122,7 @@ public class DishController {
     }
 
 
-    @RequestMapping(value = "/getDishType", method = RequestMethod.GET)
+    @RequestMapping(value = "/getDishType", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "根据菜品类别检索菜单列表", notes = "需要输入菜品类别")
     @ApiImplicitParams({
