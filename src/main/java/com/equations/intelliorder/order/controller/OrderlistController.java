@@ -242,10 +242,10 @@ public class OrderlistController {
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String showOrderInfo(int orderId) {
+    public String showOrderInfo(String orderId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Orderlist> orderlists = orderlistService.showOrderInfo(orderId);
+            List<Orderlist> orderlists = orderlistService.showOrderInfo(Integer.parseInt(orderId));
             for (Orderlist orderlist:orderlists){
                 int dishId = orderlist.getDishId();
                 Dish dish = dishService.getDishId(dishId);
