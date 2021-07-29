@@ -49,6 +49,7 @@ public class Order implements Serializable {
 
 
     public void setOrderStatus(boolean b) {
+        this.orderStatus = b;
     }
 
 
@@ -57,5 +58,6 @@ public class Order implements Serializable {
     }
 
     public void setEndTime(LocalDateTime dataTime) {
+        this.endTime = dataTime;
     }
 }

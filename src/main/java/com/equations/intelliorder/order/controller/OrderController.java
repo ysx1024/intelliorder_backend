@@ -35,7 +35,7 @@ import static com.equations.intelliorder.utils.Alipay.*;
  * @since 2021-07-15
  */
 @Controller
-@CrossOrigin
+@CrossOrigin(origins = "http://10.128.135.182:8080/")
 @RequestMapping("/order/order")
 @Api(tags = "点餐中订单功能的Controller")
 public class OrderController {
@@ -75,10 +75,10 @@ public class OrderController {
             @ApiResponse(code = 404, message = "更新失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String updateOrderState(int orderId) {
+    public String updateOrderState(String orderId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = orderService.updateOrderState(orderId);
+            int result = orderService.updateOrderState(Integer.parseInt(orderId));
             if (result == 1) {
                 map.put("status", "200");
                 map.put("msg", "更新成功");
@@ -97,9 +97,9 @@ public class OrderController {
     @RequestMapping(value = "/toPay", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "前台结账", notes = "需要提供订单号")
-    public String toPay(int orderId) {
+    public String toPay(String orderId) {
 
-        Order order = orderService.toPay(orderId);
+        Order order = orderService.toPay(Integer.parseInt(orderId));
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient("\t\n" +
                 "https://openapi.alipaydev.com/gateway.do",
@@ -107,11 +107,11 @@ public class OrderController {
                 CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
         //创建API对应的request
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
-        alipayRequest.setReturnUrl("http://localhost:8088/order");
+        alipayRequest.setReturnUrl("http://10.128.135.182:8080/Reception/OrderList");
         //在公共参数中设置回跳和通知地址
-        alipayRequest.setNotifyUrl("http://localhost:8088/notify");
+        alipayRequest.setNotifyUrl("http://10.128.135.182:8088/order/order/updateOrderState");
         alipayRequest.setBizContent("{" +
-                "    \"out_trade_no\":\"" + order.getOpenId() + "\"," +
+                "    \"out_trade_no\":\"" + getTradeNo() + "\"," +
                 "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
                 "    \"total_amount\":\"" + order.getTotalPrice() + "\"," +
                 "    \"subject\":\"点餐结账\"," +
@@ -131,6 +131,8 @@ public class OrderController {
         }
         return form.get();
     }
+
+
 
 
     public String getTradeNo() {
@@ -160,7 +162,7 @@ public class OrderController {
                 //用户付款中途退出返回商户网站的地址
                 "\"quit_url\":\"http://www.taobao.com/product/113714.html\"," +
 
-                "\"out_trade_no\":\"" + order.getOpenId() + "\"," +
+                "\"out_trade_no\":\"" + getTradeNo() + "\"," +
                 "\"total_amount\"" + order.getTotalPrice() + "\"," +
                 "\"seller_id\":\"2088102147948060\"," +
                 "\"passback_params\":" +
