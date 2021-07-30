@@ -212,14 +212,14 @@ public class StaffController {
     @ResponseBody
     @ApiOperation(value = "删除员工", notes = "需要输入员工ID，必须是有效的数字")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "staffId", value = "员工ID", required = true, dataType = "int")
+            @ApiImplicitParam(name = "staffId", value = "员工ID", required = true, dataType = "Integer")
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "删除成功"),
             @ApiResponse(code = 404, message = "删除失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String deleteById(int staffId) {
+    public String deleteById(Integer staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
             int result = staffService.deleteById(staffId);
