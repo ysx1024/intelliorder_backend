@@ -208,7 +208,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/deleteById", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteById", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "删除员工", notes = "需要输入员工ID，必须是有效的数字")
     @ApiImplicitParams({
