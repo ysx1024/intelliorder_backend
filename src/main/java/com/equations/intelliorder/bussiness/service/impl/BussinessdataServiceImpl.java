@@ -104,7 +104,8 @@ public class BussinessdataServiceImpl extends ServiceImpl<BussinessdataMapper, B
         wrapper1.eq("dishId", 2);
         Bussinessdata data=bussinessdataMapper.selectOne(wrapper1);
         //判断有数据则直接传给前端，没有则先插入再传给前端
-        if (data!=null && data.getDataId()>0){
+//        if (data!=null && data.getDataId()>0){
+        if (data!=null){
             //排序利润降序
             QueryWrapper<Bussinessdata> wrapper = new QueryWrapper<>();
             //时间格式
@@ -121,8 +122,9 @@ public class BussinessdataServiceImpl extends ServiceImpl<BussinessdataMapper, B
         }else {
             //获得最大菜品id进行下面的遍历求菜品利润
             int max = bussinessdataMapper.queryMaxDishId();
-            for (int i = 2; i <= max; i++) {
-                //按日查询不同菜品销售量和利润
+            for (int i = 2; i <= max; i++)
+            if (dishService.getDishId(i)!=null){               //按日查询不同菜品销售量和利润
+
                 int dishNum = bussinessdataMapper.queryTotalDishNum(startDay, endDay, i);
                 String dishName = dishService.getDishId(i).getDishName();
                 double dishPrice = dishService.getDishId(i).getDishPrice();
@@ -143,17 +145,21 @@ public class BussinessdataServiceImpl extends ServiceImpl<BussinessdataMapper, B
                 bussinessdata.setEndDay(monthDay2);
                 bussinessdataMapper.insert(bussinessdata);
             }
+            System.out.println("1");
             //排序利润降序
             QueryWrapper<Bussinessdata> wrapper = new QueryWrapper<>();
             //时间格式
             wrapper.apply("date_format(startDay, '%Y-%m-%d %H:%i:%s') = {0}", startDay);
             wrapper.apply("date_format(endDay, '%Y-%m-%d %H:%i:%s') = {0}", endDay);
             wrapper.orderByDesc("dishProfit");
+            System.out.println("2");
             //获取前10条方便图标显示
             List<Bussinessdata> list = bussinessdataMapper.selectList(wrapper);
             if (list.size() > 10) {//判断list长度
+                System.out.println("3");
                 return list.subList(0, 10);//取前十条数据
             } else {
+                System.out.println("4");
                 return list;
             }
         }
