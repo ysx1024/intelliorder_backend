@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -131,10 +132,14 @@ public class QueuelistController {
     public String showQueue() {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Queuelist> queueList = queuelistService.showQueue();
+            List<Queuelist> queueLists = queuelistService.showQueue();
+            LinkedList queueCustomer = new LinkedList();
+            for (Queuelist queuelist:queueLists){
+                queueCustomer.add(queuelist.getQueueCustomer());
+            }
             map.put("status", "200");
             map.put("queueNow", signQueueNow);
-            map.put("data", queueList);
+            map.put("data", queueCustomer);
         } catch (Exception exception) {
             map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
@@ -145,7 +150,7 @@ public class QueuelistController {
 
     @RequestMapping(value = "/deleteQueue", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "服务员点击清空", notes = "清空数据库")
+    @ApiOperation(value = "前台点击清空", notes = "清空数据库")
     @ApiResponses({
             @ApiResponse(code = 200, message = "清空成功"),
             @ApiResponse(code = 201, message = "清空失败"),
@@ -156,7 +161,7 @@ public class QueuelistController {
         try {
 
             int result = queuelistService.deleteQueue();
-            if (result == 1) {
+            if (result == 0) {
                 this.setSignQueueNow(-1);
                 map.put("status", "200");
                 map.put("queueNow", signQueueNow);
