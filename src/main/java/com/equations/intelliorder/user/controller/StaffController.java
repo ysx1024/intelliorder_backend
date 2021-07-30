@@ -219,10 +219,10 @@ public class StaffController {
             @ApiResponse(code = 404, message = "删除失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String deleteById(int staffId) {
+    public String deleteById(String staffId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = staffService.deleteById(staffId);
+            int result = staffService.deleteById(Integer.parseInt(staffId));
             if (result == 1) {
                 map.put("status", "200");
                 map.put("msg", "删除成功");
