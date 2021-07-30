@@ -281,6 +281,7 @@ public class OrderlistController {
     public String waiterOrder(@RequestBody WaiterOrderReqVo waiterOrderReqVo) {
         Map<String, Object> map = new HashMap<>();
         try {
+            System.out.println("判断语句");
             int result = orderlistService.waiterOrder(waiterOrderReqVo);
             if (result == 1) {
                 map.put("status", "200");

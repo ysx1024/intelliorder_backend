@@ -146,11 +146,11 @@ public class StaffController {
             @ApiResponse(code = -1, message = "errorMsg")
     })
     public String updateStaff(
-            int staffId, String phone, String account,
+            String staffId, String phone, String account,
             String password, String staffType) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Staff staff = staffService.getStaffById(staffId);
+            Staff staff = staffService.getStaffById(Integer.parseInt(staffId));
             AtomicBoolean flag = new AtomicBoolean(true);
             if (!Objects.equals(staff.getPhone(), phone)) flag.set(false);
             else if (!Objects.equals(staff.getAccount(), account)) flag.set(false);
@@ -160,7 +160,7 @@ public class StaffController {
                 map.put("status", "304");
                 map.put("msg", "信息未修改");
             } else {
-                int result = staffService.updateStaff(staffId, phone, account, password, staffType);
+                int result = staffService.updateStaff(Integer.parseInt(staffId), phone, account, password, staffType);
                 if (result == 1) {
                     map.put("status", "200");
                     map.put("msg", "更新成功");

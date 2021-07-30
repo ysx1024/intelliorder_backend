@@ -95,22 +95,24 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
     public List<Orderlist> showOrderInfo(int orderId) {
         QueryWrapper<Orderlist> wrapper = new QueryWrapper<>();
         wrapper.eq("orderId", orderId);
-        List<Orderlist> orderlists = orderlistMapper.selectList(wrapper);
-        return orderlists;
+        return orderlistMapper.selectList(wrapper);
 
     }
 
     @Override
     public int waiterOrder(WaiterOrderReqVo waiterOrderReqVo) {
 
+
         //通过桌号查询为点菜还是加菜
         AtomicInteger orderId = new AtomicInteger();
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.eq("orderStatus", false)
                 .eq("deskId", waiterOrderReqVo.getDeskId());
+
         //如果此订单号存在（即可以查到即值大于0）则直接赋值并进行加菜
         //如果不存在则创建订单进行点餐
-        if (orderMapper.selectOne(orderQueryWrapper).getOrderId() > 0)
+        Order existOrder = orderMapper.selectOne(orderQueryWrapper);
+        if (existOrder != null && existOrder.getOrderId() > 0)
             orderId.set(orderMapper.selectOne(orderQueryWrapper).getOrderId());
         else {
             //服务员设置桌号，同时创建新order
@@ -124,7 +126,6 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
                     .eq("deskId", waiterOrderReqVo.getDeskId());
             orderId.set(orderMapper.selectOne(wrapper).getOrderId());
         }
-
 
         //        服务员添加菜品
         //        先遍历dishOrders数组
@@ -143,13 +144,14 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
                 dishQueryWrapper.eq("dishId", dishOrders.getDishId());
                 orderlist.setDishPrice(dishOrders.getDishPrice());
                 orderlist.setListStatus(0);
-                orderlistMapper.insert(orderlist);
-            }
 
+                int r = orderlistMapper.insert(orderlist);
+                System.out.println(r);
+            }
 
         //服务员下单该订单
         UpdateWrapper<Order> orderWrapper = new UpdateWrapper<>();
-        orderWrapper.eq("orderId", orderId);
+        orderWrapper.eq("orderId", orderId.intValue());
         Order order = orderMapper.selectOne(orderWrapper);
         order.setOrderTime(LocalDateTime.now());
         order.setTotalPrice(waiterOrderReqVo.getTotalPrice());
@@ -167,7 +169,8 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
                 .eq("deskId", customerOrderReqVo.getDeskId());
         //如果此订单号存在（即可以查到即值大于0）则直接赋值并进行加菜
         //如果不存在则创建订单进行点餐
-        if (orderMapper.selectOne(orderQueryWrapper).getOrderId() > 0)
+        Order existOrder = orderMapper.selectOne(orderQueryWrapper);
+        if (existOrder != null && existOrder.getOrderId() > 0)
             orderId.set(orderMapper.selectOne(orderQueryWrapper).getOrderId());
         else {
             //设置桌号，同时创建新order
@@ -207,14 +210,14 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
 
         //顾客下单该订单
         UpdateWrapper<Order> orderWrapper = new UpdateWrapper<>();
-        orderWrapper.eq("orderId", orderId);
+        orderWrapper.eq("orderId", orderId.intValue());
         Order order = orderMapper.selectOne(orderWrapper);
         order.setOrderTime(LocalDateTime.now());
         order.setTotalPrice(customerOrderReqVo.getTotalPrice());
         orderMapper.update(order, orderWrapper);
         //返回orderlist下所有的订单
         QueryWrapper<Orderlist> orderlistQueryWrapper = new QueryWrapper<>();
-        orderlistQueryWrapper.eq("orderId", orderId);
+        orderlistQueryWrapper.eq("orderId", orderId.intValue());
         return orderlistMapper.selectList(orderlistQueryWrapper);
 
     }
