@@ -38,7 +38,7 @@ public class StaffController {
     // controller（前端控制器）层调用service（业务逻辑）层，service调用Mapper（数据）层
 
 
-    @RequestMapping(value = "/getStaffById", method = RequestMethod.GET)//url地址和请求方法类型
+    @RequestMapping(value = "/getStaffById", method = RequestMethod.POST)//url地址和请求方法类型
     //这里是swagger自动生成api文档的相关注解
     @ResponseBody
     @ApiOperation(value = "根据员工ID检索员工列表", notes = "输入员工ID必须是有效的数字")
@@ -63,7 +63,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/getStaffByName", method = RequestMethod.GET)
+    @RequestMapping(value = "/getStaffByName", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "根据员工姓名模糊检索员工列表", notes = "需要输入中文姓名")
     @ApiImplicitParams({
@@ -86,7 +86,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showStaffList", method = RequestMethod.GET)
+    @RequestMapping(value = "/showStaffList", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
     @ApiResponses({
