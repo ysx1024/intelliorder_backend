@@ -94,13 +94,14 @@ public class FeedlistController {
             @ApiResponse(code = 404, message = "回复失败"),
             @ApiResponse(code = 200, message = "回复成功")
     })
-    public String replyFeed(int feedId, String reply) {
+    public String replyFeed(String feedId, String reply) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = feedlistService.replyFeed(feedId, reply);
+            int result = feedlistService.replyFeed(Integer.parseInt(feedId), reply);
+            List<Feedlist> feedlistList = feedlistService.showFeedlistList();
             if (result == 1) {
                 map.put("status", "200");
-                map.put("msg", "回复成功");
+                map.put("data", feedlistList);
             } else {
                 map.put("status", "404");
                 map.put("msg", "回复失败");
