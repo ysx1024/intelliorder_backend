@@ -86,7 +86,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/showStaffList", method = RequestMethod.POST)
+    @RequestMapping(value = "/showStaffList", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "页面渲染时返回所有员工列表", notes = "渲染时即返回")
     @ApiResponses({
@@ -106,7 +106,7 @@ public class StaffController {
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(value = "/getStaffByType", method = RequestMethod.GET)
+    @RequestMapping(value = "/getStaffByType", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "根据员工类别检索员工列表", notes = "需要输入员工类别{服务员，后厨，前台}")
     @ApiImplicitParams({
