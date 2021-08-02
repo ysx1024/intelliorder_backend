@@ -83,6 +83,7 @@ public class QueuelistController {
         Map<String, Object> map = new HashMap<>();
         try {
             this.setSignQueueNow(signQueueNow);
+            queuelistService.changeQueue(signQueueNow);
             map.put("status", "200");
             map.put("queueNow", signQueueNow);
             map.put("msg", "叫号更新成功");

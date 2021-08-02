@@ -1,6 +1,7 @@
 package com.equations.intelliorder.queue.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.equations.intelliorder.queue.entity.Queuelist;
 import com.equations.intelliorder.queue.mapper.QueuelistMapper;
@@ -56,6 +57,14 @@ public class QueuelistServiceImpl extends ServiceImpl<QueuelistMapper, Queuelist
     @Override
     public int deleteQueue() {
         return queuelistMapper.delete(new QueryWrapper<>());
+    }
+
+    public int changeQueue(int signQueueNow) {
+        UpdateWrapper<Queuelist> wrapper = new UpdateWrapper<>();
+        wrapper.eq("queueCustomer", signQueueNow);
+        Queuelist queuelist = queuelistMapper.selectOne(wrapper);
+        queuelist.setQueueStatus(1);
+        return queuelistMapper.update(queuelist,wrapper);
     }
 
     @Override

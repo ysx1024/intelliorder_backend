@@ -24,4 +24,6 @@ public interface IQueuelistService extends IService<Queuelist> {
 
     List<Queuelist> showQueue();//前台渲染时返回信息
 
+    int changeQueue(int signQueueNow);  //服务员点击下一位
+
 }
