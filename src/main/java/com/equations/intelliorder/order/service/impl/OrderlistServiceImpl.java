@@ -112,8 +112,9 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
         //如果此订单号存在（即可以查到即值大于0）则直接赋值并进行加菜
         //如果不存在则创建订单进行点餐
         Order existOrder = orderMapper.selectOne(orderQueryWrapper);
-        if (existOrder != null && existOrder.getOrderId() > 0)
-            orderId.set(orderMapper.selectOne(orderQueryWrapper).getOrderId());
+        if (existOrder != null && existOrder.getOrderId() > 0) {
+            orderId.set(existOrder.getOrderId());
+        }
         else {
             //服务员设置桌号，同时创建新order
             Order newOrder = new Order();
@@ -154,7 +155,7 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
         orderWrapper.eq("orderId", orderId.intValue());
         Order order = orderMapper.selectOne(orderWrapper);
         order.setOrderTime(LocalDateTime.now());
-        order.setTotalPrice(waiterOrderReqVo.getTotalPrice());
+        order.setTotalPrice(waiterOrderReqVo.getTotalPrice()+order.getTotalPrice());
         return orderMapper.update(order, orderWrapper);
     }
 
