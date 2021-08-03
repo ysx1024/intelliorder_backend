@@ -47,10 +47,10 @@ public class CallquestController {
             @ApiResponse(code = 404, message = "呼叫失败"),
             @ApiResponse(code = -1, message = "errorMsg")
     })
-    public String addCallquest(int deskId, String callMsg) {
+    public String addCallquest(String deskId, String callMsg) {
         Map<String, Object> map = new HashMap<>();
         try {
-            int result = callquestService.addCallquest(deskId, callMsg);
+            int result = callquestService.addCallquest(Integer.parseInt(deskId), callMsg);
             if (result == 1) {
                 map.put("status", "200");
                 map.put("msg", "呼叫成功");
