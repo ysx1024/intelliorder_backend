@@ -6,7 +6,8 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.equations.intelliorder.order.entity.Order;
 import com.equations.intelliorder.order.service.IOrderService;
 import io.swagger.annotations.*;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,38 +146,45 @@ public class OrderController {
     @RequestMapping(value = "/phonePay", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "顾客手机结账", notes = "需要提供订单号")
-    public String phonePay(int orderId) {
+    public String phonePay(String orderId) {
 
-        Order order = orderService.toPay(orderId);
+        Order order = orderService.toPay(Integer.parseInt(orderId));
         AlipayClient alipayClient = new DefaultAlipayClient(
                 "https://openapi.alipaydev.com/gateway.do",
                 APP_ID, APP_PRIVATE_KEY, FORMAT,
                 CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
-        AlipayTradeWapPayRequest request = new AlipayTradeWapPayRequest();
+        AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
         //支付成功后进行网页回调的地址
-        request.setReturnUrl("http://localhost:8088/order");
-        //在公共参数中设置回跳和通知地址
-        request.setNotifyUrl("http://localhost:8088/notify");
+//        request.setReturnUrl("http://10.128.135.182:8080/Reception/OrderList");
+//        //在公共参数中设置回跳和通知地址
+//        request.setNotifyUrl("http://localhost:8088/notify");
+        DecimalFormat df = new DecimalFormat("######0.00");
         request.setBizContent("{" +
                 "\"subject\":\"点餐结账\"," +
-                "\"body\":\"" + order.getDeskId() + "号桌点餐结账\"," +
-                //用户付款中途退出返回商户网站的地址
-                "\"quit_url\":\"http://www.taobao.com/product/113714.html\"," +
-
+//                "\"body\":\"" + order.getDeskId() + "号桌点餐结账\"," +
                 "\"out_trade_no\":\"" + getTradeNo() + "\"," +
-                "\"total_amount\"" + order.getTotalPrice() + "\"," +
-                "\"seller_id\":\"2088102147948060\"," +
-                "\"passback_params\":" +
-                "\"merchantBizType%3d3C%26merchantBizNo%3d2016010101111\"," +
-                "\"product_code\":\"QUICK_WAP_PAY\"," +
+                "\"timeout_express\":\"90m\","+
+                "\"total_amount\":\"" + df.format(order.getTotalPrice()) + "\"," +
+                "\"product_code\":\"FACE_TO_FACE_PAYMENT\"" +
                 "  }");
-        AtomicReference<String> response = new AtomicReference<>("");
+        AlipayTradePrecreateResponse response = null;
+        String qrCode = "";
+        Map<String, Object> map = new HashMap<>();
         try {
-            response.set(alipayClient.pageExecute(request).getBody());//调用SDK生成表单
-        } catch (AlipayApiException e) {
-            e.printStackTrace();
+            response = alipayClient.execute(request);
+            if (!response.isSuccess()) {
+                map.put("生成支付宝订单失败:" ,response.getMsg());
+            }
+            qrCode = response.getQrCode();
+//            map.put("orderId",orderId);
+            map.put("Url",qrCode);
+
+        } catch (Exception exception) {
+            map.put("status", "-1");
+            map.put("errorMsg", exception.getMessage());
         }
-        return response.get();
+        // 封装支付信息 返回
+        return JSON.toJSONString(map);
     }
 
 
