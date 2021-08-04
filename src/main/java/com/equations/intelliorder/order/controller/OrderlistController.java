@@ -313,45 +313,47 @@ public class OrderlistController {
             int flagSize = 0;
             //获取返回数据并为返回数组对象赋值
             List<Orderlist> orderlists = orderlistService.customerOrder(orderReqVo, openId);
+            resVo.setOrderId(orderlists.get(0).getOrderId());
             //遍历返回数据
             for (Orderlist orderlist : orderlists) {
                 if (orderlist.getDishNum() > 0) {
                     DishOrder order = new DishOrder();
                     order.setDishId(orderlist.getDishId());
-                    order.setDishName(orderlist.getDishName());
+                    order.setDishName(dishService.getDishName(orderlist.getDishId()));
                     order.setDishPrice(orderlist.getDishPrice());
+                    order.setDishImage(dishService.getDishImage(orderlist.getDishId()));
                     order.setDishNum(orderlist.getDishNum());
                     orders.add(order);
                     flags.add(true);
                     flagSize++;
-                    System.out.println("增加语句");
-                    System.out.println("flagSize=" + flagSize);
+//                    System.out.println("增加语句");
+//                    System.out.println("flagSize=" + flagSize);
                     if (flagSize > 1) {
-                        System.out.println("orders=" + orders);
+//                        System.out.println("orders=" + orders);
                         for (int index = 0; index < flagSize - 1; index++) {
                             if (Objects.equals(orders.get(index).getDishId(), orderlist.getDishId())
                                     && flags.get(index)) {
-                                System.out.println("index=" + index);
-                                System.out.println("orders.get(index).getDishId()=" + orders.get(index).getDishId());
-                                System.out.println("orderlist.getDishId()=" + orderlist.getDishId());
-                                System.out.println("flags.get(index)=" + flags.get(index));
+//                                System.out.println("index=" + index);
+//                                System.out.println("orders.get(index).getDishId()=" + orders.get(index).getDishId());
+//                                System.out.println("orderlist.getDishId()=" + orderlist.getDishId());
+//                                System.out.println("flags.get(index)=" + flags.get(index));
                                 order.setDishNum(order.getDishNum() + orders.get(index).getDishNum());
                                 flags.set(index, false);
-                                System.out.println("修改语句");
+//                                System.out.println("修改语句");
                             }
                         }
                     }
                 }
             }
-
-            System.out.println("移除语句" + flagSize);
-            System.out.println("orders" + orders);
-            System.out.println("flags" + flags);
+//
+//            System.out.println("移除语句" + flagSize);
+//            System.out.println("orders" + orders);
+//            System.out.println("flags" + flags);
             for (int i = flagSize - 1; i >= 0; i--) {
                 if (!flags.get(i)) {
-                    System.out.println("i=" + flags.get(i));
+//                    System.out.println("i=" + flags.get(i));
                     orders.remove(i);
-                    System.out.println("i=" + i);
+//                    System.out.println("i=" + i);
                 }
             }
             resVo.setDishOrders(orders);

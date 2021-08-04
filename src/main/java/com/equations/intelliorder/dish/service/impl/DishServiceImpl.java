@@ -109,4 +109,18 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements ID
         return dishMapper.deleteById(dishId);
     }
 
+    @Override
+    public String getDishImage(int dishId) {
+        QueryWrapper<Dish> wrapper = new QueryWrapper<>();
+        wrapper.eq("dishId", dishId);
+        return dishMapper.selectOne(wrapper).getDishImage();
+    }
+
+    @Override
+    public String getDishName(int dishId) {
+        QueryWrapper<Dish> wrapper = new QueryWrapper<>();
+        wrapper.eq("dishId", dishId);
+        return dishMapper.selectOne(wrapper).getDishName();
+    }
+
 }

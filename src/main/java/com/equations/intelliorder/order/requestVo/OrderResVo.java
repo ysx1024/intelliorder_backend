@@ -20,6 +20,10 @@ public class OrderResVo {
     //点餐桌号
     private Integer deskId;
 
+    //订单号
+    private Integer orderId;
+
+
     //dishOrders列表
     private List<DishOrder> dishOrders;
 

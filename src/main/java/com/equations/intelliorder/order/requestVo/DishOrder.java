@@ -17,4 +17,7 @@ public class DishOrder {
 
     //该菜品数量
     private Integer dishNum;
+
+    //该菜品图片
+    private String dishImage;
 }

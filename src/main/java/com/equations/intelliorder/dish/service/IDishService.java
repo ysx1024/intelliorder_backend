@@ -35,4 +35,8 @@ public interface IDishService extends IService<Dish> {
 
     int deleteByDishId(int dishId);//通过序号删除菜品
 
+    String getDishImage(int dishId);//通过序号查找图片
+
+    String getDishName(int dishId);//通过序号查找名称
+
 }
