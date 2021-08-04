@@ -306,11 +306,12 @@ public class OrderlistController {
             //创建返回类对象并从参数类为部分值赋值
             OrderResVo resVo = new OrderResVo();
             resVo.setDeskId(orderReqVo.getDeskId());
-            resVo.setTotalPrice(orderReqVo.getTotalPrice());
+
             //为返回类中数组创建对象并初始化（遍历需要）
             ArrayList<DishOrder> orders = new ArrayList<>();
             List<Boolean> flags = new ArrayList<>();
             int flagSize = 0;
+            double totalPrice = 0.0;
             //获取返回数据并为返回数组对象赋值
             List<Orderlist> orderlists = orderlistService.customerOrder(orderReqVo, openId);
             resVo.setOrderId(orderlists.get(0).getOrderId());
@@ -323,6 +324,10 @@ public class OrderlistController {
                     order.setDishPrice(orderlist.getDishPrice());
                     order.setDishImage(dishService.getDishImage(orderlist.getDishId()));
                     order.setDishNum(orderlist.getDishNum());
+                    totalPrice += orderlist.getDishPrice() * orderlist.getDishNum();
+//                    System.out.println(orderlist.getDishPrice());
+//                    System.out.println(orderlist.getDishNum());
+//                    System.out.println("totalPrice=" + totalPrice);
                     orders.add(order);
                     flags.add(true);
                     flagSize++;
@@ -356,6 +361,7 @@ public class OrderlistController {
 //                    System.out.println("i=" + i);
                 }
             }
+            resVo.setTotalPrice(totalPrice);
             resVo.setDishOrders(orders);
             map.put("status", "200");
             map.put("data", resVo);
