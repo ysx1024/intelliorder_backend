@@ -80,4 +80,13 @@ public class Orderlist implements Serializable{
     public String getDishName() {
         return dishName;
     }
+
+    public Integer getDishId() {
+        return dishId;
+    }
+
+    public void setDishId(Integer dishId) {
+        this.dishId = dishId;
+    }
+
 }

@@ -1,13 +1,12 @@
 package com.equations.intelliorder.order.requestVo;
 
-
 import lombok.Data;
 
 import java.util.List;
 
 /**
  * <p>
- * 前端请求json实体类
+ * 后端返回json实体类
  * </p>
  *
  * @author equations
@@ -15,7 +14,8 @@ import java.util.List;
  */
 
 @Data
-public class WaiterOrderReqVo {
+
+public class OrderResVo {
 
     //点餐桌号
     private Integer deskId;
@@ -25,6 +25,4 @@ public class WaiterOrderReqVo {
 
     // 总价
     private Double totalPrice;
-
 }
-

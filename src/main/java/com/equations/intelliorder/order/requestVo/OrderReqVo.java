@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 
-public class CustomerOrderReqVo {
+public class OrderReqVo {
 
     //点餐桌号
     private Integer deskId;

@@ -15,16 +15,5 @@ class IntelliorderApplicationTests {
     void contextLoads() {
     }
 
-//    @Test
-//    void testorder(){
-//
-//        WaiterOrderReqVo waiterOrderReqVo = new WaiterOrderReqVo();
-//        waiterOrderReqVo.setDeskId(10);
-//        List<WaiterOrderReqVo.DishOrder> dishOrders = new ArrayList<>();
-//        dishOrders.add()
-//        waiterOrderReqVo.setDishOrders(dishOrders);
-//        orderlistService.waiterOrder(WaiterOrderReqVo waiterOrderReqVo)
-//
-//
-//    }
+
 }

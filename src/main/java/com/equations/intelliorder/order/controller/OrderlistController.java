@@ -5,17 +5,16 @@ import com.alibaba.fastjson.JSON;
 import com.equations.intelliorder.dish.entity.Dish;
 import com.equations.intelliorder.dish.service.IDishService;
 import com.equations.intelliorder.order.entity.Orderlist;
-import com.equations.intelliorder.order.requestVo.CustomerOrderReqVo;
-import com.equations.intelliorder.order.requestVo.WaiterOrderReqVo;
+import com.equations.intelliorder.order.requestVo.DishOrder;
+import com.equations.intelliorder.order.requestVo.OrderReqVo;
+import com.equations.intelliorder.order.requestVo.OrderResVo;
 import com.equations.intelliorder.order.service.IOrderlistService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -51,7 +50,7 @@ public class OrderlistController {
         Map<String, Object> map = new HashMap<>();
         try {
             List<Orderlist> orderlistList = orderlistService.showOrderlistList();
-            for (Orderlist orderlist:orderlistList){
+            for (Orderlist orderlist : orderlistList) {
                 int dishId = orderlist.getDishId();
                 Dish dish = dishService.getDishId(dishId);
                 String dishName = dish.getDishName();
@@ -151,7 +150,7 @@ public class OrderlistController {
         Map<String, Object> map = new HashMap<>();
         try {
             List<Orderlist> orderlistList = orderlistService.serveList();
-            for (Orderlist orderlist:orderlistList){
+            for (Orderlist orderlist : orderlistList) {
                 int dishId = orderlist.getDishId();
                 Dish dish = dishService.getDishId(dishId);
                 String dishName = dish.getDishName();
@@ -252,7 +251,7 @@ public class OrderlistController {
         Map<String, Object> map = new HashMap<>();
         try {
             List<Orderlist> orderlists = orderlistService.showOrderInfo(Integer.parseInt(orderId));
-            for (Orderlist orderlist:orderlists){
+            for (Orderlist orderlist : orderlists) {
                 int dishId = orderlist.getDishId();
                 Dish dish = dishService.getDishId(dishId);
                 String dishName = dish.getDishName();
@@ -270,19 +269,14 @@ public class OrderlistController {
     @RequestMapping(value = "/waiterOrder", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "服务员点餐", notes = "点餐系列操作完成后传给打包好的json数组")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "waiterOrderReqVo", value = "请求json实体类",
-                    required = true, dataType = "WaiterOrderReqVo"),
-    })
     @ApiResponses({
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String waiterOrder(@RequestBody WaiterOrderReqVo waiterOrderReqVo) {
+    public String waiterOrder(@RequestBody OrderReqVo orderReqVo) {
         Map<String, Object> map = new HashMap<>();
         try {
-            System.out.println("判断语句");
-            int result = orderlistService.waiterOrder(waiterOrderReqVo);
+            int result = orderlistService.waiterOrder(orderReqVo);
             if (result == 1) {
                 map.put("status", "200");
                 map.put("data", "下单成功");
@@ -293,6 +287,7 @@ public class OrderlistController {
         } catch (Exception exception) {
             map.put("status", "-1");
             map.put("errorMsg", exception.getMessage());
+            exception.printStackTrace();
         }
         return JSON.toJSONString(map);
     }
@@ -300,23 +295,72 @@ public class OrderlistController {
     @RequestMapping(value = "/customerOrder", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "顾客点餐", notes = "点餐系列操作完成后传给打包好的json数组")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "customerOrderReqVo", value = "请求json实体类",
-                    required = true, dataType = "CustomerOrderReqVo"),
-    })
     @ApiResponses({
             @ApiResponse(code = 404, message = "请求失败"),
             @ApiResponse(code = 200, message = "请求成功")
     })
-    public String customerOrder(@RequestBody CustomerOrderReqVo customerOrderReqVo, String openId) {
+    public String customerOrder(@RequestBody OrderReqVo orderReqVo, String openId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Orderlist> orderlist = orderlistService.customerOrder(customerOrderReqVo, openId);
+
+            //创建返回类对象并从参数类为部分值赋值
+            OrderResVo resVo = new OrderResVo();
+            resVo.setDeskId(orderReqVo.getDeskId());
+            resVo.setTotalPrice(orderReqVo.getTotalPrice());
+            //为返回类中数组创建对象并初始化（遍历需要）
+            ArrayList<DishOrder> orders = new ArrayList<>();
+            List<Boolean> flags = new ArrayList<>();
+            int flagSize = 0;
+            //获取返回数据并为返回数组对象赋值
+            List<Orderlist> orderlists = orderlistService.customerOrder(orderReqVo, openId);
+            //遍历返回数据
+            for (Orderlist orderlist : orderlists) {
+                if (orderlist.getDishNum() > 0) {
+                    DishOrder order = new DishOrder();
+                    order.setDishId(orderlist.getDishId());
+                    order.setDishName(orderlist.getDishName());
+                    order.setDishPrice(orderlist.getDishPrice());
+                    order.setDishNum(orderlist.getDishNum());
+                    orders.add(order);
+                    flags.add(true);
+                    flagSize++;
+                    System.out.println("增加语句");
+                    System.out.println("flagSize=" + flagSize);
+                    if (flagSize > 1) {
+                        System.out.println("orders=" + orders);
+                        for (int index = 0; index < flagSize - 1; index++) {
+                            if (Objects.equals(orders.get(index).getDishId(), orderlist.getDishId())
+                                    && flags.get(index)) {
+                                System.out.println("index=" + index);
+                                System.out.println("orders.get(index).getDishId()=" + orders.get(index).getDishId());
+                                System.out.println("orderlist.getDishId()=" + orderlist.getDishId());
+                                System.out.println("flags.get(index)=" + flags.get(index));
+                                order.setDishNum(order.getDishNum() + orders.get(index).getDishNum());
+                                flags.set(index, false);
+                                System.out.println("修改语句");
+                            }
+                        }
+                    }
+                }
+            }
+
+            System.out.println("移除语句" + flagSize);
+            System.out.println("orders" + orders);
+            System.out.println("flags" + flags);
+            for (int i = flagSize - 1; i >= 0; i--) {
+                if (!flags.get(i)) {
+                    System.out.println("i=" + flags.get(i));
+                    orders.remove(i);
+                    System.out.println("i=" + i);
+                }
+            }
+            resVo.setDishOrders(orders);
             map.put("status", "200");
-            map.put("data", orderlist);
+            map.put("data", resVo);
         } catch (Exception exception) {
             map.put("status", "404");
             map.put("errorMsg", exception.getMessage());
+            exception.printStackTrace();
         }
         return JSON.toJSONString(map);
     }

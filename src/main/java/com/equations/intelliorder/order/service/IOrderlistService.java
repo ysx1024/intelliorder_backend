@@ -2,8 +2,7 @@ package com.equations.intelliorder.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.equations.intelliorder.order.entity.Orderlist;
-import com.equations.intelliorder.order.requestVo.CustomerOrderReqVo;
-import com.equations.intelliorder.order.requestVo.WaiterOrderReqVo;
+import com.equations.intelliorder.order.requestVo.OrderReqVo;
 
 import java.util.List;
 
@@ -30,8 +29,8 @@ public interface IOrderlistService extends IService<Orderlist> {
 
     List<Orderlist> showOrderInfo(int orderId);    //前台查看订单详情
 
-    int waiterOrder(WaiterOrderReqVo waiterOrderReqVo); //服务员点餐系列操作
+    int waiterOrder(OrderReqVo orderReqVo); //服务员点餐系列操作
 
-    List<Orderlist> customerOrder(CustomerOrderReqVo customerOrderReqVo
+    List<Orderlist> customerOrder(OrderReqVo orderReqVo
             , String openId); //顾客点餐系列操作
 }
