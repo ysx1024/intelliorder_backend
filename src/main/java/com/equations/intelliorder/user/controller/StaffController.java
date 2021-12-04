@@ -221,6 +221,7 @@ public class StaffController {
     })
     public String deleteById(Integer staffId) {
         Map<String, Object> map = new HashMap<>();
+        System.out.println(staffId);
         try {
             int result = staffService.deleteById(staffId);
             if (result == 1) {
